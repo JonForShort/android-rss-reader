@@ -21,20 +21,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.contentfetcher.model
+package com.github.jonforshort.newsreader.feedcontentfetcher
 
-import org.simpleframework.xml.Element
-import org.simpleframework.xml.Root
+data class FeedContent(
 
-@Root(name = "item", strict = false)
-internal data class Article @JvmOverloads constructor(
+    val title: String,
 
-    @field:Element(name = "title")
-    var title: String? = null,
+    val link: String,
 
-    @field:Element(name = "link")
-    var link: String? = null,
-
-    @field:Element(name = "description")
-    var description: String? = null
+    val description: String
 )

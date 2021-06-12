@@ -21,7 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.contentfetcher.model
+package com.github.jonforshort.newsreader.feedcontentfetcher.model
 
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.ElementList
@@ -33,9 +33,9 @@ internal data class Feed @JvmOverloads constructor(
 
     @field:Element(name = "title")
     @field:Path("channel")
-    var channelTitle: String? = null,
+    var channelTitle: String = "",
 
     @field:ElementList(name = "item", inline = true)
     @field:Path("channel")
-    var articleList: List<Article>? = null
+    var items: List<Item> = emptyList()
 )

@@ -21,32 +21,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.contentfetcher
+package com.github.jonforshort.newsreader.feedcontentfetcher.model
 
-import com.github.jonforshort.contentfetcher.model.Feed
-import retrofit2.Call
-import retrofit2.Retrofit
-import retrofit2.converter.simplexml.SimpleXmlConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Url
-import java.net.URL
+import org.simpleframework.xml.Element
+import org.simpleframework.xml.Root
 
-class ContentFetcher(private val rssFeedUrl: URL) {
+@Root(name = "item", strict = false)
+internal data class Item @JvmOverloads constructor(
 
-    fun fetch(): String {
-        val baseUrl = "${rssFeedUrl.protocol}://${rssFeedUrl.host}"
-        val path = rssFeedUrl.path.trimStart('/')
-        val retrofit = Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .addConverterFactory(SimpleXmlConverterFactory.create())
-            .build()
-        val rssFeed = retrofit.create(RssFeed::class.java)
-        return rssFeed.getContent(path).execute().body().toString()
-    }
-}
+    @field:Element(name = "title")
+    var title: String = "",
 
-internal interface RssFeed {
+    @field:Element(name = "link")
+    var link: String = "",
 
-    @GET
-    fun getContent(@Url url: String): Call<Feed>
-}
+    @field:Element(name = "description")
+    var description: String = ""
+)

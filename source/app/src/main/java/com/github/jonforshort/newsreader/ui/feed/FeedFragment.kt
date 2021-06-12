@@ -21,16 +21,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.newsreader.ui.gallery
+package com.github.jonforshort.newsreader.ui.feed
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.github.jonforshort.newsreader.R
 
-class GalleryViewModel : ViewModel() {
+class FeedFragment : Fragment() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is gallery Fragment"
+    private lateinit var feedViewModel: FeedViewModel
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        feedViewModel = ViewModelProvider(this).get(FeedViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_feed, container, false)
+        val textView: TextView = root.findViewById(R.id.text_feed)
+        feedViewModel.text.observe(viewLifecycleOwner, Observer {
+            textView.text = it
+        })
+        return root
     }
-    val text: LiveData<String> = _text
 }

@@ -1,4 +1,4 @@
 include ':app'
-include ':contentFetcher'
+include ':feedContentFetcher'
 
 rootProject.name = "android-news-reader"
