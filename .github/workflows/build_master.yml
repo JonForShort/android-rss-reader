@@ -43,7 +43,7 @@ jobs:
         run: bash ./gradlew clean build
 
       - name: Archive APK
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: app
           path: source/app/build/outputs/apk/**/*.apk
