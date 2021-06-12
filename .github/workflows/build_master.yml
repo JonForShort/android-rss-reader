@@ -11,29 +11,40 @@ jobs:
   test:
     name: Run Unit Tests
     runs-on: ubuntu-latest
+    env:
+      working-directory: source
 
     steps:
-      - uses: actions/checkout@v1
-      - name: set up JDK 1.8
+      - name: checkout source code
+        uses: actions/checkout@v1
+
+      - name: install dependencies
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      - name: Run Unit tests
+
+      - name: run unit tests
         run: bash ./gradlew clean test
 
   build:
     name: Build APK
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
+    env:
+      working-directory: source
 
     steps:
-      - uses: actions/checkout@v1
-      - name: set up JDK 1.8
+      - name: checkout source code
+        uses: actions/checkout@v1
+
+      - name: install dependencies
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      - name: Build APK
+
+      - name: build APK
         run: bash ./gradlew clean build
-      - name: Archive APK
+
+      - name: archive APK
         uses: actions/upload-artifact@v1
         with:
           name: app
