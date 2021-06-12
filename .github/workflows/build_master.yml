@@ -11,8 +11,6 @@ jobs:
   test:
     name: Run Unit Tests
     runs-on: ubuntu-latest
-    env:
-      working-directory: source
 
     steps:
       - name: checkout source code
@@ -24,13 +22,12 @@ jobs:
           java-version: 1.8
 
       - name: run unit tests
+        working-directory: ./source
         run: bash ./gradlew clean test
 
   build:
     name: Build APK
     runs-on: ubuntu-latest
-    env:
-      working-directory: source
 
     steps:
       - name: checkout source code
@@ -42,6 +39,7 @@ jobs:
           java-version: 1.8
 
       - name: build APK
+        working-directory: ./source
         run: bash ./gradlew clean build
 
       - name: archive APK
