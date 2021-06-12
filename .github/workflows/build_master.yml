@@ -13,15 +13,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: checkout source code
+      - name: Checkout Source Code
         uses: actions/checkout@v1
 
-      - name: install dependencies
+      - name: Install Dependencies
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
 
-      - name: run unit tests
+      - name: Run Unit Tests
         working-directory: ./source
         run: bash ./gradlew clean test
 
@@ -30,19 +30,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: checkout source code
+      - name: Checkout Source Code
         uses: actions/checkout@v1
 
-      - name: install dependencies
+      - name: Install Dependencies
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
 
-      - name: build APK
+      - name: Build APK
         working-directory: ./source
         run: bash ./gradlew clean build
 
-      - name: archive APK
+      - name: Archive APK
         uses: actions/upload-artifact@v1
         with:
           name: app
