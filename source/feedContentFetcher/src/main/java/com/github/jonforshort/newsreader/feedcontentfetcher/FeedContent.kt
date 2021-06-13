@@ -23,11 +23,21 @@
 //
 package com.github.jonforshort.newsreader.feedcontentfetcher
 
+import java.text.SimpleDateFormat
+import java.util.*
+
 data class FeedContent(
 
     val title: String,
 
     val link: String,
 
-    val description: String
+    val description: String,
+
+    val publishDate: Date
 )
+
+internal fun String.toDate(): Date {
+    val dateFormat = SimpleDateFormat("E, dd MMM yyyy HH:mm Z", Locale.US);
+    return dateFormat.parse(this)
+}

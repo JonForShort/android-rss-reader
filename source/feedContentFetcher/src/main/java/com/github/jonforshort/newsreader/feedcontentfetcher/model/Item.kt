@@ -23,6 +23,7 @@
 //
 package com.github.jonforshort.newsreader.feedcontentfetcher.model
 
+import org.simpleframework.xml.Attribute
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.Root
 
@@ -36,5 +37,23 @@ internal data class Item @JvmOverloads constructor(
     var link: String = "",
 
     @field:Element(name = "description")
-    var description: String = ""
+    var description: String = "",
+
+    @field:Element(name = "pubDate")
+    var publishDate: String = "",
+
+    @field:Element(name = "enclosure")
+    var enclsoure: Enclosure = Enclosure()
+)
+
+internal data class Enclosure(
+
+    @field:Attribute(name = "url")
+    var url: String = "",
+
+    @field:Attribute(name = "type")
+    var mimeType: String = "",
+
+    @field:Attribute(name = "length")
+    var lengthInBytes: String = ""
 )

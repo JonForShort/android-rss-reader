@@ -42,7 +42,7 @@ class FeedContentFetcher(private val url: URL) {
         val rssFeed = retrofit.create(RssFeed::class.java)
         val feedContent = rssFeed.getContent(urlPath)
         return feedContent.items.map {
-            FeedContent(it.title, it.link, it.description)
+            FeedContent(it.title, it.link, it.description, it.publishDate.toDate())
         }
     }
 }
