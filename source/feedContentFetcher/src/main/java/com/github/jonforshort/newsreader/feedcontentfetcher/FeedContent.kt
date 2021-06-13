@@ -34,7 +34,18 @@ data class FeedContent(
 
     val description: String,
 
-    val publishDate: Date
+    val publishDate: Date,
+
+    val enclosure: Enclosure
+)
+
+data class Enclosure(
+
+    val url: String,
+
+    val lengthInBytes: Int,
+
+    val mimeType: String
 )
 
 internal fun String.toDate(): Date {

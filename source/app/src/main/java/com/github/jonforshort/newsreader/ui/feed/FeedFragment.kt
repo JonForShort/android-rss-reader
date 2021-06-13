@@ -113,7 +113,8 @@ private class FeedContentAdapter :
         val feedItem = FeedItem(
             feedContent.title,
             feedContent.description,
-            feedContent.publishDate.toString()
+            feedContent.publishDate.toString(),
+            feedContent.enclosure
         )
         holder.bind(feedItem)
     }

@@ -43,7 +43,7 @@ internal data class Item @JvmOverloads constructor(
     var publishDate: String = "",
 
     @field:Element(name = "enclosure")
-    var enclsoure: Enclosure = Enclosure()
+    var enclosure: Enclosure = Enclosure()
 )
 
 internal data class Enclosure(

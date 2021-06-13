@@ -1,4 +1,4 @@
 include ':app'
 include ':feedContentFetcher'
 
-rootProject.name = "android-news-reader"
+rootProject.name = "android-rss-reader"
