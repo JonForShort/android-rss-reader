@@ -23,10 +23,13 @@
 //
 package com.github.jonforshort.newsreader.ui.feed
 
+import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DiffUtil
@@ -58,7 +61,7 @@ class FeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         super.onViewCreated(view, savedInstanceState)
 
         feedViewModel = ViewModelProvider(this).get(FeedViewModel::class.java)
-        feedContentAdapter = FeedContentAdapter()
+        feedContentAdapter = FeedContentAdapter(requireContext())
         feedRecyclerView = view.findViewById(R.id.contentRecyclerView)
         feedRecyclerView.adapter = feedContentAdapter
         feedRecyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -91,27 +94,34 @@ class FeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 }
 
-private class FeedContentAdapter :
+private class FeedContentAdapter(private val context: Context) :
     ListAdapter<FeedContent, FeedContentAdapter.ViewHolder>(FeedContentDiffer()) {
 
-    class ViewHolder(private val binding: ViewFeedItemBinding) :
+    class ViewHolder(private val binding: ViewFeedItemBinding, private val context: Context) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: FeedItem?) {
+        fun bind(item: FeedItem) {
             binding.feedItem = item
             binding.executePendingBindings()
+            binding.root.setOnClickListener {
+                CustomTabsIntent
+                    .Builder()
+                    .build()
+                    .launchUrl(context, Uri.parse(item.link))
+            }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val feedItemBinding = ViewFeedItemBinding.inflate(layoutInflater, parent, false)
-        return ViewHolder(feedItemBinding)
+        return ViewHolder(feedItemBinding, context)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val feedContent = getItem(position)
         val feedItem = FeedItem(
             feedContent.title,
+            feedContent.link,
             feedContent.description,
             feedContent.publishDate.toString(),
             feedContent.enclosure

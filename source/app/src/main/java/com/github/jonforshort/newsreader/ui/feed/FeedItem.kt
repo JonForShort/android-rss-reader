@@ -29,9 +29,15 @@ import com.bumptech.glide.Glide
 import com.github.jonforshort.newsreader.feedcontentfetcher.Enclosure
 
 internal class FeedItem(
+
     val title: String = "",
+
+    val link: String = "",
+
     val description: String = "",
+
     val publishDate: String = "",
+
     val enclosure: Enclosure? = null
 )
 
