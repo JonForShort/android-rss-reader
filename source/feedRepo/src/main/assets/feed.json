@@ -1,0 +1,16 @@
+{
+  "version": "1",
+  "feed": [
+    {
+      "title": "Google News",
+      "description": "Google news feed which is aggregated from sources all over the world.",
+      "homePageUrl": "https://news.google.com/",
+      "rssUrl": "http://news.google.com/news?cf=all&hl=en&pz=1&ned=us&topic=h&num=3&output=rss",
+      "iconUrl": "http://s2.googleusercontent.com/s2/favicons?domain=https://news.google.com/",
+      "tags": [
+        "news",
+        "google"
+      ]
+    }
+  ]
+}

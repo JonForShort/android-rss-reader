@@ -1,0 +1,59 @@
+{
+  "$id": "https://github.com/JonForShort/android-rss-reader/blob/master/source/feedRepo/src/main/json/feed.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Feed",
+  "type": "object",
+  "properties": {
+    "feed": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "description": "Title for the RSS feed.",
+            "type": "string"
+          },
+          "description": {
+            "description": "Description for the RSS feed.",
+            "type": "string"
+          },
+          "homePageUrl": {
+            "description": "URL for the provider's home page.",
+            "type": "string"
+          },
+          "rssUrl": {
+            "description": "URL for the provider's RSS feed.",
+            "type": "string"
+          },
+          "iconUrl": {
+            "description": "URL for the RSS feed's icon.",
+            "type": "string"
+          },
+          "tags": {
+            "description": "Tags that identify the provider's feed.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "title",
+          "description",
+          "homePageUrl",
+          "rssUrl",
+          "iconUrl",
+          "tags"
+        ]
+      }
+    },
+    "version": {
+      "type": "string",
+      "description": "Version number for the schema"
+    }
+  },
+  "required": [
+    "feed",
+    "version"
+  ]
+}
