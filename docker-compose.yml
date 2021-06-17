@@ -1,0 +1,10 @@
+version: '3'
+services:
+
+  rss-reader:
+    build:
+      dockerfile: 'cm/docker/android/Dockerfile'
+      context: .
+    volumes:
+      - '.:/rss-reader'
+    working_dir: '/rss-reader'

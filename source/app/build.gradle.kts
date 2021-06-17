@@ -64,6 +64,7 @@ dependencies {
     kapt("com.github.bumptech.glide:compiler:4.12.0")
 
     implementation(project(":feedContentFetcher"))
+    implementation(project(":feedRepo"))
 
     testImplementation("junit:junit:4.13.2")
 
