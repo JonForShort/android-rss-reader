@@ -1,5 +1,6 @@
 include ':app'
 include ':feedContentFetcher'
 include ':feedRepo'
+include ':feedSource'
 
 rootProject.name = "android-rss-reader"
