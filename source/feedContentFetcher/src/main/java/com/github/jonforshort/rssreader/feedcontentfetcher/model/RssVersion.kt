@@ -21,29 +21,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.newsreader.ui.feed
+package com.github.jonforshort.rssreader.feedcontentfetcher.model
 
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
-import com.bumptech.glide.Glide
-import com.github.jonforshort.newsreader.feedcontentfetcher.FeedItemEnclosure
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 
-data class FeedArticle(
+internal class RssVersion {
 
-    val title: String = "",
-
-    val link: String = "",
-
-    val description: String = "",
-
-    val publishDate: String = "",
-
-    val enclosure: FeedItemEnclosure? = null
-)
-
-@BindingAdapter("loadEnclosure")
-internal fun loadEnclosure(view: ImageView, enclosure: FeedItemEnclosure) {
-    Glide.with(view.context)
-        .load(enclosure.url)
-        .into(view)
+    @JacksonXmlProperty(isAttribute = true)
+    val version = "2.0"
 }

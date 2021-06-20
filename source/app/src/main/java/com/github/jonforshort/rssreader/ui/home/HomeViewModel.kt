@@ -21,39 +21,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.newsreader.ui.feed
+package com.github.jonforshort.rssreader.ui.home
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.github.jonforshort.newsreader.feedcontentfetcher.FeedContent
-import com.github.jonforshort.newsreader.feedcontentfetcher.FeedContentFetcher
-import com.github.jonforshort.newsreader.feedcontentfetcher.FeedContentFetcher.Result
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.net.URL
 
-internal class FeedViewModel : ViewModel() {
+class HomeViewModel : ViewModel() {
 
-    private val feedContent = MutableLiveData<FeedContent>()
-
-    private val feedUrls = MutableLiveData<List<URL>>()
-
-    fun refreshFeedContent() {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                feedUrls.value?.forEach { url ->
-                    val fetchResult = FeedContentFetcher(url).fetch()
-                    if (fetchResult is Result.Success) {
-                        feedContent.postValue(fetchResult.result)
-                    }
-                }
-            }
-        }
+    private val _text = MutableLiveData<String>().apply {
+        value = "This is home Fragment"
     }
-
-    fun getFeedContentLiveData() = feedContent
-
-    fun getFeedUrls() = feedUrls
+    val text: LiveData<String> = _text
 }

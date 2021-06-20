@@ -21,36 +21,46 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.newsreader.feedcontentfetcher.model.rsstwo
+package com.github.jonforshort.rssreader.feedcontentfetcher
 
-internal class Item {
+data class FeedContent(
 
-    var title = ""
+    val version: String,
 
-    var link = ""
+    val channel: FeedChannel
+)
 
-    var description = ""
+data class FeedChannel(
 
-    var author = ""
+    val title: String,
 
-    var category = ""
+    val link: String,
 
-    var comments = ""
+    val description: String,
 
-    var enclosure: Enclosure = Enclosure()
+    val items: List<FeedItem>
+)
 
-    var guid = ""
+data class FeedItem(
 
-    var pubDate = ""
+    val title: String,
 
-    var source = ""
-}
+    val link: String,
 
-internal data class Enclosure(
+    val description: String,
 
-    var url: String = "",
+    val publishDate: String,
 
-    var mimeType: String = "",
+    val source: String,
 
-    var lengthInBytes: String? = null
+    val enclosure: FeedItemEnclosure? = null
+)
+
+data class FeedItemEnclosure(
+
+    val url: String,
+
+    val lengthInBytes: Int,
+
+    val mimeType: String
 )

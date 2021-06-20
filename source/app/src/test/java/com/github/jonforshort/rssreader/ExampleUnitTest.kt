@@ -21,12 +21,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.newsreader.feedcontentfetcher.model
+package com.github.jonforshort.rssreader
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
+import org.junit.Assert.assertEquals
+import org.junit.Test
 
-internal class RssVersion {
-
-    @JacksonXmlProperty(isAttribute = true)
-    val version = "2.0"
+/**
+ * Example local unit test, which will execute on the development machine (host).
+ *
+ * See [testing documentation](http://d.android.com/tools/testing).
+ */
+class ExampleUnitTest {
+    @Test
+    fun addition_isCorrect() {
+        assertEquals(4, 2 + 2)
+    }
 }

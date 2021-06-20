@@ -21,7 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.newsreader.ui.feed
+package com.github.jonforshort.rssreader.ui.feed
 
 import android.content.Context
 import android.net.Uri
@@ -37,9 +37,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.github.jonforshort.newsreader.R
-import com.github.jonforshort.newsreader.databinding.ViewFeedArticleBinding
-import com.github.jonforshort.newsreader.feedcontentfetcher.FeedItem
+import com.github.jonforshort.rssreader.R
+import com.github.jonforshort.rssreader.databinding.ViewFeedArticleBinding
+import com.github.jonforshort.rssreader.feedcontentfetcher.FeedItem
 import java.net.URL
 
 class FeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {

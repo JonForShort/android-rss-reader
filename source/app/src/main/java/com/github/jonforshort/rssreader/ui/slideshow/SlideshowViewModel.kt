@@ -21,46 +21,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.newsreader.feedcontentfetcher
+package com.github.jonforshort.rssreader.ui.slideshow
 
-data class FeedContent(
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 
-    val version: String,
+class SlideshowViewModel : ViewModel() {
 
-    val channel: FeedChannel
-)
-
-data class FeedChannel(
-
-    val title: String,
-
-    val link: String,
-
-    val description: String,
-
-    val items: List<FeedItem>
-)
-
-data class FeedItem(
-
-    val title: String,
-
-    val link: String,
-
-    val description: String,
-
-    val publishDate: String,
-
-    val source: String,
-
-    val enclosure: FeedItemEnclosure? = null
-)
-
-data class FeedItemEnclosure(
-
-    val url: String,
-
-    val lengthInBytes: Int,
-
-    val mimeType: String
-)
+    private val _text = MutableLiveData<String>().apply {
+        value = "This is slideshow Fragment"
+    }
+    val text: LiveData<String> = _text
+}

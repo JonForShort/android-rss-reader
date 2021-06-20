@@ -12,7 +12,7 @@ android {
         minSdkVersion(26)
         targetSdkVersion(30)
 
-        applicationId = "com.github.jonforshort.newsreader"
+        applicationId = "com.github.jonforshort.rssreader"
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -49,17 +49,15 @@ android {
 
 dependencies {
 
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.10")
-    implementation("androidx.core:core-ktx:1.5.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:${LIBRARY_VERSION_KOTLIN}")
+    implementation("androidx.core:core-ktx:${LIBRARY_VERSION_CORE_KTX}")
     implementation("androidx.appcompat:appcompat:1.3.0")
     implementation("com.google.android.material:material:1.3.0")
     implementation("androidx.constraintlayout:constraintlayout:2.0.4")
-    implementation("androidx.navigation:navigation-fragment:2.3.5")
-    implementation("androidx.navigation:navigation-ui:2.3.5")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
-    implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:${LIBRARY_VERSION_LIVEDATA}")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${LIBRARY_VERSION_LIVEDATA}")
+    implementation("androidx.navigation:navigation-fragment-ktx:${LIBRARY_VERSION_NAVIGATION}")
+    implementation("androidx.navigation:navigation-ui-ktx:${LIBRARY_VERSION_NAVIGATION}")
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")

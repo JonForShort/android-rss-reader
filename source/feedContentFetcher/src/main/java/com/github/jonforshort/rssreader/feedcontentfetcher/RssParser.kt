@@ -21,12 +21,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.newsreader.feedcontentfetcher
+package com.github.jonforshort.rssreader.feedcontentfetcher
 
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
-import com.github.jonforshort.newsreader.feedcontentfetcher.model.RssVersion
-import com.github.jonforshort.newsreader.feedcontentfetcher.model.rsstwo.Rss as RssTwo
+import com.github.jonforshort.rssreader.feedcontentfetcher.model.RssVersion
+import com.github.jonforshort.rssreader.feedcontentfetcher.model.rsstwo.Rss as RssTwo
 
 internal class RssParser {
 

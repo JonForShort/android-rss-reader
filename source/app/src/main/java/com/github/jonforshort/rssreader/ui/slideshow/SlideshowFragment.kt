@@ -21,7 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.newsreader.ui.home
+package com.github.jonforshort.rssreader.ui.slideshow
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -31,22 +31,22 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.github.jonforshort.newsreader.R
+import com.github.jonforshort.rssreader.R
 
-class HomeFragment : Fragment() {
+class SlideshowFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var slideshowViewModel: SlideshowViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
+        slideshowViewModel =
+            ViewModelProvider(this).get(SlideshowViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_slideshow, container, false)
+        val textView: TextView = root.findViewById(R.id.text_slideshow)
+        slideshowViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root

@@ -21,7 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.newsreader.feedcontentfetcher
+package com.github.jonforshort.rssreader.feedcontentfetcher
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

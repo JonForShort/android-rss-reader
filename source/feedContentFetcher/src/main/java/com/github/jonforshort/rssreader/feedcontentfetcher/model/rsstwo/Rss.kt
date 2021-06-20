@@ -21,18 +21,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.newsreader.feedcontentfetcher.model.rsstwo
+package com.github.jonforshort.rssreader.feedcontentfetcher.model.rsstwo
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 
-internal class Channel {
+internal class Rss {
 
-    var title = ""
+    @JacksonXmlProperty(isAttribute = true)
+    val version = "2.0"
 
-    var link = ""
-
-    var description = ""
-
-    @JacksonXmlElementWrapper(useWrapping = false)
-    var item = listOf<Item>()
+    var channel: Channel? = null
 }

@@ -21,19 +21,29 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.newsreader
+package com.github.jonforshort.rssreader.ui.feed
 
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import android.widget.ImageView
+import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
+import com.github.jonforshort.rssreader.feedcontentfetcher.FeedItemEnclosure
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
-    @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
-    }
+data class FeedArticle(
+
+    val title: String = "",
+
+    val link: String = "",
+
+    val description: String = "",
+
+    val publishDate: String = "",
+
+    val enclosure: FeedItemEnclosure? = null
+)
+
+@BindingAdapter("loadEnclosure")
+internal fun loadEnclosure(view: ImageView, enclosure: FeedItemEnclosure) {
+    Glide.with(view.context)
+        .load(enclosure.url)
+        .into(view)
 }
