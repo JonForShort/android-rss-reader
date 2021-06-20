@@ -21,29 +21,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.ui.feed
+package com.github.jonforshort.rssreader.ui.settings
 
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
-import com.bumptech.glide.Glide
-import com.github.jonforshort.rssreader.feedcontentfetcher.FeedItemEnclosure
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.github.jonforshort.rssreader.R
 
-data class FeedArticle(
+class SettingsFragment : Fragment() {
 
-    val title: String = "",
+    private lateinit var viewModel: SettingsViewModel
 
-    val link: String = "",
-
-    val description: String = "",
-
-    val publishDate: String = "",
-
-    val enclosure: FeedItemEnclosure? = null
-)
-
-@BindingAdapter("loadEnclosure")
-internal fun loadEnclosure(view: ImageView, enclosure: FeedItemEnclosure) {
-    Glide.with(view.context)
-        .load(enclosure.url)
-        .into(view)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        viewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_home, container, false)
+        val textView: TextView = root.findViewById(R.id.text_settings)
+        viewModel.text.observe(viewLifecycleOwner, Observer {
+            textView.text = it
+        })
+        return root
+    }
 }

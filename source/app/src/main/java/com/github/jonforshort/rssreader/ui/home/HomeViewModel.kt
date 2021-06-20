@@ -23,14 +23,37 @@
 //
 package com.github.jonforshort.rssreader.ui.home
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContent
+import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContentFetcher
+import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContentFetcher.Result
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.net.URL
 
-class HomeViewModel : ViewModel() {
+internal class HomeViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    private val feedContent = MutableLiveData<FeedContent>()
+
+    private val feedUrls = MutableLiveData<List<URL>>()
+
+    fun refreshFeedContent() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                feedUrls.value?.forEach { url ->
+                    val fetchResult = FeedContentFetcher(url).fetch()
+                    if (fetchResult is Result.Success) {
+                        feedContent.postValue(fetchResult.result)
+                    }
+                }
+            }
+        }
     }
-    val text: LiveData<String> = _text
+
+    fun getFeedContentLiveData() = feedContent
+
+    fun getFeedUrls() = feedUrls
 }
