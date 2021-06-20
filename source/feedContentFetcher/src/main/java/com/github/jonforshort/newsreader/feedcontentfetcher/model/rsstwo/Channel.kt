@@ -21,21 +21,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.newsreader.feedcontentfetcher.model
+package com.github.jonforshort.newsreader.feedcontentfetcher.model.rsstwo
 
-import org.simpleframework.xml.Element
-import org.simpleframework.xml.ElementList
-import org.simpleframework.xml.Path
-import org.simpleframework.xml.Root
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
 
-@Root(name = "rss", strict = false)
-internal data class Feed @JvmOverloads constructor(
+internal class Channel {
 
-    @field:Element(name = "title")
-    @field:Path("channel")
-    var channelTitle: String = "",
+    var title = ""
 
-    @field:ElementList(name = "item", inline = true)
-    @field:Path("channel")
-    var items: List<Item> = mutableListOf()
-)
+    var link = ""
+
+    var description = ""
+
+    @JacksonXmlElementWrapper(useWrapping = false)
+    var item = listOf<Item>()
+}

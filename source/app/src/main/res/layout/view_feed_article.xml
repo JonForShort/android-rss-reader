@@ -7,8 +7,8 @@
     <data>
 
         <variable
-            name="feedItem"
-            type="com.github.jonforshort.newsreader.ui.feed.FeedItem" />
+            name="feedArticle"
+            type="com.github.jonforshort.newsreader.ui.feed.FeedArticle" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -27,14 +27,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/feed_item_enclosure"
-                app:loadEnclosure="@{feedItem.enclosure}" />
+                app:loadEnclosure="@{feedArticle.enclosure}" />
 
             <TextView
                 android:id="@+id/feedItemTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/feed_fragment_card_margin"
-                android:text="@{feedItem.title}"
+                android:text="@{feedArticle.title}"
                 tools:text="Feed Item Title" />
 
             <TextView
@@ -42,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/feed_fragment_card_margin"
-                android:text="@{feedItem.description}"
+                android:text="@{feedArticle.description}"
                 tools:text="Feed Item Description" />
 
             <TextView
@@ -50,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/feed_fragment_card_margin"
-                android:text="@{feedItem.publishDate.toString()}"
+                android:text="@{feedArticle.publishDate.toString()}"
                 tools:text="Publish Date" />
 
         </LinearLayout>

@@ -21,39 +21,36 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.newsreader.feedcontentfetcher.model
+package com.github.jonforshort.newsreader.feedcontentfetcher.model.rsstwo
 
-import org.simpleframework.xml.Attribute
-import org.simpleframework.xml.Element
-import org.simpleframework.xml.Root
+internal class Item {
 
-@Root(name = "item", strict = false)
-internal data class Item @JvmOverloads constructor(
+    var title = ""
 
-    @field:Element(name = "title")
-    var title: String = "",
+    var link = ""
 
-    @field:Element(name = "link")
-    var link: String = "",
+    var description = ""
 
-    @field:Element(name = "description")
-    var description: String = "",
+    var author = ""
 
-    @field:Element(name = "pubDate")
-    var publishDate: String = "",
+    var category = ""
 
-    @field:Element(name = "enclosure")
+    var comments = ""
+
     var enclosure: Enclosure = Enclosure()
-)
+
+    var guid = ""
+
+    var pubDate = ""
+
+    var source = ""
+}
 
 internal data class Enclosure(
 
-    @field:Attribute(name = "url")
     var url: String = "",
 
-    @field:Attribute(name = "type")
     var mimeType: String = "",
 
-    @field:Attribute(name = "length")
-    var lengthInBytes: String = ""
+    var lengthInBytes: String? = null
 )

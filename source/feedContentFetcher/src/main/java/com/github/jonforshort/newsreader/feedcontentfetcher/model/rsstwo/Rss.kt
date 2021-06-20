@@ -21,8 +21,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.newsreader.feedcontentfetcher.util
+package com.github.jonforshort.newsreader.feedcontentfetcher.model.rsstwo
 
-import java.net.URL
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 
-internal fun URL.getBaseUrl() = "${this.protocol}://${this.host}"
+internal class Rss {
+
+    @JacksonXmlProperty(isAttribute = true)
+    val version = "2.0"
+
+    var channel: Channel? = null
+}

@@ -26,9 +26,9 @@ package com.github.jonforshort.newsreader.ui.feed
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
-import com.github.jonforshort.newsreader.feedcontentfetcher.Enclosure
+import com.github.jonforshort.newsreader.feedcontentfetcher.FeedItemEnclosure
 
-internal class FeedItem(
+data class FeedArticle(
 
     val title: String = "",
 
@@ -38,11 +38,11 @@ internal class FeedItem(
 
     val publishDate: String = "",
 
-    val enclosure: Enclosure? = null
+    val enclosure: FeedItemEnclosure? = null
 )
 
 @BindingAdapter("loadEnclosure")
-internal fun loadEnclosure(view: ImageView, enclosure: Enclosure) {
+internal fun loadEnclosure(view: ImageView, enclosure: FeedItemEnclosure) {
     Glide.with(view.context)
         .load(enclosure.url)
         .into(view)

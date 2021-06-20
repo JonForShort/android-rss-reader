@@ -9,7 +9,12 @@ java {
 }
 
 dependencies {
-    implementation("com.squareup.retrofit2:retrofit:${LIBRARY_VERSION_RETROFIT}")
-    implementation("com.squareup.retrofit2:converter-simplexml:${LIBRARY_VERSION_RETROFIT}")
-    implementation("org.simpleframework:simple-xml:${LIBRARY_VERSION_SIMPLE_XML}")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1")
+
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:${LIBRARY_VERSION_OKHTTP}"))
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor")
+
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.12.3")
+    implementation("javax.xml.stream:stax-api:1.0-2")
 }

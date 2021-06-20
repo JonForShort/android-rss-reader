@@ -28,6 +28,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.jonforshort.newsreader.feedcontentfetcher.FeedContent
 import com.github.jonforshort.newsreader.feedcontentfetcher.FeedContentFetcher
+import com.github.jonforshort.newsreader.feedcontentfetcher.FeedContentFetcher.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -35,15 +36,18 @@ import java.net.URL
 
 internal class FeedViewModel : ViewModel() {
 
-    private val feedContent = MutableLiveData<List<FeedContent>>()
+    private val feedContent = MutableLiveData<FeedContent>()
+
     private val feedUrls = MutableLiveData<List<URL>>()
 
     fun refreshFeedContent() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 feedUrls.value?.forEach { url ->
-                    val content = FeedContentFetcher(url).fetch()
-                    feedContent.postValue(content)
+                    val fetchResult = FeedContentFetcher(url).fetch()
+                    if (fetchResult is Result.Success) {
+                        feedContent.postValue(fetchResult.result)
+                    }
                 }
             }
         }

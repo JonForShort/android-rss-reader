@@ -23,42 +23,41 @@
 //
 package com.github.jonforshort.newsreader.feedcontentfetcher
 
-import com.github.jonforshort.newsreader.feedcontentfetcher.model.Feed
-import com.github.jonforshort.newsreader.feedcontentfetcher.util.getBaseUrl
-import retrofit2.Retrofit
-import retrofit2.converter.simplexml.SimpleXmlConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Url
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
 import java.net.URL
 
 class FeedContentFetcher(private val url: URL) {
 
-    suspend fun fetch(): List<FeedContent> {
-        val urlPath = url.path.trimStart('/')
-        val retrofit = Retrofit.Builder()
-            .baseUrl(url.getBaseUrl())
-            .addConverterFactory(SimpleXmlConverterFactory.create())
-            .build()
-        val rssFeed = retrofit.create(RssFeed::class.java)
-        val feedContent = rssFeed.getContent(urlPath)
-        return feedContent.items.map {
-            FeedContent(
-                it.title,
-                it.link,
-                it.description,
-                it.publishDate.toDate(),
-                Enclosure(
-                    it.enclosure.url,
-                    it.enclosure.lengthInBytes.toInt(),
-                    it.enclosure.mimeType
-                )
-            )
+    sealed class Result<out T : Any> {
+        data class Success<out T : Any>(val result: T) : Result<T>()
+        data class InvalidXmlFormatError(val error: String) : Result<Nothing>()
+        data class ServerError(val error: String) : Result<Nothing>()
+    }
+
+    suspend fun fetch(): Result<FeedContent> {
+        val client = OkHttpClient.Builder().build()
+        val request = Request.Builder().url(url).build()
+        return withContext(Dispatchers.IO) {
+            client.newCall(request).execute().use { response ->
+                handleFetchResponse(response)
+            }
         }
     }
-}
 
-internal interface RssFeed {
-
-    @GET
-    suspend fun getContent(@Url url: String): Feed
+    private fun handleFetchResponse(response: Response) =
+        if (response.isSuccessful && response.body != null) {
+            val responseBody = response.body!!.string()
+            try {
+                val parsedRss = RssParser().parse(responseBody)
+                Result.Success(parsedRss)
+            } catch (e: Exception) {
+                Result.InvalidXmlFormatError("failed to parse rss, ${e.message}")
+            }
+        } else {
+            Result.ServerError("failed to fetch rss, ${response.code}")
+        }
 }

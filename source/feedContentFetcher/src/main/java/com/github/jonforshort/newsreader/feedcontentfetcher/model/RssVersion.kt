@@ -21,46 +21,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.newsreader.feedcontentfetcher
+package com.github.jonforshort.newsreader.feedcontentfetcher.model
 
-data class FeedContent(
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 
-    val version: String,
+internal class RssVersion {
 
-    val channel: FeedChannel
-)
-
-data class FeedChannel(
-
-    val title: String,
-
-    val link: String,
-
-    val description: String,
-
-    val items: List<FeedItem>
-)
-
-data class FeedItem(
-
-    val title: String,
-
-    val link: String,
-
-    val description: String,
-
-    val publishDate: String,
-
-    val source: String,
-
-    val enclosure: FeedItemEnclosure? = null
-)
-
-data class FeedItemEnclosure(
-
-    val url: String,
-
-    val lengthInBytes: Int,
-
-    val mimeType: String
-)
+    @JacksonXmlProperty(isAttribute = true)
+    val version = "2.0"
+}

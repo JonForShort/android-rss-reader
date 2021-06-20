@@ -38,15 +38,15 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.github.jonforshort.newsreader.R
-import com.github.jonforshort.newsreader.databinding.ViewFeedItemBinding
-import com.github.jonforshort.newsreader.feedcontentfetcher.FeedContent
+import com.github.jonforshort.newsreader.databinding.ViewFeedArticleBinding
+import com.github.jonforshort.newsreader.feedcontentfetcher.FeedItem
 import java.net.URL
 
 class FeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var feedRecyclerView: RecyclerView
     private lateinit var feedViewModel: FeedViewModel
-    private lateinit var feedContentAdapter: FeedContentAdapter
+    private lateinit var feedArticleAdapter: FeedArticleAdapter
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreateView(
@@ -61,13 +61,13 @@ class FeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         super.onViewCreated(view, savedInstanceState)
 
         feedViewModel = ViewModelProvider(this).get(FeedViewModel::class.java)
-        feedContentAdapter = FeedContentAdapter(requireContext())
+        feedArticleAdapter = FeedArticleAdapter(requireContext())
         feedRecyclerView = view.findViewById(R.id.contentRecyclerView)
-        feedRecyclerView.adapter = feedContentAdapter
+        feedRecyclerView.adapter = feedArticleAdapter
         feedRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         feedViewModel.getFeedContentLiveData().observe(viewLifecycleOwner) {
-            feedContentAdapter.submitList(it)
+            feedArticleAdapter.submitList(it.channel.items)
             swipeRefreshLayout.isRefreshing = false
         }
 
@@ -94,13 +94,19 @@ class FeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 }
 
-private class FeedContentAdapter(private val context: Context) :
-    ListAdapter<FeedContent, FeedContentAdapter.ViewHolder>(FeedContentDiffer()) {
+private class FeedArticleAdapter(private val context: Context) :
+    ListAdapter<FeedItem, FeedArticleAdapter.ViewHolder>(FeedItemDiffer()) {
 
-    class ViewHolder(private val binding: ViewFeedItemBinding, private val context: Context) :
+    class ViewHolder(private val binding: ViewFeedArticleBinding, private val context: Context) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: FeedItem) {
-            binding.feedItem = item
+            binding.feedArticle = FeedArticle(
+                item.title,
+                item.link,
+                item.description,
+                item.publishDate,
+                item.enclosure
+            )
             binding.executePendingBindings()
             binding.root.setOnClickListener {
                 CustomTabsIntent
@@ -113,28 +119,21 @@ private class FeedContentAdapter(private val context: Context) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val feedItemBinding = ViewFeedItemBinding.inflate(layoutInflater, parent, false)
+        val feedItemBinding = ViewFeedArticleBinding.inflate(layoutInflater, parent, false)
         return ViewHolder(feedItemBinding, context)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val feedContent = getItem(position)
-        val feedItem = FeedItem(
-            feedContent.title,
-            feedContent.link,
-            feedContent.description,
-            feedContent.publishDate.toString(),
-            feedContent.enclosure
-        )
+        val feedItem = getItem(position)
         holder.bind(feedItem)
     }
 
-    class FeedContentDiffer : DiffUtil.ItemCallback<FeedContent>() {
+    class FeedItemDiffer : DiffUtil.ItemCallback<FeedItem>() {
 
-        override fun areItemsTheSame(oldItem: FeedContent, newItem: FeedContent) =
+        override fun areItemsTheSame(oldItem: FeedItem, newItem: FeedItem) =
             oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: FeedContent, newItem: FeedContent) =
+        override fun areContentsTheSame(oldItem: FeedItem, newItem: FeedItem) =
             oldItem == newItem
     }
 }
