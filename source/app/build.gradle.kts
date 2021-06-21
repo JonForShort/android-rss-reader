@@ -54,6 +54,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.3.0")
     implementation("com.google.android.material:material:1.3.0")
     implementation("androidx.constraintlayout:constraintlayout:2.0.4")
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:${LIBRARY_VERSION_LIVEDATA}")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${LIBRARY_VERSION_LIVEDATA}")
     implementation("androidx.navigation:navigation-fragment-ktx:${LIBRARY_VERSION_NAVIGATION}")

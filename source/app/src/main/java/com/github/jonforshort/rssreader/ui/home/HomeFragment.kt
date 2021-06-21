@@ -23,31 +23,25 @@
 //
 package com.github.jonforshort.rssreader.ui.home
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.browser.customtabs.CustomTabsIntent
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.github.jonforshort.rssreader.R
-import com.github.jonforshort.rssreader.databinding.ViewFeedArticleBinding
-import com.github.jonforshort.rssreader.feedcontentfetcher.FeedItem
-import java.net.URL
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
-class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
+internal class HomeFragment : Fragment() {
 
-    private lateinit var feedRecyclerView: RecyclerView
+    private lateinit var homeTabs: ViewPager2
+    private lateinit var homeTabsAdapter: HomeTabsAdapter
+    private lateinit var homeTabsLayout: TabLayout
     private lateinit var homeViewModel: HomeViewModel
-    private lateinit var feedArticleAdapter: FeedArticleAdapter
-    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,80 +54,37 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        homeTabs = view.findViewById(R.id.homeTabs)
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        feedArticleAdapter = FeedArticleAdapter(requireContext())
-        feedRecyclerView = view.findViewById(R.id.contentRecyclerView)
-        feedRecyclerView.adapter = feedArticleAdapter
-        feedRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        homeTabsAdapter = HomeTabsAdapter(this, homeViewModel)
+        homeTabs.adapter = homeTabsAdapter
+        homeTabsLayout = view.findViewById(R.id.homeTabsLayout)
 
-        homeViewModel.getFeedContentLiveData().observe(viewLifecycleOwner) {
-            feedArticleAdapter.submitList(it.channel.items)
-            swipeRefreshLayout.isRefreshing = false
-        }
-
-        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout) as SwipeRefreshLayout
-        swipeRefreshLayout.setOnRefreshListener(this)
-
-        homeViewModel.getFeedUrls().value = listOf(
-            URL("https://www.nasa.gov/rss/dyn/breaking_news.rss")
-        )
+        attachTabsToTabLayout()
     }
 
-    override fun onResume() {
-        super.onResume()
-        refreshFeedContent()
-    }
-
-    override fun onRefresh() {
-        refreshFeedContent()
-    }
-
-    private fun refreshFeedContent() {
-        swipeRefreshLayout.isRefreshing = true
-        homeViewModel.refreshFeedContent()
+    private fun attachTabsToTabLayout() {
+        TabLayoutMediator(homeTabsLayout, homeTabs) { tab, position ->
+            tab.text = homeViewModel.tabs[position].text
+            tab.icon = AppCompatResources.getDrawable(
+                requireContext(), homeViewModel.tabs[position].icon
+            )
+        }.attach()
     }
 }
 
-private class FeedArticleAdapter(private val context: Context) :
-    ListAdapter<FeedItem, FeedArticleAdapter.ViewHolder>(FeedItemDiffer()) {
+private class HomeTabsAdapter(
+    fragment: Fragment,
+    val homeViewModel: HomeViewModel
+) : FragmentStateAdapter(fragment) {
 
-    class ViewHolder(private val binding: ViewFeedArticleBinding, private val context: Context) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: FeedItem) {
-            binding.feedArticle = FeedArticle(
-                item.title,
-                item.link,
-                item.description,
-                item.publishDate,
-                item.enclosure
-            )
-            binding.executePendingBindings()
-            binding.root.setOnClickListener {
-                CustomTabsIntent
-                    .Builder()
-                    .build()
-                    .launchUrl(context, Uri.parse(item.link))
-            }
-        }
-    }
+    override fun getItemCount(): Int = homeViewModel.tabs.size
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val feedItemBinding = ViewFeedArticleBinding.inflate(layoutInflater, parent, false)
-        return ViewHolder(feedItemBinding, context)
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val feedItem = getItem(position)
-        holder.bind(feedItem)
-    }
-
-    class FeedItemDiffer : DiffUtil.ItemCallback<FeedItem>() {
-
-        override fun areItemsTheSame(oldItem: FeedItem, newItem: FeedItem) =
-            oldItem == newItem
-
-        override fun areContentsTheSame(oldItem: FeedItem, newItem: FeedItem) =
-            oldItem == newItem
+    override fun createFragment(position: Int): Fragment {
+        val fragment = FeedFragment()
+        fragment.arguments = FeedFragment.encodeFragmentArguments(
+            homeViewModel.tabs[position].feedType
+        )
+        return fragment
     }
 }

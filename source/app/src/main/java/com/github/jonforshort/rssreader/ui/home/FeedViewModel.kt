@@ -23,28 +23,37 @@
 //
 package com.github.jonforshort.rssreader.ui.home
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.github.jonforshort.rssreader.R
+import androidx.lifecycle.viewModelScope
+import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContent
+import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContentFetcher
+import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContentFetcher.Result
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.net.URL
 
-internal class HomeViewModel : ViewModel() {
+internal class FeedViewModel : ViewModel() {
 
-    data class TabInformation(val text: String, val icon: Int, val feedType: FeedFragment.FeedType)
+    private val feedContent = MutableLiveData<FeedContent>()
 
-    val tabs = listOf(
-        TabInformation(
-            "Home",
-            R.drawable.ic_feed_home,
-            FeedFragment.FeedType.HOME
-        ),
-        TabInformation(
-            "Popular",
-            R.drawable.ic_feed_popular,
-            FeedFragment.FeedType.POPULAR
-        ),
-        TabInformation(
-            "Bookmark",
-            R.drawable.ic_feed_bookmark,
-            FeedFragment.FeedType.BOOKMARK
-        )
-    )
+    private val feedUrls = MutableLiveData<List<URL>>()
+
+    fun refreshFeedContent() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                feedUrls.value?.forEach { url ->
+                    val fetchResult = FeedContentFetcher(url).fetch()
+                    if (fetchResult is Result.Success) {
+                        feedContent.postValue(fetchResult.result)
+                    }
+                }
+            }
+        }
+    }
+
+    fun getFeedContentLiveData() = feedContent
+
+    fun getFeedUrls() = feedUrls
 }
