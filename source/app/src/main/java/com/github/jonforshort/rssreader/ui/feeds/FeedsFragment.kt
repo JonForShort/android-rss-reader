@@ -21,8 +21,22 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.ui.feed
+package com.github.jonforshort.rssreader.ui.feeds
 
-import androidx.lifecycle.ViewModel
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.github.jonforshort.rssreader.R
 
-internal class FeedViewModel : ViewModel()
+class FeedsFragment : Fragment() {
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_feeds, container, false)
+    }
+}
