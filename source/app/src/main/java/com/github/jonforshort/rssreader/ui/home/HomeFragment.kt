@@ -33,10 +33,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.github.jonforshort.rssreader.R
+import com.github.jonforshort.rssreader.utils.setActionBarTitle
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-internal class HomeFragment : Fragment() {
+internal class HomeFragment : Fragment(), TabLayout.OnTabSelectedListener {
 
     private lateinit var homeTabs: ViewPager2
     private lateinit var homeTabsAdapter: HomeTabsAdapter
@@ -59,17 +60,29 @@ internal class HomeFragment : Fragment() {
         homeTabsAdapter = HomeTabsAdapter(this, homeViewModel)
         homeTabs.adapter = homeTabsAdapter
         homeTabsLayout = view.findViewById(R.id.homeTabsLayout)
+        homeTabsLayout.addOnTabSelectedListener(this)
 
         attachTabsToTabLayout()
     }
 
     private fun attachTabsToTabLayout() {
         TabLayoutMediator(homeTabsLayout, homeTabs) { tab, position ->
-            tab.text = homeViewModel.tabs[position].text
             tab.icon = AppCompatResources.getDrawable(
                 requireContext(), homeViewModel.tabs[position].icon
             )
         }.attach()
+    }
+
+    override fun onTabSelected(tab: TabLayout.Tab) {
+        val selectedTabPosition = tab.position
+        val actionBarTitle = homeViewModel.tabs[selectedTabPosition].text
+        setActionBarTitle(actionBarTitle)
+    }
+
+    override fun onTabUnselected(tab: TabLayout.Tab) {
+    }
+
+    override fun onTabReselected(tab: TabLayout.Tab) {
     }
 }
 
