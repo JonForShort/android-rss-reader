@@ -14,8 +14,9 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        card_view:cardCornerRadius="4dp">
+        android:layout_margin="@dimen/feed_fragment_card_margin"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="4dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -35,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/feed_fragment_card_margin"
                 android:text="@{feedArticle.title}"
+                android:textAppearance="@android:style/TextAppearance.Medium"
                 tools:text="Feed Item Title" />
 
             <TextView
@@ -42,16 +44,53 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/feed_fragment_card_margin"
+                android:autoLink="all"
                 android:text="@{feedArticle.description}"
+                android:textAppearance="@android:style/TextAppearance.Small"
                 tools:text="Feed Item Description" />
 
-            <TextView
-                android:id="@+id/feedItemPublishDate"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/feed_fragment_card_margin"
-                android:text="@{feedArticle.publishDate.toString()}"
-                tools:text="Publish Date" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/feedItemPublishDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/feed_fragment_card_margin"
+                    android:layout_marginStart="4dp"
+                    android:text="@{feedArticle.publishDate.toString()}"
+                    android:textAppearance="@android:style/TextAppearance.Small"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Publish Date" />
+
+                <ImageView
+                    android:id="@+id/shareImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/feed_fragment_card_margin"
+                    android:layout_marginEnd="16dp"
+                    android:contentDescription="@string/share_icon_description"
+                    android:src="@drawable/ic_share_black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/favoriteImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/feed_fragment_card_margin"
+                    android:contentDescription="@string/favorite_icon_description"
+                    android:src="@drawable/ic_favorite_border_black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/shareImageView"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 
