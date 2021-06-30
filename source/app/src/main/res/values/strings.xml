@@ -13,4 +13,5 @@
     <string name="feed_item_enclosure">Feed Item Enclosure</string>
     <string name="favorite_icon_description">favorite icon</string>
     <string name="share_icon_description">share icon</string>
+    <string name="bookmark_icon_description">bookmark icon</string>
 </resources>

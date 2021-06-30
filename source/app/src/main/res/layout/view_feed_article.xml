@@ -90,6 +90,17 @@
                     app:layout_constraintEnd_toStartOf="@+id/shareImageView"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <ImageView
+                    android:id="@+id/bookmarkImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/feed_fragment_card_margin"
+                    android:contentDescription="@string/bookmark_icon_description"
+                    android:src="@drawable/ic_feed_bookmark"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/favoriteImageView"
+                    app:layout_constraintTop_toTopOf="parent" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
