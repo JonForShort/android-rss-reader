@@ -8,7 +8,7 @@
 
         <variable
             name="feedArticle"
-            type="com.github.jonforshort.rssreader.ui.home.FeedArticle" />
+            type="com.github.jonforshort.rssreader.ui.home.feed.home.FeedArticle" />
     </data>
 
     <androidx.cardview.widget.CardView

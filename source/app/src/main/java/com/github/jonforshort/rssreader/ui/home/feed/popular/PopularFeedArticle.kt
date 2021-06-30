@@ -21,29 +21,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.ui.home
+package com.github.jonforshort.rssreader.ui.home.feed.popular
 
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
-import com.bumptech.glide.Glide
-import com.github.jonforshort.rssreader.feedcontentfetcher.FeedItemEnclosure
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-data class FeedArticle(
+@Entity
+data class PopularFeedArticle(
 
-    val title: String = "",
-
-    val link: String = "",
-
-    val description: String = "",
-
-    val publishDate: String = "",
-
-    val enclosure: FeedItemEnclosure? = null
+    @PrimaryKey val id: Int,
 )
-
-@BindingAdapter("loadEnclosure")
-internal fun loadEnclosure(view: ImageView, enclosure: FeedItemEnclosure) {
-    Glide.with(view.context)
-        .load(enclosure.url)
-        .into(view)
-}

@@ -40,6 +40,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.github.jonforshort.rssreader.R
 import com.github.jonforshort.rssreader.databinding.ViewFeedArticleBinding
 import com.github.jonforshort.rssreader.feedcontentfetcher.FeedItem
+import com.github.jonforshort.rssreader.ui.home.feed.home.FeedArticle
+import com.github.jonforshort.rssreader.ui.home.feed.home.FeedViewModel
 import java.net.URL
 
 internal class FeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
