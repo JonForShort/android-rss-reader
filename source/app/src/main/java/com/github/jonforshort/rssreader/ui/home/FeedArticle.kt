@@ -21,18 +21,29 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.ui.home.feed.bookmark
+package com.github.jonforshort.rssreader.ui.home
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContent
-import com.github.jonforshort.rssreader.ui.home.FeedViewModel
+import android.widget.ImageView
+import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
+import com.github.jonforshort.rssreader.feedcontentfetcher.FeedItemEnclosure
 
-internal class BookMarkFeedViewModel : ViewModel(), FeedViewModel {
+data class FeedArticle(
 
-    private val feedContent = MutableLiveData<FeedContent>()
+    val title: String = "",
 
-    override fun refreshFeedContent() {}
+    val link: String = "",
 
-    override fun getFeedContentLiveData() = feedContent
+    val description: String = "",
+
+    val publishDate: String = "",
+
+    val enclosure: FeedItemEnclosure? = null
+)
+
+@BindingAdapter("loadEnclosure")
+internal fun loadEnclosure(view: ImageView, enclosure: FeedItemEnclosure) {
+    Glide.with(view.context)
+        .load(enclosure.url)
+        .into(view)
 }

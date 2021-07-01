@@ -25,10 +25,14 @@ package com.github.jonforshort.rssreader.ui.home.feed.popular
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContent
+import com.github.jonforshort.rssreader.ui.home.FeedViewModel
 
-internal class PopularFeedViewModel : ViewModel() {
+internal class PopularFeedViewModel : ViewModel(), FeedViewModel {
 
-    private val feedContent = MutableLiveData<PopularFeedArticle>()
+    private val feedContent = MutableLiveData<FeedContent>()
 
-    fun getFeedContentLiveData() = feedContent
+    override fun refreshFeedContent() {}
+
+    override fun getFeedContentLiveData() = feedContent
 }

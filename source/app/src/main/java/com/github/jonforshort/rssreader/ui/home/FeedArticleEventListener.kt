@@ -21,18 +21,22 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.ui.home.feed.bookmark
+package com.github.jonforshort.rssreader.ui.home
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContent
-import com.github.jonforshort.rssreader.ui.home.FeedViewModel
+import android.view.View
+import timber.log.Timber.d
 
-internal class BookMarkFeedViewModel : ViewModel(), FeedViewModel {
+class FeedArticleEventListener {
 
-    private val feedContent = MutableLiveData<FeedContent>()
+    fun onBookmarkClicked(view: View, feedArticle: FeedArticle) {
+        d("onBookmarkClicked")
+    }
 
-    override fun refreshFeedContent() {}
+    fun onFavoriteClicked(view: View, feedArticle: FeedArticle) {
+        d("onFavoriteClicked")
+    }
 
-    override fun getFeedContentLiveData() = feedContent
+    fun onShareClicked(view: View, feedArticle: FeedArticle) {
+        d("onShareClicked")
+    }
 }

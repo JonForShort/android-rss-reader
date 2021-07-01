@@ -7,8 +7,12 @@
     <data>
 
         <variable
+            name="feedArticleEventListener"
+            type="com.github.jonforshort.rssreader.ui.home.FeedArticleEventListener" />
+
+        <variable
             name="feedArticle"
-            type="com.github.jonforshort.rssreader.ui.home.feed.home.FeedArticle" />
+            type="com.github.jonforshort.rssreader.ui.home.FeedArticle" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -74,7 +78,8 @@
                     android:layout_margin="@dimen/feed_fragment_card_margin"
                     android:layout_marginEnd="16dp"
                     android:contentDescription="@string/share_icon_description"
-                    android:src="@drawable/ic_share_black"
+                    android:onClick="@{(view) -> feedArticleEventListener.onShareClicked(view, feedArticle)}"
+                    android:src="@drawable/ic_share"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -85,7 +90,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/feed_fragment_card_margin"
                     android:contentDescription="@string/favorite_icon_description"
-                    android:src="@drawable/ic_favorite_border_black"
+                    android:onClick="@{(view) -> feedArticleEventListener.onFavoriteClicked(view, feedArticle)}"
+                    android:src="@drawable/ic_favorite_border"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/shareImageView"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -96,7 +102,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/feed_fragment_card_margin"
                     android:contentDescription="@string/bookmark_icon_description"
-                    android:src="@drawable/ic_feed_bookmark"
+                    android:onClick="@{(view) -> feedArticleEventListener.onBookmarkClicked(view, feedArticle)}"
+                    android:src="@drawable/ic_bookmark_border"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/favoriteImageView"
                     app:layout_constraintTop_toTopOf="parent" />

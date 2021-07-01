@@ -40,12 +40,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.github.jonforshort.rssreader.R
 import com.github.jonforshort.rssreader.databinding.ViewFeedArticleBinding
 import com.github.jonforshort.rssreader.feedcontentfetcher.FeedItem
-import com.github.jonforshort.rssreader.ui.home.feed.home.FeedArticle
-import com.github.jonforshort.rssreader.ui.home.feed.home.FeedViewModel
-import java.net.URL
+import com.github.jonforshort.rssreader.ui.home.feed.bookmark.BookMarkFeedViewModel
+import com.github.jonforshort.rssreader.ui.home.feed.home.HomeFeedViewModel
+import com.github.jonforshort.rssreader.ui.home.feed.popular.PopularFeedViewModel
 
 internal class FeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
+    private lateinit var feedType: FeedType
     private lateinit var feedViewModel: FeedViewModel
     private lateinit var feedRecyclerView: RecyclerView
     private lateinit var feedArticleAdapter: FeedArticleAdapter
@@ -77,7 +78,14 @@ internal class FeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        feedViewModel = ViewModelProvider(this).get(FeedViewModel::class.java)
+        feedType = FeedType.valueOf(
+            arguments?.getString(ARGUMENT_FEED_TYPE) ?: FeedType.HOME.toString()
+        )
+        feedViewModel = when (feedType) {
+            FeedType.HOME -> ViewModelProvider(this).get(HomeFeedViewModel::class.java)
+            FeedType.POPULAR -> ViewModelProvider(this).get(PopularFeedViewModel::class.java)
+            FeedType.BOOKMARK -> ViewModelProvider(this).get(BookMarkFeedViewModel::class.java)
+        }
         feedArticleAdapter = FeedArticleAdapter(requireContext())
         feedRecyclerView = view.findViewById(R.id.contentRecyclerView)
         feedRecyclerView.adapter = feedArticleAdapter
@@ -90,10 +98,6 @@ internal class FeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout) as SwipeRefreshLayout
         swipeRefreshLayout.setOnRefreshListener(this)
-
-        feedViewModel.getFeedUrls().value = listOf(
-            URL("https://www.nasa.gov/rss/dyn/breaking_news.rss")
-        )
     }
 
     override fun onResume() {
@@ -114,9 +118,15 @@ internal class FeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 private class FeedArticleAdapter(private val context: Context) :
     ListAdapter<FeedItem, FeedArticleAdapter.ViewHolder>(FeedItemDiffer()) {
 
-    class ViewHolder(private val binding: ViewFeedArticleBinding, private val context: Context) :
-        RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(
+        private val binding: ViewFeedArticleBinding,
+        private val context: Context
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        private val feedArticleEventListener = FeedArticleEventListener()
+
         fun bind(item: FeedItem) {
+            binding.feedArticleEventListener = feedArticleEventListener
             binding.feedArticle = FeedArticle(
                 item.title,
                 item.link,

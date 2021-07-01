@@ -49,6 +49,7 @@ android {
 
 dependencies {
 
+    implementation("com.jakewharton.timber:timber:4.7.1")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${LIBRARY_VERSION_KOTLIN}")
     implementation("androidx.core:core-ktx:${LIBRARY_VERSION_CORE_KTX}")
     implementation("androidx.appcompat:appcompat:1.3.0")
