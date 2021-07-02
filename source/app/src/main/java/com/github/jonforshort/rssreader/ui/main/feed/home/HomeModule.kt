@@ -23,28 +23,17 @@
 //
 package com.github.jonforshort.rssreader.ui.main.feed.home
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContent
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
-import javax.inject.Inject
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
-@HiltViewModel
-internal class HomeFeedViewModel @Inject constructor(
-    private val feedContentRepository: FeedContentRepository
-) : ViewModel() {
+@Module
+@InstallIn(SingletonComponent::class)
+internal class HomeModule {
 
-    private val feedContentLiveData = MutableLiveData<FeedContent>()
-
-    fun feedContent() = feedContentLiveData
-
-    fun refreshFeedContent() {
-        viewModelScope.launch {
-            feedContentRepository.fetch().forEach { feedContent ->
-                feedContentLiveData.postValue(feedContent)
-            }
-        }
-    }
+    @Singleton
+    @Provides
+    fun provideFeedContentRepository() = FeedContentRepository()
 }

@@ -23,28 +23,25 @@
 //
 package com.github.jonforshort.rssreader.ui.main.feed.home
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContent
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
-import javax.inject.Inject
+import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContentFetcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.net.URL
 
-@HiltViewModel
-internal class HomeFeedViewModel @Inject constructor(
-    private val feedContentRepository: FeedContentRepository
-) : ViewModel() {
+internal class FeedContentRepository {
 
-    private val feedContentLiveData = MutableLiveData<FeedContent>()
+    private val feedUrls = listOf(
+        URL("https://www.nasa.gov/rss/dyn/breaking_news.rss")
+    )
 
-    fun feedContent() = feedContentLiveData
-
-    fun refreshFeedContent() {
-        viewModelScope.launch {
-            feedContentRepository.fetch().forEach { feedContent ->
-                feedContentLiveData.postValue(feedContent)
+    suspend fun fetch(): List<FeedContent> = withContext(Dispatchers.IO) {
+        feedUrls.map { url ->
+            val fetchResult = FeedContentFetcher(url).fetch()
+            if (fetchResult is FeedContentFetcher.Result.Success) {
+                return@withContext listOf(fetchResult.result)
             }
+            return@withContext emptyList()
         }
     }
 }

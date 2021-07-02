@@ -28,7 +28,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -36,15 +36,18 @@ import com.github.jonforshort.rssreader.R
 import com.github.jonforshort.rssreader.ui.main.FeedArticle
 import com.github.jonforshort.rssreader.ui.main.FeedArticleAdapter
 import com.github.jonforshort.rssreader.ui.main.FeedArticleViewObserver
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber.d
 
+@AndroidEntryPoint
 internal class HomeFeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
-    private lateinit var feedViewModel: HomeFeedViewModel
     private lateinit var feedRecyclerView: RecyclerView
     private lateinit var feedArticleAdapter: FeedArticleAdapter
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+
     private val feedArticleViewObserver = HomeFeedArticleViewObserver()
+    private val feedViewModel: HomeFeedViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,13 +60,12 @@ internal class HomeFeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        feedViewModel = ViewModelProvider(this).get(HomeFeedViewModel::class.java)
         feedArticleAdapter = FeedArticleAdapter(requireContext(), feedArticleViewObserver)
         feedRecyclerView = view.findViewById(R.id.contentRecyclerView)
         feedRecyclerView.adapter = feedArticleAdapter
         feedRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        feedViewModel.getFeedContentLiveData().observe(viewLifecycleOwner) {
+        feedViewModel.feedContent().observe(viewLifecycleOwner) {
             feedArticleAdapter.submitList(it.channel.items)
             swipeRefreshLayout.isRefreshing = false
         }
