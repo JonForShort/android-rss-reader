@@ -21,18 +21,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.ui.home.feed.bookmark
+package com.github.jonforshort.rssreader.ui.main.feed.popular
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContent
-import com.github.jonforshort.rssreader.ui.home.FeedViewModel
+import androidx.fragment.app.Fragment
 
-internal class BookMarkFeedViewModel : ViewModel(), FeedViewModel {
-
-    private val feedContent = MutableLiveData<FeedContent>()
-
-    override fun refreshFeedContent() {}
-
-    override fun getFeedContentLiveData() = feedContent
-}
+internal class PopularFeedFragment : Fragment()

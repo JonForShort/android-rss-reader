@@ -21,14 +21,39 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.ui.home
+package com.github.jonforshort.rssreader.ui.main.feed.home
 
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContent
+import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContentFetcher
+import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContentFetcher.Result
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.net.URL
 
-internal interface FeedViewModel {
+internal class HomeFeedViewModel : ViewModel() {
 
-    fun refreshFeedContent()
+    private val feedContent = MutableLiveData<FeedContent>()
 
-    fun getFeedContentLiveData(): LiveData<FeedContent>
+    private val feedUrls = listOf(
+        URL("https://www.nasa.gov/rss/dyn/breaking_news.rss")
+    )
+
+    fun refreshFeedContent() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                feedUrls.forEach { url ->
+                    val fetchResult = FeedContentFetcher(url).fetch()
+                    if (fetchResult is Result.Success) {
+                        feedContent.postValue(fetchResult.result)
+                    }
+                }
+            }
+        }
+    }
+
+    fun getFeedContentLiveData() = feedContent
 }

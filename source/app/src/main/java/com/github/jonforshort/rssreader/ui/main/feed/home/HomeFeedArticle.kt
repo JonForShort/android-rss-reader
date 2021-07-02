@@ -21,19 +21,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader
+package com.github.jonforshort.rssreader.ui.main.feed.home
 
-import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
-import timber.log.Timber
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-@HiltAndroidApp
-class RssReaderApplication : Application() {
+@Entity
+data class HomeFeedArticle(
 
-    override fun onCreate() {
-        super.onCreate()
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-        }
-    }
-}
+    @PrimaryKey(autoGenerate = true) val id: Int,
+
+    val feedContentJson: String
+)

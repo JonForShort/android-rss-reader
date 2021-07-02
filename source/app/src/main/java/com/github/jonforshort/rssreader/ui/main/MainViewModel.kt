@@ -21,13 +21,30 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.ui.home.feed.bookmark
+package com.github.jonforshort.rssreader.ui.main
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.lifecycle.ViewModel
+import com.github.jonforshort.rssreader.R
 
-@Entity
-data class BookmarkFeedArticle(
+internal class MainViewModel : ViewModel() {
 
-    @PrimaryKey val id: Int,
-)
+    data class TabInformation(
+        val text: String,
+        val icon: Int
+    )
+
+    val tabs = listOf(
+        TabInformation(
+            "Home",
+            R.drawable.ic_feed_home
+        ),
+        TabInformation(
+            "Popular",
+            R.drawable.ic_feed_popular
+        ),
+        TabInformation(
+            "Bookmark",
+            R.drawable.ic_feed_bookmark
+        )
+    )
+}

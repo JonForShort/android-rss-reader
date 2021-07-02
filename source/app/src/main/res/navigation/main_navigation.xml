@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.github.jonforshort.rssreader.ui.home.HomeFragment"
+        android:name="com.github.jonforshort.rssreader.ui.main.MainFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 

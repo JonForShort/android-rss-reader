@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -70,6 +71,9 @@ dependencies {
 
     implementation("androidx.room:room-runtime:${LIBRARY_VERSION_ROOM}")
     kapt("androidx.room:room-compiler:${LIBRARY_VERSION_ROOM}")
+
+    implementation("com.google.dagger:hilt-android:${LIBRARY_VERSION_HILT}")
+    kapt("com.google.dagger:hilt-android-compiler:${LIBRARY_VERSION_HILT}")
 
     implementation(project(":feedContentFetcher"))
     implementation(project(":feedRepo"))

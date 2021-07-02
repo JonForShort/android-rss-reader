@@ -21,18 +21,22 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.ui.home.feed.popular
+package com.github.jonforshort.rssreader.ui.main.feed.popular
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContent
-import com.github.jonforshort.rssreader.ui.home.FeedViewModel
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Query
 
-internal class PopularFeedViewModel : ViewModel(), FeedViewModel {
+@Dao
+internal interface PopularFeedDao {
 
-    private val feedContent = MutableLiveData<FeedContent>()
+    @Query("SELECT * FROM PopularFeedArticle")
+    fun getAll(): List<PopularFeedArticle>
 
-    override fun refreshFeedContent() {}
+    @Insert
+    fun insert(bookmarkFeedArticleArticle: PopularFeedArticle)
 
-    override fun getFeedContentLiveData() = feedContent
+    @Delete
+    fun delete(feedArticleArticle: PopularFeedArticle)
 }

@@ -21,7 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.ui.home.feed.popular
+package com.github.jonforshort.rssreader.ui.main.feed.bookmark
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -29,14 +29,14 @@ import androidx.room.Insert
 import androidx.room.Query
 
 @Dao
-interface PopularFeedDao {
+interface BookMarkFeedDao {
 
-    @Query("SELECT * FROM PopularFeedArticle")
-    fun getAll(): List<PopularFeedArticle>
+    @Query("SELECT * FROM BookmarkFeedArticle")
+    fun getAll(): List<BookmarkFeedArticle>
 
     @Insert
-    fun insert(bookmarkFeedArticleArticle: PopularFeedArticle)
+    fun insert(bookmarkFeedArticle: BookmarkFeedArticle)
 
     @Delete
-    fun delete(feedArticleArticle: PopularFeedArticle)
+    fun delete(feedArticle: BookmarkFeedArticle)
 }

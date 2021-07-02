@@ -21,30 +21,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.ui.home
+package com.github.jonforshort.rssreader.ui.main
 
-import androidx.lifecycle.ViewModel
-import com.github.jonforshort.rssreader.R
+import android.view.View
 
-internal class HomeViewModel : ViewModel() {
+internal interface FeedArticleViewObserver {
 
-    data class TabInformation(val text: String, val icon: Int, val feedType: FeedFragment.FeedType)
+    fun onBookmarkClicked(view: View, feedArticle: FeedArticle)
 
-    val tabs = listOf(
-        TabInformation(
-            "Home",
-            R.drawable.ic_feed_home,
-            FeedFragment.FeedType.HOME
-        ),
-        TabInformation(
-            "Popular",
-            R.drawable.ic_feed_popular,
-            FeedFragment.FeedType.POPULAR
-        ),
-        TabInformation(
-            "Bookmark",
-            R.drawable.ic_feed_bookmark,
-            FeedFragment.FeedType.BOOKMARK
-        )
-    )
+    fun onFavoriteClicked(view: View, feedArticle: FeedArticle)
+
+    fun onShareClicked(view: View, feedArticle: FeedArticle)
 }

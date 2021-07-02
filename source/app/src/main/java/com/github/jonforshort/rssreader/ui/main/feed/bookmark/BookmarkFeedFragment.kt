@@ -21,22 +21,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.ui.home
+package com.github.jonforshort.rssreader.ui.main.feed.bookmark
 
-import android.view.View
-import timber.log.Timber.d
+import androidx.fragment.app.Fragment
 
-class FeedArticleEventListener {
-
-    fun onBookmarkClicked(view: View, feedArticle: FeedArticle) {
-        d("onBookmarkClicked")
-    }
-
-    fun onFavoriteClicked(view: View, feedArticle: FeedArticle) {
-        d("onFavoriteClicked")
-    }
-
-    fun onShareClicked(view: View, feedArticle: FeedArticle) {
-        d("onShareClicked")
-    }
-}
+class BookmarkFeedFragment : Fragment()

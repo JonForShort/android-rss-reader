@@ -21,22 +21,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.ui.home.feed.bookmark
+package com.github.jonforshort.rssreader.ui.main.feed.popular
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContent
 
-@Dao
-interface BookMarkFeedDao {
+internal class PopularFeedViewModel : ViewModel() {
 
-    @Query("SELECT * FROM BookmarkFeedArticle")
-    fun getAll(): List<BookmarkFeedArticle>
+    private val feedContent = MutableLiveData<FeedContent>()
 
-    @Insert
-    fun insert(bookmarkFeedArticle: BookmarkFeedArticle)
+    fun refreshFeedContent() {}
 
-    @Delete
-    fun delete(feedArticle: BookmarkFeedArticle)
+    fun getFeedContentLiveData() = feedContent
 }

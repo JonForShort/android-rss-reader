@@ -21,29 +21,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.ui.home
+package com.github.jonforshort.rssreader.ui.main
 
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
-import com.bumptech.glide.Glide
-import com.github.jonforshort.rssreader.feedcontentfetcher.FeedItemEnclosure
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import com.github.jonforshort.rssreader.ui.main.feed.bookmark.BookMarkFeedDao
+import com.github.jonforshort.rssreader.ui.main.feed.bookmark.BookmarkFeedArticle
 
-data class FeedArticle(
+@Database(entities = [BookmarkFeedArticle::class], version = 1)
+internal abstract class FeedDatabase : RoomDatabase() {
 
-    val title: String = "",
-
-    val link: String = "",
-
-    val description: String = "",
-
-    val publishDate: String = "",
-
-    val enclosure: FeedItemEnclosure? = null
-)
-
-@BindingAdapter("loadEnclosure")
-internal fun loadEnclosure(view: ImageView, enclosure: FeedItemEnclosure) {
-    Glide.with(view.context)
-        .load(enclosure.url)
-        .into(view)
+    abstract fun bookMarkedFeedDao(): BookMarkFeedDao
 }

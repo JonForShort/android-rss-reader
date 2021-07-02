@@ -21,7 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.ui.home
+package com.github.jonforshort.rssreader.ui.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -33,16 +33,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.github.jonforshort.rssreader.R
+import com.github.jonforshort.rssreader.ui.main.feed.bookmark.BookmarkFeedFragment
+import com.github.jonforshort.rssreader.ui.main.feed.home.HomeFeedFragment
+import com.github.jonforshort.rssreader.ui.main.feed.popular.PopularFeedFragment
 import com.github.jonforshort.rssreader.utils.setActionBarTitle
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-internal class HomeFragment : Fragment(), TabLayout.OnTabSelectedListener {
+internal class MainFragment : Fragment(), TabLayout.OnTabSelectedListener {
 
-    private lateinit var homeTabs: ViewPager2
-    private lateinit var homeTabsAdapter: HomeTabsAdapter
-    private lateinit var homeTabsLayout: TabLayout
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var mainTabs: ViewPager2
+    private lateinit var mainTabsAdapter: MainTabsAdapter
+    private lateinit var mainTabsLayout: TabLayout
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,27 +58,27 @@ internal class HomeFragment : Fragment(), TabLayout.OnTabSelectedListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        homeTabs = view.findViewById(R.id.homeTabs)
-        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        homeTabsAdapter = HomeTabsAdapter(this, homeViewModel)
-        homeTabs.adapter = homeTabsAdapter
-        homeTabsLayout = view.findViewById(R.id.homeTabsLayout)
-        homeTabsLayout.addOnTabSelectedListener(this)
+        mainTabs = view.findViewById(R.id.mainTabs)
+        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        mainTabsAdapter = MainTabsAdapter(this, mainViewModel)
+        mainTabs.adapter = mainTabsAdapter
+        mainTabsLayout = view.findViewById(R.id.mainTabsLayout)
+        mainTabsLayout.addOnTabSelectedListener(this)
 
         attachTabsToTabLayout()
     }
 
     private fun attachTabsToTabLayout() {
-        TabLayoutMediator(homeTabsLayout, homeTabs) { tab, position ->
+        TabLayoutMediator(mainTabsLayout, mainTabs) { tab, position ->
             tab.icon = AppCompatResources.getDrawable(
-                requireContext(), homeViewModel.tabs[position].icon
+                requireContext(), mainViewModel.tabs[position].icon
             )
         }.attach()
     }
 
     override fun onTabSelected(tab: TabLayout.Tab) {
         val selectedTabPosition = tab.position
-        val actionBarTitle = homeViewModel.tabs[selectedTabPosition].text
+        val actionBarTitle = mainViewModel.tabs[selectedTabPosition].text
         setActionBarTitle(actionBarTitle)
     }
 
@@ -86,18 +89,18 @@ internal class HomeFragment : Fragment(), TabLayout.OnTabSelectedListener {
     }
 }
 
-private class HomeTabsAdapter(
+private class MainTabsAdapter(
     fragment: Fragment,
-    val homeViewModel: HomeViewModel
+    val mainViewModel: MainViewModel
 ) : FragmentStateAdapter(fragment) {
 
-    override fun getItemCount(): Int = homeViewModel.tabs.size
+    override fun getItemCount(): Int = mainViewModel.tabs.size
 
     override fun createFragment(position: Int): Fragment {
-        val fragment = FeedFragment()
-        fragment.arguments = FeedFragment.encodeFragmentArguments(
-            homeViewModel.tabs[position].feedType
-        )
-        return fragment
+        return when (position) {
+            0 -> HomeFeedFragment()
+            1 -> PopularFeedFragment()
+            else -> BookmarkFeedFragment()
+        }
     }
 }
