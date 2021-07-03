@@ -9,7 +9,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update && \
     apt -y upgrade && \
     apt -y dist-upgrade && \
-    apt install -y wget curl unzip python3-jsonschema openjdk-8-jdk && \
+    apt install -y wget curl unzip python3-jsonschema openjdk-11-jdk && \
     apt autoclean -y && \
     apt remove -y && \
     apt autoremove -y && \
