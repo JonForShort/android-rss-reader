@@ -22,7 +22,7 @@ jobs:
           java-version: 1.8
 
       - name: Run Unit Tests
-        working-directory: ./source
+        working-directory: ./rss-reader
         run: bash ./gradlew clean test
 
   build:
@@ -39,11 +39,11 @@ jobs:
           java-version: 1.8
 
       - name: Build APK
-        working-directory: ./source
+        working-directory: ./rss-reader
         run: bash ./gradlew clean build
 
       - name: Archive APK
         uses: actions/upload-artifact@v2
         with:
           name: app
-          path: source/app/build/outputs/apk/**/*.apk
+          path: rss-reader/app/build/outputs/apk/**/*.apk
