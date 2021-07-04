@@ -21,7 +21,7 @@ repositories {
 }
 
 jsonSchema2Pojo {
-    source = files("${project.rootDir}/feedSource/src/main/json")
+    source = files("${project.rootDir}/feed/localDataSource/src/main/json")
     targetPackage = "com.github.jonforshort.rssreader.feedsource"
 }
 

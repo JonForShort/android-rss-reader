@@ -75,8 +75,9 @@ dependencies {
     implementation("com.google.dagger:hilt-android:${LIBRARY_VERSION_HILT}")
     kapt("com.google.dagger:hilt-android-compiler:${LIBRARY_VERSION_HILT}")
 
-    implementation(project(":feedContentFetcher"))
-    implementation(project(":feedRepo"))
+    implementation(project(":feedContent:fetcher"))
+    implementation(project(":feedContent:repo"))
+    implementation(project(":feed:repo"))
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("androidx.room:room-testing:${LIBRARY_VERSION_ROOM}")
