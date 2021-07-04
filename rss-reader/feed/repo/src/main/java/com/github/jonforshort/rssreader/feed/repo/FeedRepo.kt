@@ -21,7 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.feedrepo
+package com.github.jonforshort.rssreader.feed.repo
 
 import kotlinx.coroutines.flow.Flow
 
@@ -34,11 +34,17 @@ interface FeedRepo {
     fun getByProvider(provider: String): Flow<Feed>
 }
 
-data class Feed(
+internal class FeedRepoImpl : FeedRepo {
 
-    val homePageUrl: String,
+    override fun getAll(): Flow<Feed> {
+        TODO("Not yet implemented")
+    }
 
-    val xmlUrl: String,
+    override fun getByTags(tags: Collection<String>): Flow<Feed> {
+        TODO("Not yet implemented")
+    }
 
-    val iconUrl: String,
-)
+    override fun getByProvider(provider: String): Flow<Feed> {
+        TODO("Not yet implemented")
+    }
+}
