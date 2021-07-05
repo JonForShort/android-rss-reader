@@ -1,0 +1,16 @@
+{
+  "version": "1",
+  "feed": [
+    {
+      "title": "NASA Breaking News",
+      "description": "NASA feed for breaking news.",
+      "homePageUrl": "https://www.nasa.gov",
+      "rssUrl": "https://www.nasa.gov/rss/dyn/breaking_news.rss",
+      "iconUrl": "http://s2.googleusercontent.com/s2/favicons?domain=https://www.nasa.gov/",
+      "tags": [
+        "nasa",
+        "space"
+      ]
+    }
+  ]
+}

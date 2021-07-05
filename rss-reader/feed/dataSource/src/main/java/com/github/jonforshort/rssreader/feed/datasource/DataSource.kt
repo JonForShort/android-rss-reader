@@ -21,17 +21,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.feed.repo
+package com.github.jonforshort.rssreader.feed.datasource
 
-data class Feed(
+interface DataSource {
 
-    val title: String,
-
-    val description: String,
-
-    val homePageUrl: String,
-
-    val rssUrl: String,
-
-    val iconUrl: String,
-)
+    fun get(): List<Feed>
+}

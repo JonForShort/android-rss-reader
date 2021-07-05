@@ -28,6 +28,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -42,7 +43,7 @@ internal class HomeFeedViewModel @Inject constructor(
 
     fun refreshFeedContent() {
         viewModelScope.launch {
-            feedContentRepository.fetch().forEach { feedContent ->
+            feedContentRepository.fetch().collect { feedContent ->
                 feedContentLiveData.postValue(feedContent)
             }
         }

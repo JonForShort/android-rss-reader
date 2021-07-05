@@ -23,25 +23,21 @@
 //
 package com.github.jonforshort.rssreader.ui.main.feed.home
 
-import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContent
+import com.github.jonforshort.rssreader.feed.repo.createFeedRepo
 import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContentFetcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
 import java.net.URL
 
 internal class FeedContentRepository {
 
-    private val feedUrls = listOf(
-        URL("https://www.nasa.gov/rss/dyn/breaking_news.rss")
-    )
-
-    suspend fun fetch(): List<FeedContent> = withContext(Dispatchers.IO) {
-        feedUrls.map { url ->
+    suspend fun fetch() = flow {
+        createFeedRepo().getAll().collect { feed ->
+            val url = URL(feed.rssUrl)
             val fetchResult = FeedContentFetcher(url).fetch()
             if (fetchResult is FeedContentFetcher.Result.Success) {
-                return@withContext listOf(fetchResult.result)
+                emit(fetchResult.result)
             }
-            return@withContext emptyList()
         }
     }
 }

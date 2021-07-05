@@ -21,17 +21,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.feed.repo
+package com.github.jonforshort.rssreader.feed.datasource
 
-data class Feed(
+import com.fasterxml.jackson.databind.json.JsonMapper
 
-    val title: String,
+class LocalDataSource : DataSource {
 
-    val description: String,
-
-    val homePageUrl: String,
-
-    val rssUrl: String,
-
-    val iconUrl: String,
-)
+    override fun get(): List<Feed> {
+        val feedJsonResource = FeedSchema::class.java.getResource("/feed.json")
+        return feedJsonResource?.readText()?.let { feedSchemaJson ->
+            JsonMapper().readValue(feedSchemaJson, FeedSchema::class.java).feed
+        } ?: emptyList()
+    }
+}

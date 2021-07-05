@@ -23,7 +23,10 @@
 //
 package com.github.jonforshort.rssreader.feed.repo
 
+import com.github.jonforshort.rssreader.feed.datasource.LocalDataSource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import com.github.jonforshort.rssreader.feed.datasource.Feed as FeedDTO
 
 interface FeedRepo {
 
@@ -34,17 +37,39 @@ interface FeedRepo {
     fun getByProvider(provider: String): Flow<Feed>
 }
 
-internal class FeedRepoImpl : FeedRepo {
+fun createFeedRepo(): FeedRepo = FeedRepoImpl()
 
-    override fun getAll(): Flow<Feed> {
-        TODO("Not yet implemented")
+private class FeedRepoImpl : FeedRepo {
+
+    override fun getAll(): Flow<Feed> = flow {
+        LocalDataSource().get().let { feedsDTO ->
+            feedsDTO.map {
+                emit(it.toFeed())
+            }
+        }
     }
 
-    override fun getByTags(tags: Collection<String>): Flow<Feed> {
-        TODO("Not yet implemented")
+    override fun getByTags(tags: Collection<String>): Flow<Feed> = flow {
+        LocalDataSource().get().let { feedsDTO ->
+            feedsDTO.map {
+                emit(it.toFeed())
+            }
+        }
     }
 
-    override fun getByProvider(provider: String): Flow<Feed> {
-        TODO("Not yet implemented")
+    override fun getByProvider(provider: String): Flow<Feed> = flow {
+        LocalDataSource().get().let { feedsDTO ->
+            feedsDTO.map {
+                emit(it.toFeed())
+            }
+        }
     }
 }
+
+private fun FeedDTO.toFeed() = Feed(
+    title = this.title,
+    description = this.description,
+    homePageUrl = this.homePageUrl,
+    rssUrl = this.rssUrl,
+    iconUrl = this.iconUrl
+)
