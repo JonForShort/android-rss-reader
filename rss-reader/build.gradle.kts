@@ -1,11 +1,9 @@
 buildscript {
-
     repositories {
         mavenLocal()
         google()
         mavenCentral()
     }
-
     dependencies {
         classpath("com.android.tools.build:gradle:${LIBRARY_VERSION_GRADLE_TOOLS}")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${LIBRARY_VERSION_KOTLIN}")

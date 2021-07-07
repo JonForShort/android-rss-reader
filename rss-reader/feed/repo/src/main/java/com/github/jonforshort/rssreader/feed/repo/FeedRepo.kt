@@ -24,6 +24,7 @@
 package com.github.jonforshort.rssreader.feed.repo
 
 import com.github.jonforshort.rssreader.feed.datasource.LocalDataSource
+import com.github.jonforshort.rssreader.feed.datasource.RemoteDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import com.github.jonforshort.rssreader.feed.datasource.Feed as FeedDTO
@@ -41,26 +42,37 @@ fun createFeedRepo(): FeedRepo = FeedRepoImpl()
 
 private class FeedRepoImpl : FeedRepo {
 
+    private val dataSources = listOf(
+        LocalDataSource(),
+        RemoteDataSource()
+    )
+
     override fun getAll(): Flow<Feed> = flow {
-        LocalDataSource().get().let { feedsDTO ->
-            feedsDTO.map {
-                emit(it.toFeed())
+        dataSources.forEach { dataSource ->
+            dataSource.get().let { feedsDTO ->
+                feedsDTO.map {
+                    emit(it.toFeed())
+                }
             }
         }
     }
 
     override fun getByTags(tags: Collection<String>): Flow<Feed> = flow {
-        LocalDataSource().get().let { feedsDTO ->
-            feedsDTO.map {
-                emit(it.toFeed())
+        dataSources.forEach { dataSource ->
+            dataSource.get().let { feedsDTO ->
+                feedsDTO.map {
+                    emit(it.toFeed())
+                }
             }
         }
     }
 
     override fun getByProvider(provider: String): Flow<Feed> = flow {
-        LocalDataSource().get().let { feedsDTO ->
-            feedsDTO.map {
-                emit(it.toFeed())
+        dataSources.forEach { dataSource ->
+            dataSource.get().let { feedsDTO ->
+                feedsDTO.map {
+                    emit(it.toFeed())
+                }
             }
         }
     }
