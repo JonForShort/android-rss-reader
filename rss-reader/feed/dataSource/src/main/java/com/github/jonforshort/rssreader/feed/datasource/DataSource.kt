@@ -25,5 +25,5 @@ package com.github.jonforshort.rssreader.feed.datasource
 
 interface DataSource {
 
-    fun get(): List<Feed>
+    suspend fun get(): List<Feed>
 }

@@ -27,7 +27,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper
 
 class LocalDataSource : DataSource {
 
-    override fun get(): List<Feed> {
+    override suspend fun get(): List<Feed> {
         val feedJsonResource = FeedSchema::class.java.getResource("/feed.json")
         return feedJsonResource?.readText()?.let { feedSchemaJson ->
             JsonMapper().readValue(feedSchemaJson, FeedSchema::class.java).feed

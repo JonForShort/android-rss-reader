@@ -60,9 +60,10 @@ private class FeedRepoImpl : FeedRepo {
     override fun getByTags(tags: Collection<String>): Flow<Feed> = flow {
         dataSources.forEach { dataSource ->
             dataSource.get().let { feedsDTO ->
-                feedsDTO.map {
-                    emit(it.toFeed())
-                }
+                feedsDTO
+                    .map { it.toFeed() }
+                    .filter { it.tags.any { tag -> tags.contains(tag) } }
+                    .forEach { emit(it) }
             }
         }
     }
@@ -83,5 +84,6 @@ private fun FeedDTO.toFeed() = Feed(
     description = this.description,
     homePageUrl = this.homePageUrl,
     rssUrl = this.rssUrl,
-    iconUrl = this.iconUrl
+    iconUrl = this.iconUrl,
+    tags = this.tags
 )

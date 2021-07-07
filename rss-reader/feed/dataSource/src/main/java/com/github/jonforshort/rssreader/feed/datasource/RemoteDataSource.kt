@@ -23,7 +23,43 @@
 //
 package com.github.jonforshort.rssreader.feed.datasource
 
+import com.fasterxml.jackson.databind.json.JsonMapper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import timber.log.Timber.e
+
 class RemoteDataSource : DataSource {
 
-    override fun get(): List<Feed> = emptyList()
+    companion object {
+        private const val FEED_JSON_URL =
+            "https://raw.githubusercontent.com/JonForShort/android-rss-reader/master/rss-feeds/feed.json"
+    }
+
+    override suspend fun get(): List<Feed> {
+        val feedSchemaJson = fetch()
+        return try {
+            val feedSchema = JsonMapper().readValue(feedSchemaJson, FeedSchema::class.java)
+            return feedSchema.feed
+        } catch (e: Exception) {
+            e(e)
+            emptyList()
+        }
+    }
+
+    private suspend fun fetch(): String? {
+        val client = OkHttpClient.Builder().build()
+        val request = Request.Builder().url(FEED_JSON_URL).build()
+        withContext(Dispatchers.IO) {
+            client.newCall(request).execute().use { response ->
+                if (response.isSuccessful) {
+                    response.body?.toString()?.let {
+                        return@withContext it
+                    }
+                }
+            }
+        }
+        return null
+    }
 }

@@ -34,4 +34,6 @@ data class Feed(
     val rssUrl: String,
 
     val iconUrl: String,
+
+    val tags: List<String>
 )
