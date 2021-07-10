@@ -49,8 +49,8 @@ private class FeedRepoImpl : FeedRepo {
 
     override fun getAll(): Flow<Feed> = flow {
         dataSources.forEach { dataSource ->
-            dataSource.get().let { feedsDTO ->
-                feedsDTO.map {
+            dataSource.get().let { feedChannel ->
+                feedChannel.feed?.map {
                     emit(it.toFeed())
                 }
             }
@@ -59,8 +59,8 @@ private class FeedRepoImpl : FeedRepo {
 
     override fun getByTags(tags: Collection<String>): Flow<Feed> = flow {
         dataSources.forEach { dataSource ->
-            dataSource.get().let { feedsDTO ->
-                feedsDTO
+            dataSource.get().let { feedChannel ->
+                feedChannel.feed
                     .map { it.toFeed() }
                     .filter { it.tags.any { tag -> tags.contains(tag) } }
                     .forEach { emit(it) }
@@ -70,8 +70,8 @@ private class FeedRepoImpl : FeedRepo {
 
     override fun getByProvider(provider: String): Flow<Feed> = flow {
         dataSources.forEach { dataSource ->
-            dataSource.get().let { feedsDTO ->
-                feedsDTO.map {
+            dataSource.get().let { feedChannel ->
+                feedChannel.feed.map {
                     emit(it.toFeed())
                 }
             }

@@ -24,13 +24,14 @@
 package com.github.jonforshort.rssreader.feed.datasource
 
 import com.fasterxml.jackson.databind.json.JsonMapper
+import com.github.jonforshort.rssreader.feed.datasource.DataSource.Companion.EMPTY_FEED_CHANNEL
 
 class LocalDataSource : DataSource {
 
-    override suspend fun get(): List<Feed> {
-        val feedJsonResource = FeedSchema::class.java.getResource("/feed.json")
+    override suspend fun get(): FeedChannel {
+        val feedJsonResource = FeedChannel::class.java.getResource("/feed.json")
         return feedJsonResource?.readText()?.let { feedSchemaJson ->
-            JsonMapper().readValue(feedSchemaJson, FeedSchema::class.java).feed
-        } ?: emptyList()
+            JsonMapper().readValue(feedSchemaJson, FeedChannel::class.java)
+        } ?: EMPTY_FEED_CHANNEL
     }
 }

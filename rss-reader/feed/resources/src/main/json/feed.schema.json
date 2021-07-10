@@ -1,12 +1,13 @@
 {
   "$id": "https://github.com/JonForShort/android-rss-reader/blob/master/source/feedRepo/src/main/json/feed.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Feed",
+  "title": "FeedChannel",
   "type": "object",
   "properties": {
     "feed": {
       "type": "array",
       "items": {
+        "title": "Feed",
         "type": "object",
         "properties": {
           "title": {

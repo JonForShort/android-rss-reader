@@ -25,5 +25,14 @@ package com.github.jonforshort.rssreader.feed.datasource
 
 interface DataSource {
 
-    suspend fun get(): List<Feed>
+    suspend fun get(): FeedChannel
+
+    companion object {
+
+        internal val EMPTY_FEED_CHANNEL = FeedChannel()
+            .apply {
+                version = "0"
+                feed = emptyList()
+            }
+    }
 }

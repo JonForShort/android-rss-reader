@@ -24,6 +24,7 @@
 package com.github.jonforshort.rssreader.feed.datasource
 
 import com.fasterxml.jackson.databind.json.JsonMapper
+import com.github.jonforshort.rssreader.feed.datasource.DataSource.Companion.EMPTY_FEED_CHANNEL
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
@@ -37,14 +38,13 @@ class RemoteDataSource : DataSource {
             "https://raw.githubusercontent.com/JonForShort/android-rss-reader/master/rss-feeds/feed.json"
     }
 
-    override suspend fun get(): List<Feed> {
+    override suspend fun get(): FeedChannel {
         val feedSchemaJson = fetch()
         return try {
-            val feedSchema = JsonMapper().readValue(feedSchemaJson, FeedSchema::class.java)
-            return feedSchema.feed
+            return JsonMapper().readValue(feedSchemaJson, FeedChannel::class.java)
         } catch (e: Exception) {
             e(e)
-            emptyList()
+            EMPTY_FEED_CHANNEL
         }
     }
 
