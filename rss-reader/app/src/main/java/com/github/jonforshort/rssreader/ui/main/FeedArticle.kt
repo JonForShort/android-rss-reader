@@ -23,6 +23,7 @@
 //
 package com.github.jonforshort.rssreader.ui.main
 
+import android.content.res.Resources
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
@@ -42,13 +43,23 @@ internal data class FeedArticle(
 
     val providerName: String,
 
-    val providerIconUrl: String,
+    val providerIconUrl: String
 )
+
+private val FEED_ENCLOSURE_HEIGHT_PX by lazy {
+    (200 * Resources.getSystem().displayMetrics.density).toInt()
+}
+
+private val FEED_ENCLOSURE_WIDTH_PX by lazy {
+    Resources.getSystem().displayMetrics.widthPixels
+}
 
 @BindingAdapter("loadEnclosure")
 internal fun loadEnclosure(view: ImageView, enclosure: FeedItemEnclosure) {
     Glide.with(view.context)
         .load(enclosure.url)
+        .override(FEED_ENCLOSURE_WIDTH_PX, FEED_ENCLOSURE_HEIGHT_PX)
+        .centerCrop()
         .into(view)
 }
 

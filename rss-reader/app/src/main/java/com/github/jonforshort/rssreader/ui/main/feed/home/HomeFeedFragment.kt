@@ -23,6 +23,7 @@
 //
 package com.github.jonforshort.rssreader.ui.main.feed.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -113,5 +114,12 @@ private class HomeFeedArticleViewObserver : FeedArticleViewObserver {
 
     override fun onShareClicked(view: View, feedArticle: FeedArticle) {
         d("onShareClicked")
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_SUBJECT, "Sharing Feed URL")
+            putExtra(Intent.EXTRA_TEXT, feedArticle.link)
+        }
+        val chooserIntent = Intent.createChooser(intent, "Share URL")
+        view.context.startActivity(chooserIntent)
     }
 }
