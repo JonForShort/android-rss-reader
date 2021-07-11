@@ -6,4 +6,5 @@
     <dimen name="nav_header_height">176dp</dimen>
 
     <dimen name="feed_fragment_card_margin">8dp</dimen>
+    <dimen name="feed_fragment_card_feed_icon">16dp</dimen>
 </resources>

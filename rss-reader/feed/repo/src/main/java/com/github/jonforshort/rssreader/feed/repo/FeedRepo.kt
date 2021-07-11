@@ -80,10 +80,11 @@ private class FeedRepoImpl : FeedRepo {
 }
 
 private fun FeedDTO.toFeed() = Feed(
+    providerName = this.provider,
+    providerHomePageUrl = this.homePageUrl,
+    providerIconUrl = this.iconUrl,
     title = this.title,
     description = this.description,
-    homePageUrl = this.homePageUrl,
     rssUrl = this.rssUrl,
-    iconUrl = this.iconUrl,
     tags = this.tags
 )

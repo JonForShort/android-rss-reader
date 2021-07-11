@@ -23,11 +23,15 @@
 //
 package com.github.jonforshort.rssreader.ui.main.feed.home
 
+import com.github.jonforshort.rssreader.feed.repo.Feed
 import com.github.jonforshort.rssreader.feed.repo.createFeedRepo
+import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContent
 import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContentFetcher
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import java.net.URL
+
+internal typealias FeedAndFeedContent = Pair<Feed, FeedContent>
 
 internal class FeedContentRepository {
 
@@ -36,7 +40,8 @@ internal class FeedContentRepository {
             val url = URL(feed.rssUrl)
             val fetchResult = FeedContentFetcher(url).fetch()
             if (fetchResult is FeedContentFetcher.Result.Success) {
-                emit(fetchResult.result)
+                val feedAndFeedContent = FeedAndFeedContent(feed, fetchResult.result)
+                emit(feedAndFeedContent)
             }
         }
     }

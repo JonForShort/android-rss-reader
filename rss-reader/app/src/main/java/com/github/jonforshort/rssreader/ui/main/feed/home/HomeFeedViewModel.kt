@@ -26,7 +26,6 @@ package com.github.jonforshort.rssreader.ui.main.feed.home
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -37,14 +36,14 @@ internal class HomeFeedViewModel @Inject constructor(
     private val feedContentRepository: FeedContentRepository
 ) : ViewModel() {
 
-    private val feedContentLiveData = MutableLiveData<FeedContent>()
+    private val feedContentLiveData = MutableLiveData<FeedAndFeedContent>()
 
     fun feedContent() = feedContentLiveData
 
     fun refreshFeedContent() {
         viewModelScope.launch {
-            feedContentRepository.fetch().collect { feedContent ->
-                feedContentLiveData.postValue(feedContent)
+            feedContentRepository.fetch().collect { feedAndFeedContent ->
+                feedContentLiveData.postValue(feedAndFeedContent)
             }
         }
     }

@@ -25,15 +25,17 @@ package com.github.jonforshort.rssreader.feed.repo
 
 data class Feed(
 
+    val providerName: String,
+
+    val providerHomePageUrl: String,
+
+    val providerIconUrl: String,
+
     val title: String,
 
     val description: String,
 
-    val homePageUrl: String,
-
     val rssUrl: String,
 
-    val iconUrl: String,
-
-    val tags: List<String>
+    val tags: List<String>,
 )

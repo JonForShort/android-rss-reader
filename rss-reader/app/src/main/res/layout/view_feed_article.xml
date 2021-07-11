@@ -23,7 +23,7 @@
         card_view:cardElevation="4dp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
@@ -58,16 +58,38 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
+                <ImageView
+                    android:id="@+id/feedIconImageView"
+                    android:layout_width="@dimen/feed_fragment_card_feed_icon"
+                    android:layout_height="@dimen/feed_fragment_card_feed_icon"
+                    android:layout_marginStart="16dp"
+                    android:contentDescription="@string/feed_icon_description"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:loadFeedIcon="@{feedArticle.providerIconUrl}"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+                <TextView
+                    android:id="@+id/providerName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/feed_fragment_card_margin"
+                    android:text="@{feedArticle.providerName}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/feedIconImageView"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Provider Name" />
+
                 <TextView
                     android:id="@+id/feedItemPublishDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/feed_fragment_card_margin"
-                    android:layout_marginStart="4dp"
                     android:text="@{feedArticle.publishDate.toString()}"
                     android:textAppearance="@android:style/TextAppearance.Small"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/bookmarkImageView"
+                    app:layout_constraintStart_toEndOf="@+id/providerName"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Publish Date" />
 

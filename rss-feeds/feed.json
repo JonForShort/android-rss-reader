@@ -2,6 +2,7 @@
   "version": "1",
   "feed": [
     {
+      "provider": "NASA",
       "title": "NASA Breaking News",
       "description": "NASA feed for breaking news.",
       "homePageUrl": "https://www.nasa.gov",

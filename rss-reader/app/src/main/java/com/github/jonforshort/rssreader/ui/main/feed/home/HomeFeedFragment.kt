@@ -65,8 +65,20 @@ internal class HomeFeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListen
         feedRecyclerView.adapter = feedArticleAdapter
         feedRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        feedViewModel.feedContent().observe(viewLifecycleOwner) {
-            feedArticleAdapter.submitList(it.channel.items)
+        feedViewModel.feedContent().observe(viewLifecycleOwner) { feedAndFeedContent ->
+            val feedContent = feedAndFeedContent.second
+            val feedArticles = feedContent.channel.items.map { feedItem ->
+                FeedArticle(
+                    feedItem.title,
+                    feedItem.link,
+                    feedItem.description,
+                    feedItem.publishDate,
+                    feedItem.enclosure,
+                    feedAndFeedContent.first.providerName,
+                    feedAndFeedContent.first.providerIconUrl
+                )
+            }
+            feedArticleAdapter.submitList(feedArticles)
             swipeRefreshLayout.isRefreshing = false
         }
 

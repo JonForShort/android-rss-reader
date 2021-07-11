@@ -10,6 +10,10 @@
         "title": "Feed",
         "type": "object",
         "properties": {
+          "provider": {
+            "description": "Provider of the RSS feed.",
+            "type": "string"
+          },
           "title": {
             "description": "Title for the RSS feed.",
             "type": "string"

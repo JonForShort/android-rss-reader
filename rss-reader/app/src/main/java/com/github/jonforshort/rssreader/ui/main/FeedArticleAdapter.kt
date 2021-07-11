@@ -32,12 +32,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.github.jonforshort.rssreader.databinding.ViewFeedArticleBinding
-import com.github.jonforshort.rssreader.feedcontentfetcher.FeedItem
 
 internal class FeedArticleAdapter(
     private val context: Context,
     private val viewObserver: FeedArticleViewObserver
-) : ListAdapter<FeedItem, FeedArticleAdapter.ViewHolder>(FeedItemDiffer()) {
+) : ListAdapter<FeedArticle, FeedArticleAdapter.ViewHolder>(FeedArticleDiffer()) {
 
     class ViewHolder(
         private val binding: ViewFeedArticleBinding,
@@ -45,15 +44,9 @@ internal class FeedArticleAdapter(
         private val viewObserver: FeedArticleViewObserver
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: FeedItem) {
+        fun bind(item: FeedArticle) {
             binding.feedArticleEventListener = viewObserver
-            binding.feedArticle = FeedArticle(
-                item.title,
-                item.link,
-                item.description,
-                item.publishDate,
-                item.enclosure
-            )
+            binding.feedArticle = item
             binding.executePendingBindings()
             binding.root.setOnClickListener {
                 CustomTabsIntent
@@ -66,21 +59,21 @@ internal class FeedArticleAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val feedItemBinding = ViewFeedArticleBinding.inflate(layoutInflater, parent, false)
-        return ViewHolder(feedItemBinding, context, viewObserver)
+        val feedArticleBinding = ViewFeedArticleBinding.inflate(layoutInflater, parent, false)
+        return ViewHolder(feedArticleBinding, context, viewObserver)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val feedItem = getItem(position)
-        holder.bind(feedItem)
+        val feedArticle = getItem(position)
+        holder.bind(feedArticle)
     }
 
-    class FeedItemDiffer : DiffUtil.ItemCallback<FeedItem>() {
+    class FeedArticleDiffer : DiffUtil.ItemCallback<FeedArticle>() {
 
-        override fun areItemsTheSame(oldItem: FeedItem, newItem: FeedItem) =
+        override fun areItemsTheSame(oldItem: FeedArticle, newItem: FeedArticle) =
             oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: FeedItem, newItem: FeedItem) =
+        override fun areContentsTheSame(oldItem: FeedArticle, newItem: FeedArticle) =
             oldItem == newItem
     }
 }

@@ -38,12 +38,23 @@ internal data class FeedArticle(
 
     val publishDate: String = "",
 
-    val enclosure: FeedItemEnclosure? = null
+    val enclosure: FeedItemEnclosure? = null,
+
+    val providerName: String,
+
+    val providerIconUrl: String,
 )
 
 @BindingAdapter("loadEnclosure")
 internal fun loadEnclosure(view: ImageView, enclosure: FeedItemEnclosure) {
     Glide.with(view.context)
         .load(enclosure.url)
+        .into(view)
+}
+
+@BindingAdapter("loadFeedIcon")
+internal fun loadFeedIcon(view: ImageView, iconUrl: String) {
+    Glide.with(view.context)
+        .load(iconUrl)
         .into(view)
 }
