@@ -28,6 +28,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -106,10 +107,32 @@ private class HomeFeedArticleViewObserver : FeedArticleViewObserver {
 
     override fun onBookmarkClicked(view: View, feedArticle: FeedArticle) {
         d("onBookmarkClicked")
+        val imageView = view as? ImageView
+        when (imageView?.tag) {
+            R.drawable.ic_bookmark -> {
+                imageView.tag = R.drawable.ic_bookmark_border
+                imageView.setImageResource(R.drawable.ic_bookmark_border)
+            }
+            else -> {
+                imageView?.tag = R.drawable.ic_bookmark
+                imageView?.setImageResource(R.drawable.ic_bookmark)
+            }
+        }
     }
 
     override fun onFavoriteClicked(view: View, feedArticle: FeedArticle) {
         d("onFavoriteClicked")
+        val imageView = view as? ImageView
+        when (imageView?.tag) {
+            R.drawable.ic_favorite -> {
+                imageView.tag = R.drawable.ic_favorite_border
+                imageView.setImageResource(R.drawable.ic_favorite_border)
+            }
+            else -> {
+                imageView?.tag = R.drawable.ic_favorite
+                imageView?.setImageResource(R.drawable.ic_favorite)
+            }
+        }
     }
 
     override fun onShareClicked(view: View, feedArticle: FeedArticle) {
