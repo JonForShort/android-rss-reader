@@ -26,13 +26,21 @@ package com.github.jonforshort.rssreader.ui.main.feed.home
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.jonforshort.rssreader.feed.repo.Feed
+import com.github.jonforshort.rssreader.feed.repo.FeedRepository
+import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContent
+import com.github.jonforshort.rssreader.feedcontentrepo.FeedContentRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.net.URL
 import javax.inject.Inject
+
+internal typealias FeedAndFeedContent = Pair<Feed, FeedContent>
 
 @HiltViewModel
 internal class HomeFeedViewModel @Inject constructor(
+    private val feedRepository: FeedRepository,
     private val feedContentRepository: FeedContentRepository
 ) : ViewModel() {
 
@@ -42,8 +50,11 @@ internal class HomeFeedViewModel @Inject constructor(
 
     fun refreshFeedContent() {
         viewModelScope.launch {
-            feedContentRepository.fetch().collect { feedAndFeedContent ->
-                feedContentLiveData.postValue(feedAndFeedContent)
+            feedRepository.getAll().collect { feed ->
+                val url = URL(feed.rssUrl)
+                feedContentRepository.fetch(url).collect { feedContent ->
+                    feedContentLiveData.postValue(Pair(feed, feedContent))
+                }
             }
         }
     }

@@ -21,13 +21,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.ui.main.feed.bookmark
+package com.github.jonforshort.rssreader.feedcontentrepo.database
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import android.content.Context
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
 
-@Entity
-data class BookmarkFeedArticle(
+@Database(entities = [FeedContentDto::class], version = 1)
+internal abstract class FeedContentDatabase : RoomDatabase() {
 
-    @PrimaryKey val id: Int,
-)
+    abstract fun feedContentDao(): FeedContentDao
+}
+
+internal fun getDatabase(context: Context) = Room
+    .databaseBuilder(context, FeedContentDatabase::class.java, "FeedContentDatabase")
+    .build()

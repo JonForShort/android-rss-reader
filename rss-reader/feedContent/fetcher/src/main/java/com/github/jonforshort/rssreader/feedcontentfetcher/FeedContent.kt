@@ -27,8 +27,14 @@ data class FeedContent(
 
     val version: String,
 
+    val serialized: String,
+
     val channel: FeedChannel
-)
+) {
+    companion object {
+        fun fromSerialized(serialized: String) = RssParser().parse(serialized)
+    }
+}
 
 data class FeedChannel(
 

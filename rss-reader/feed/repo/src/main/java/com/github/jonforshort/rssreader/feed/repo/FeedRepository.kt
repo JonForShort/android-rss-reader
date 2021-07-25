@@ -29,7 +29,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import com.github.jonforshort.rssreader.feed.datasource.Feed as FeedDTO
 
-interface FeedRepo {
+interface FeedRepository {
 
     fun getAll(): Flow<Feed>
 
@@ -38,9 +38,9 @@ interface FeedRepo {
     fun getByProvider(provider: String): Flow<Feed>
 }
 
-fun createFeedRepo(): FeedRepo = FeedRepoImpl()
+fun createFeedRepo(): FeedRepository = FeedRepositoryImpl()
 
-private class FeedRepoImpl : FeedRepo {
+private class FeedRepositoryImpl : FeedRepository {
 
     private val dataSources = listOf(
         LocalDataSource(),

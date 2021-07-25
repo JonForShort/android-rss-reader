@@ -43,6 +43,7 @@ internal class RssParser {
         val channel = rss.channel!!
         return FeedContent(
             version = "2.0",
+            serialized = rssContent,
             channel = FeedChannel(
                 channel.title,
                 channel.link,

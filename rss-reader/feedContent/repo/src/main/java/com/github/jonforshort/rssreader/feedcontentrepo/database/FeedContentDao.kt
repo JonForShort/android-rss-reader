@@ -21,7 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.ui.main.feed.bookmark
+package com.github.jonforshort.rssreader.feedcontentrepo.database
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -29,14 +29,20 @@ import androidx.room.Insert
 import androidx.room.Query
 
 @Dao
-interface BookMarkFeedDao {
+interface FeedContentDao {
 
-    @Query("SELECT * FROM BookmarkFeedArticle")
-    fun getAll(): List<BookmarkFeedArticle>
+    @Query("SELECT * FROM FeedContentDto ORDER BY modification_date DESC")
+    suspend fun getAll(): List<FeedContentDto>
+
+    @Query("SELECT * FROM FeedContentDto WHERE url = :url")
+    suspend fun getByUrl(url: String): FeedContentDto
+
+    @Query("SELECT EXISTS(SELECT * FROM FeedContentDto WHERE url = :url)")
+    suspend fun isFeedContentExists(url: String): Boolean
 
     @Insert
-    fun insert(bookmarkFeedArticle: BookmarkFeedArticle)
+    suspend fun insert(feedContentDto: FeedContentDto)
 
     @Delete
-    fun delete(feedArticle: BookmarkFeedArticle)
+    suspend fun delete(feedContentDto: FeedContentDto)
 }

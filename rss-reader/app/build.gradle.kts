@@ -45,6 +45,7 @@ android {
     packagingOptions {
         exclude("META-INF/NOTICE.md")
         exclude("META-INF/LICENSE.md")
+        exclude("META-INF/*.kotlin_module")
     }
 }
 
@@ -69,9 +70,6 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.12.0")
     kapt("com.github.bumptech.glide:compiler:4.12.0")
 
-    implementation("androidx.room:room-runtime:${LIBRARY_VERSION_ROOM}")
-    kapt("androidx.room:room-compiler:${LIBRARY_VERSION_ROOM}")
-
     implementation("com.google.dagger:hilt-android:${LIBRARY_VERSION_HILT}")
     kapt("com.google.dagger:hilt-android-compiler:${LIBRARY_VERSION_HILT}")
 
@@ -80,7 +78,6 @@ dependencies {
     implementation(project(":feed:repo"))
 
     testImplementation("junit:junit:4.13.2")
-    testImplementation("androidx.room:room-testing:${LIBRARY_VERSION_ROOM}")
 
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")

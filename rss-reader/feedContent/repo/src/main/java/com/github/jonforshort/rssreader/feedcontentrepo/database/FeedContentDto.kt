@@ -21,28 +21,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.ui.main.feed.home
+package com.github.jonforshort.rssreader.feedcontentrepo.database
 
-import com.github.jonforshort.rssreader.feed.repo.Feed
-import com.github.jonforshort.rssreader.feed.repo.createFeedRepo
-import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContent
-import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContentFetcher
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
-import java.net.URL
+import androidx.room.*
+import java.util.*
 
-internal typealias FeedAndFeedContent = Pair<Feed, FeedContent>
+@Entity
+@TypeConverters(DateConverter::class)
+data class FeedContentDto(
 
-internal class FeedContentRepository {
+    @PrimaryKey @ColumnInfo(name = "url") val url: String,
 
-    suspend fun fetch() = flow {
-        createFeedRepo().getAll().collect { feed ->
-            val url = URL(feed.rssUrl)
-            val fetchResult = FeedContentFetcher(url).fetch()
-            if (fetchResult is FeedContentFetcher.Result.Success) {
-                val feedAndFeedContent = FeedAndFeedContent(feed, fetchResult.result)
-                emit(feedAndFeedContent)
-            }
-        }
+    @ColumnInfo(name = "content") val content: String,
+
+    @ColumnInfo(name = "creation_date") val date: Date = Date(System.currentTimeMillis()),
+
+    @ColumnInfo(name = "modification_date") val modificationDate: Date = Date(System.currentTimeMillis())
+)
+
+private class DateConverter {
+
+    @TypeConverter
+    fun toDate(date: Long): Date {
+        return Date(date)
+    }
+
+    @TypeConverter
+    fun fromDate(date: Date): Long {
+        return date.time
     }
 }

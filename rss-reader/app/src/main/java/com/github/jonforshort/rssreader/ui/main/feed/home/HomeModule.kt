@@ -23,9 +23,13 @@
 //
 package com.github.jonforshort.rssreader.ui.main.feed.home
 
+import android.content.Context
+import com.github.jonforshort.rssreader.feed.repo.createFeedRepo
+import com.github.jonforshort.rssreader.feedcontentrepo.FeedContentRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -35,5 +39,9 @@ internal class HomeModule {
 
     @Singleton
     @Provides
-    fun provideFeedContentRepository() = FeedContentRepository()
+    fun provideFeedContentRepository(@ApplicationContext context: Context) = FeedContentRepository(context)
+
+    @Singleton
+    @Provides
+    fun provideFeedRepository() = createFeedRepo()
 }
