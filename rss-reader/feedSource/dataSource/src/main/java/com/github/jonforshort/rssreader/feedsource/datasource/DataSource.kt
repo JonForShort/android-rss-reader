@@ -21,27 +21,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.ui.main.feed.home
+package com.github.jonforshort.rssreader.feedsource.datasource
 
-import android.content.Context
-import com.github.jonforshort.rssreader.feedsource.repo.createFeedRepo
-import com.github.jonforshort.rssreader.feedcontentrepo.FeedContentRepository
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+interface DataSource {
 
-@Module
-@InstallIn(SingletonComponent::class)
-internal class HomeModule {
+    suspend fun get(): FeedChannel
 
-    @Singleton
-    @Provides
-    fun provideFeedContentRepository(@ApplicationContext context: Context) = FeedContentRepository(context)
+    companion object {
 
-    @Singleton
-    @Provides
-    fun provideFeedRepository() = createFeedRepo()
+        internal val EMPTY_FEED_CHANNEL = FeedChannel()
+            .apply {
+                version = "0"
+                feed = emptyList()
+            }
+    }
 }

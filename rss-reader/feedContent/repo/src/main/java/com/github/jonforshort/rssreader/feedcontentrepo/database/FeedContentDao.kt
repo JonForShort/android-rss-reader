@@ -31,18 +31,18 @@ import androidx.room.Query
 @Dao
 interface FeedContentDao {
 
-    @Query("SELECT * FROM FeedContentDto ORDER BY modification_date DESC")
-    suspend fun getAll(): List<FeedContentDto>
+    @Query("SELECT * FROM FeedContentEntity ORDER BY modification_date DESC")
+    suspend fun getAll(): List<FeedContentEntity>
 
-    @Query("SELECT * FROM FeedContentDto WHERE url = :url")
-    suspend fun getByUrl(url: String): FeedContentDto
+    @Query("SELECT * FROM FeedContentEntity WHERE url = :url")
+    suspend fun getByUrl(url: String): FeedContentEntity
 
-    @Query("SELECT EXISTS(SELECT * FROM FeedContentDto WHERE url = :url)")
+    @Query("SELECT EXISTS(SELECT * FROM FeedContentEntity WHERE url = :url)")
     suspend fun isFeedContentExists(url: String): Boolean
 
     @Insert
-    suspend fun insert(feedContentDto: FeedContentDto)
+    suspend fun insert(feedContentEntity: FeedContentEntity)
 
     @Delete
-    suspend fun delete(feedContentDto: FeedContentDto)
+    suspend fun delete(feedContentEntity: FeedContentEntity)
 }

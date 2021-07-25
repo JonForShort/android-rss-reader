@@ -21,27 +21,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.ui.main.feed.home
+package com.github.jonforshort.rssreader.feedcontentrepo.database
 
-import android.content.Context
-import com.github.jonforshort.rssreader.feedsource.repo.createFeedRepo
-import com.github.jonforshort.rssreader.feedcontentrepo.FeedContentRepository
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import androidx.room.*
+import java.util.*
 
-@Module
-@InstallIn(SingletonComponent::class)
-internal class HomeModule {
+@Entity
+@TypeConverters(DateConverter::class)
+data class FeedContentEntity(
 
-    @Singleton
-    @Provides
-    fun provideFeedContentRepository(@ApplicationContext context: Context) = FeedContentRepository(context)
+    @PrimaryKey @ColumnInfo(name = "url") val url: String,
 
-    @Singleton
-    @Provides
-    fun provideFeedRepository() = createFeedRepo()
+    @ColumnInfo(name = "content") val content: String,
+
+    @ColumnInfo(name = "creation_date") val date: Date = Date(System.currentTimeMillis()),
+
+    @ColumnInfo(name = "modification_date") val modificationDate: Date = Date(System.currentTimeMillis())
+)
+
+private class DateConverter {
+
+    @TypeConverter
+    fun toDate(date: Long): Date {
+        return Date(date)
+    }
+
+    @TypeConverter
+    fun fromDate(date: Date): Long {
+        return date.time
+    }
 }

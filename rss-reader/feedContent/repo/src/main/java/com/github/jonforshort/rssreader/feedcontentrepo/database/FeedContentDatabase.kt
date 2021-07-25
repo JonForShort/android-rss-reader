@@ -28,7 +28,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [FeedContentDto::class], version = 1)
+@Database(entities = [FeedContentEntity::class], version = 1)
 internal abstract class FeedContentDatabase : RoomDatabase() {
 
     abstract fun feedContentDao(): FeedContentDao

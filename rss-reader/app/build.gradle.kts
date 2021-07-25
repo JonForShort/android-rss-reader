@@ -75,7 +75,7 @@ dependencies {
 
     implementation(project(":feedContent:fetcher"))
     implementation(project(":feedContent:repo"))
-    implementation(project(":feed:repo"))
+    implementation(project(":feedSource:repo"))
 
     testImplementation("junit:junit:4.13.2")
 

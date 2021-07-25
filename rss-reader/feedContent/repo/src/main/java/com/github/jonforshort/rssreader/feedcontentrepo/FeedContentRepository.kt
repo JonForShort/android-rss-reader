@@ -26,7 +26,8 @@ package com.github.jonforshort.rssreader.feedcontentrepo
 import android.content.Context
 import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContent
 import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContentFetcher
-import com.github.jonforshort.rssreader.feedcontentrepo.database.FeedContentDto
+import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContentFetcher.Result
+import com.github.jonforshort.rssreader.feedcontentrepo.database.FeedContentEntity
 import com.github.jonforshort.rssreader.feedcontentrepo.database.getDatabase
 import kotlinx.coroutines.flow.flow
 import java.net.URL
@@ -40,7 +41,7 @@ class FeedContentRepository(context: Context) {
         val feedContent = if (isFeedContentExists) {
             getFeedContentFromDatabase(url)
         } else {
-            fetchFeedContent(url)
+            downloadFeedContent(url)
         }
         if (feedContent != null) {
             emit(feedContent)
@@ -52,9 +53,9 @@ class FeedContentRepository(context: Context) {
         return FeedContent.fromSerialized(feedContentDto.content)
     }
 
-    private suspend fun fetchFeedContent(url: URL): FeedContent? {
+    private suspend fun downloadFeedContent(url: URL): FeedContent? {
         val fetchResult = FeedContentFetcher(url).fetch()
-        return if (fetchResult is FeedContentFetcher.Result.Success) {
+        return if (fetchResult is Result.Success) {
             persistFeedContent(url, fetchResult.result)
             fetchResult.result
         } else {
@@ -64,7 +65,7 @@ class FeedContentRepository(context: Context) {
 
     private suspend fun persistFeedContent(url: URL, feedContent: FeedContent) {
         val serializedFeedContent = feedContent.serialized
-        val feedContentDto = FeedContentDto(url.toString(), serializedFeedContent)
+        val feedContentDto = FeedContentEntity(url.toString(), serializedFeedContent)
         feedContentDao.insert(feedContentDto)
     }
 }

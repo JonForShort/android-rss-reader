@@ -1,7 +1,7 @@
 include ':app'
-include ':feed:repo'
-include ':feed:resources'
-include ':feed:dataSource'
+include ':feedSource:repo'
+include ':feedSource:resources'
+include ':feedSource:dataSource'
 include ':feedContent:fetcher'
 include ':feedContent:repo'
 

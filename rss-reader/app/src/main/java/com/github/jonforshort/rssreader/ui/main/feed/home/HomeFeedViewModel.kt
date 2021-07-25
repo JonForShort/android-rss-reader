@@ -26,8 +26,8 @@ package com.github.jonforshort.rssreader.ui.main.feed.home
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.github.jonforshort.rssreader.feed.repo.Feed
-import com.github.jonforshort.rssreader.feed.repo.FeedRepository
+import com.github.jonforshort.rssreader.feedsource.repo.Feed
+import com.github.jonforshort.rssreader.feedsource.repo.FeedRepository
 import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContent
 import com.github.jonforshort.rssreader.feedcontentrepo.FeedContentRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
