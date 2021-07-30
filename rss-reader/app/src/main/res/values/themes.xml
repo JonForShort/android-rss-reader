@@ -14,12 +14,17 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.RssReader.NoActionBar">
+    <style name="Theme.RssReader.NoActionBar" parent="Theme.RssReader">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.RssReader.FullScreen" parent="Theme.RssReader.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <style name="Theme.RssReader.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.RssReader.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

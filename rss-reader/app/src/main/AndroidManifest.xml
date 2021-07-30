@@ -7,22 +7,29 @@
     <application
         android:name=".RssReaderApplication"
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RssReader"
         android:usesCleartextTraffic="true">
+
         <activity
             android:name="com.github.jonforshort.rssreader.MainActivity"
+            android:theme="@style/Theme.RssReader.NoActionBar" />
+
+        <activity
+            android:name=".ui.onboard.OnboardActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.RssReader.NoActionBar">
+            android:theme="@style/Theme.RssReader.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

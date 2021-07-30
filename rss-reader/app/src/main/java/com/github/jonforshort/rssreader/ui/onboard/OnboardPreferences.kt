@@ -1,0 +1,52 @@
+//
+// MIT License
+//
+// Copyright (c) 2021
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+//
+package com.github.jonforshort.rssreader.ui.onboard
+
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.preferencesDataStore
+import kotlinx.coroutines.flow.map
+
+internal class OnboardPreferences(private val context: Context) {
+
+    private val hasAlreadyOnboardedKey = booleanPreferencesKey(PREFERENCES_HAS_ALREADY_ONBOARDED)
+
+    companion object {
+        private const val PREFERENCES_HAS_ALREADY_ONBOARDED = "PREFERENCES_HAS_ALREADY_ONBOARDED"
+    }
+
+    suspend fun setHasAlreadyOnboarded(hasAlreadyOnboarded: Boolean) =
+        context.dataStore.edit { preferences ->
+            preferences[hasAlreadyOnboardedKey] = hasAlreadyOnboarded
+        }
+
+    fun hasAlreadyOnboarded() =
+        context.dataStore.data
+            .map { preferences -> preferences[hasAlreadyOnboardedKey] }
+}
+
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "onboardSettings")
