@@ -23,16 +23,42 @@
 //
 package com.github.jonforshort.rssreader.ui.onboard
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import com.github.jonforshort.rssreader.MainActivity
 import com.github.jonforshort.rssreader.R
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
-class OnboardActivity : AppCompatActivity() {
+class OnboardMainFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_onboard)
+    private val viewModel: OnboardViewModel by viewModels()
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_onboard_main, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        view.findViewById<Button>(R.id.buttonGetStarted).setOnClickListener {
+            viewModel.setHasAlreadyOnboarded(true)
+            navigateToMainActivity()
+        }
+
+        if (viewModel.hasAlreadyOnboarded()) {
+            navigateToMainActivity()
+        }
+    }
+
+    private fun navigateToMainActivity() {
+        activity?.let {
+            startActivity(Intent(it, MainActivity::class.java))
+            it.finish()
+        }
     }
 }
