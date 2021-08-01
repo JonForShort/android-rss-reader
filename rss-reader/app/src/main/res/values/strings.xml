@@ -16,4 +16,7 @@
     <string name="share_icon_description">share icon</string>
     <string name="bookmark_icon_description">bookmark icon</string>
     <string name="get_started">Get Started</string>
+    <string name="next">Next</string>
+    <string name="select_feeds_title">What Interests You?</string>
+    <string name="login_title">Log Into Account To Save Feeds</string>
 </resources>

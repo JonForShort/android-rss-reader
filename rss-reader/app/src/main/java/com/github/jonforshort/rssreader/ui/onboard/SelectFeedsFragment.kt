@@ -23,42 +23,32 @@
 //
 package com.github.jonforshort.rssreader.ui.onboard
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import com.github.jonforshort.rssreader.MainActivity
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.github.jonforshort.rssreader.R
 
-class OnboardMainFragment : Fragment() {
-
-    private val viewModel: OnboardViewModel by viewModels()
+class SelectFeedsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_onboard_main, container, false)
+        return inflater.inflate(R.layout.fragment_onboard_select_feeds, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<Button>(R.id.buttonGetStarted).setOnClickListener {
-            viewModel.setHasAlreadyOnboarded(true)
-            navigateToMainActivity()
-        }
-
-        if (viewModel.hasAlreadyOnboarded()) {
-            navigateToMainActivity()
+        view.findViewById<Button>(R.id.buttonNext).setOnClickListener {
+            val navController = Navigation.findNavController(view)
+            navigateToLoginFragment(navController)
         }
     }
 
-    private fun navigateToMainActivity() {
-        activity?.let {
-            startActivity(Intent(it, MainActivity::class.java))
-            it.finish()
-        }
+    private fun navigateToLoginFragment(navController: NavController) {
+        navController.navigate(R.id.action_nav_SelectFeedsFragment_to_LoginFragment);
     }
 }
