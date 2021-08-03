@@ -9,7 +9,7 @@ java {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${LIBRARY_VERSION_KOTLIN_COROUTINES}")
 
     implementation(platform("com.squareup.okhttp3:okhttp-bom:${LIBRARY_VERSION_OKHTTP}"))
     implementation("com.squareup.okhttp3:okhttp")

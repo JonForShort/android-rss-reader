@@ -37,7 +37,7 @@ android {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${LIBRARY_VERSION_KOTLIN_COROUTINES}")
 
     implementation("androidx.room:room-runtime:${LIBRARY_VERSION_ROOM}")
     implementation("androidx.room:room-ktx:${LIBRARY_VERSION_ROOM}")

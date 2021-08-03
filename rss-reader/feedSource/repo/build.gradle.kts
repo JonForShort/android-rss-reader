@@ -35,7 +35,7 @@ android {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${LIBRARY_VERSION_KOTLIN_COROUTINES}")
 
     implementation(project(":feedSource:dataSource"))
 }

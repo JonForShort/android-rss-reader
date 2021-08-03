@@ -36,7 +36,7 @@ android {
 
 dependencies {
     implementation("com.jakewharton.timber:timber:4.7.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${LIBRARY_VERSION_KOTLIN_COROUTINES}")
 
     implementation(platform("com.squareup.okhttp3:okhttp-bom:${LIBRARY_VERSION_OKHTTP}"))
     implementation("com.squareup.okhttp3:okhttp")
