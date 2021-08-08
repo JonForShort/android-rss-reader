@@ -6,12 +6,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion(30)
-    buildToolsVersion("30.0.3")
+    compileSdk = 30
+    buildToolsVersion = "30.0.3"
 
     defaultConfig {
-        minSdkVersion(26)
-        targetSdkVersion(30)
+        minSdk = 26
+        targetSdk = 30
 
         applicationId = "com.github.jonforshort.rssreader"
         versionCode = 1
@@ -56,8 +56,8 @@ dependencies {
     implementation("androidx.core:core-ktx:${LIBRARY_VERSION_CORE_KTX}")
     implementation("androidx.appcompat:appcompat:1.3.1")
     implementation("com.google.android.material:material:1.4.0")
-    implementation("androidx.datastore:datastore-preferences:1.0.0-rc02")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.4")
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.0")
     implementation("androidx.viewpager2:viewpager2:1.0.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:${LIBRARY_VERSION_LIVEDATA}")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${LIBRARY_VERSION_LIVEDATA}")
