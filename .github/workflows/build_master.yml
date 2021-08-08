@@ -19,7 +19,7 @@ jobs:
       - name: Install Dependencies
         uses: actions/setup-java@v1
         with:
-          java-version: 1.8
+          java-version: 1.11
 
       - name: Run Unit Tests
         working-directory: ./rss-reader
@@ -36,7 +36,7 @@ jobs:
       - name: Install Dependencies
         uses: actions/setup-java@v1
         with:
-          java-version: 1.8
+          java-version: 1.11
 
       - name: Build APK
         working-directory: ./rss-reader
