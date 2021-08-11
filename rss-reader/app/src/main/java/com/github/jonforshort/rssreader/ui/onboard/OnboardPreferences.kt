@@ -26,27 +26,22 @@ package com.github.jonforshort.rssreader.ui.onboard
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
-import kotlinx.coroutines.flow.map
 
 internal class OnboardPreferences(private val context: Context) {
 
-    private val hasAlreadyOnboardedKey = booleanPreferencesKey(PREFERENCES_HAS_ALREADY_ONBOARDED)
+    private val sharedPreferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE)
 
     companion object {
-        private const val PREFERENCES_HAS_ALREADY_ONBOARDED = "PREFERENCES_HAS_ALREADY_ONBOARDED"
+        private const val PREFERENCES_KEY = "OnboardPreferences"
+        private const val PREFERENCES_VALUE_HAS_ALREADY_ONBOARDED = "PREFERENCES_HAS_ALREADY_ONBOARDED"
     }
 
-    suspend fun setHasAlreadyOnboarded(hasAlreadyOnboarded: Boolean) =
-        context.dataStore.edit { preferences ->
-            preferences[hasAlreadyOnboardedKey] = hasAlreadyOnboarded
-        }
+    fun setHasAlreadyOnboarded(hasAlreadyOnboarded: Boolean) =
+        sharedPreferences.edit().putBoolean(PREFERENCES_VALUE_HAS_ALREADY_ONBOARDED, hasAlreadyOnboarded).apply()
 
     fun hasAlreadyOnboarded() =
-        context.dataStore.data
-            .map { preferences -> preferences[hasAlreadyOnboardedKey] }
+        sharedPreferences.getBoolean(PREFERENCES_VALUE_HAS_ALREADY_ONBOARDED, false)
 }
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "onboardSettings")

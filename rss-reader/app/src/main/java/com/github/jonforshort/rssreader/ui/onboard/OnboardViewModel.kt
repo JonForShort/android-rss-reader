@@ -25,21 +25,14 @@ package com.github.jonforshort.rssreader.ui.onboard
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 internal class OnboardViewModel(application: Application) : AndroidViewModel(application) {
 
     private val onboardPreferences = OnboardPreferences(application)
 
     fun hasAlreadyOnboarded() =
-        onboardPreferences.hasAlreadyOnboarded().asLiveData().value ?: false
+        onboardPreferences.hasAlreadyOnboarded()
 
-    fun setHasAlreadyOnboarded(hasAlreadyOnboarded: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
-            onboardPreferences.setHasAlreadyOnboarded(hasAlreadyOnboarded)
-        }
-    }
+    fun setHasAlreadyOnboarded(hasAlreadyOnboarded: Boolean) =
+        onboardPreferences.setHasAlreadyOnboarded(hasAlreadyOnboarded)
 }
