@@ -29,11 +29,26 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.github.jonforshort.rssreader.R
+import com.github.jonforshort.rssreader.databinding.ViewFeedSelectionItemBinding
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class SelectFeedsFragment : Fragment() {
+
+    private lateinit var feedSelectionRecyclerView: RecyclerView
+    private lateinit var feedSelectionAdapter: FeedSelectionAdapter
+
+    private val viewModel: SelectFeedsViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_onboard_select_feeds, container, false)
@@ -42,13 +57,59 @@ class SelectFeedsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        feedSelectionAdapter = FeedSelectionAdapter()
+        feedSelectionRecyclerView = view.findViewById(R.id.feedSelectionRecyclerView)
+        feedSelectionRecyclerView.adapter = feedSelectionAdapter
+        feedSelectionRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
         view.findViewById<Button>(R.id.buttonNext).setOnClickListener {
             val navController = Navigation.findNavController(view)
             navigateToLoginFragment(navController)
         }
+
+        viewModel.feedTags.observe(viewLifecycleOwner) {
+            feedSelectionAdapter.submitList(it)
+        }
+
+        lifecycleScope.launch {
+            viewModel.refreshFeedTags()
+        }
     }
 
     private fun navigateToLoginFragment(navController: NavController) {
-        navController.navigate(R.id.action_nav_SelectFeedsFragment_to_LoginFragment);
+        navController.navigate(R.id.action_nav_SelectFeedsFragment_to_LoginFragment)
+    }
+}
+
+internal data class FeedSelectionItem(
+    val tag: String
+)
+
+private class FeedSelectionAdapter : ListAdapter<String, FeedSelectionAdapter.ViewHolder>(FeedTagDiffer()) {
+
+    class ViewHolder(
+        private val binding: ViewFeedSelectionItemBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: FeedSelectionItem) {
+            binding.feedSelectionItem = item
+            binding.executePendingBindings()
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val feedSelectionItemBinding = ViewFeedSelectionItemBinding.inflate(layoutInflater, parent, false)
+        return ViewHolder(feedSelectionItemBinding)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val feedSelectionItem = getItem(position)
+        holder.bind(FeedSelectionItem(feedSelectionItem))
+    }
+
+    private class FeedTagDiffer : DiffUtil.ItemCallback<String>() {
+        override fun areItemsTheSame(oldItem: String, newItem: String) = oldItem == newItem
+
+        override fun areContentsTheSame(oldItem: String, newItem: String) = oldItem == newItem
     }
 }

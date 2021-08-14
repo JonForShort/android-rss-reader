@@ -21,27 +21,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.ui.main.feed.home
+package com.github.jonforshort.rssreader.utils
 
-import android.content.Context
-import com.github.jonforshort.rssreader.feedsource.repo.createFeedRepo
-import com.github.jonforshort.rssreader.feedcontentrepo.FeedContentRepository
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.toList
 
-@Module
-@InstallIn(SingletonComponent::class)
-internal class HomeModule {
-
-    @Singleton
-    @Provides
-    fun provideFeedContentRepository(@ApplicationContext context: Context) = FeedContentRepository(context)
-
-    @Singleton
-    @Provides
-    fun provideFeedRepository() = createFeedRepo()
-}
+suspend fun <T> Flow<Collection<T>>.flatMapToList() = flatMapConcat { it.asFlow() }.toList()

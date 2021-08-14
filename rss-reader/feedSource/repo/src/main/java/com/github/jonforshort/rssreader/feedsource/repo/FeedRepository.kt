@@ -33,6 +33,8 @@ interface FeedRepository {
 
     fun getAll(): Flow<Feed>
 
+    fun getAllTags(): Flow<Collection<String>>
+
     fun getByTags(tags: Collection<String>): Flow<Feed>
 
     fun getByProvider(provider: String): Flow<Feed>
@@ -50,8 +52,18 @@ private class FeedRepositoryImpl : FeedRepository {
     override fun getAll(): Flow<Feed> = flow {
         dataSources.forEach { dataSource ->
             dataSource.get().let { feedChannel ->
-                feedChannel.feed?.map {
-                    emit(it.toFeed())
+                feedChannel.feed?.map { feedDto ->
+                    emit(feedDto.toFeed())
+                }
+            }
+        }
+    }
+
+    override fun getAllTags(): Flow<List<String>> = flow {
+        dataSources.forEach { dataSource ->
+            dataSource.get().let { feedChannel ->
+                feedChannel.feed?.forEach { feedDto ->
+                    emit(feedDto.tags)
                 }
             }
         }
