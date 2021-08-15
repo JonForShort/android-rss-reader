@@ -39,6 +39,8 @@ internal class SelectFeedsViewModel @Inject constructor(
 
     val feedTags = MutableLiveData<List<String>>()
 
+    val desiredFeedTags = mutableSetOf<String>()
+
     suspend fun refreshFeedTags() {
         val feedTags = feedRepository.getAllTags().flatMapToList()
         withContext(Dispatchers.Main) {
