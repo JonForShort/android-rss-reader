@@ -5,6 +5,7 @@
 .DS_Store
 /build
 /captures
+detekt/reports
 .externalNativeBuild
 .cxx
 local.properties

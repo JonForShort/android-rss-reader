@@ -4,7 +4,6 @@ plugins {
     id("kotlin-kapt")
 }
 
-
 android {
     compileSdk = 30
     buildToolsVersion = "30.0.3"

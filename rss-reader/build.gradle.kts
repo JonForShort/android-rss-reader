@@ -1,3 +1,7 @@
+plugins {
+    id("io.gitlab.arturbosch.detekt").version(LIBRARY_VERSION_DETEKT)
+}
+
 buildscript {
     repositories {
         mavenLocal()
@@ -17,8 +21,11 @@ allprojects {
         google()
         mavenCentral()
     }
+
+    apply(from = "$rootDir/gradle/scripts/detekt.gradle")
 }
 
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
+    delete("$rootDir/detekt/reports")
 }
