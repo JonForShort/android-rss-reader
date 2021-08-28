@@ -1,5 +1,5 @@
 {
-  "version": "1",
+  "version": "2",
   "feed": [
     {
       "provider": "NASA",
@@ -11,6 +11,30 @@
       "tags": [
         "nasa",
         "space"
+      ]
+    },
+    {
+      "provider": "LifeHacker",
+      "title": "LifeHacker",
+      "description": "Life Hacker feed for doing everything better.",
+      "homePageUrl": "https://www.lifehacker.com",
+      "rssUrl": "https://www.lifehacker.com/rss",
+      "iconUrl": "http://s2.googleusercontent.com/s2/favicons?domain=https://www.lifehacker.com/",
+      "tags": [
+        "lifehacker",
+        "self-improvement"
+      ]
+    },
+    {
+      "provider": "Yahoo!",
+      "title": "Yahoo! News",
+      "description": "The latest news and headlines from Yahoo! News. Get breaking news stories and in-depth coverage with videos and photos.",
+      "homePageUrl": "https://www.yahoo.com/news",
+      "rssUrl": "https://www.yahoo.com/news/rss",
+      "iconUrl": "http://s2.googleusercontent.com/s2/favicons?domain=https://www.yahoo.com/",
+      "tags": [
+        "yahoo",
+        "news"
       ]
     }
   ]
