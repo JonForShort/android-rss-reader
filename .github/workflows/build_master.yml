@@ -23,7 +23,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: reports
-          path: rss-reader/**/build/reports/tests/test/index.html
+          path: rss-reader/**/build/reports/tests/
 
   build:
     name: Build APK
