@@ -30,7 +30,7 @@ import java.util.*
 private val dateParsers = mutableListOf(
     SimpleDateFormat("EEE, dd MMM yyyy HH:mm Z", Locale.US),
     SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US),
-    SimpleDateFormat("yyyy-dd-MM'T'HH:mm:ss'Z'", Locale.US),
+    SimpleDateFormat("yyyy-dd-MM'T'HH:mm:ssXXX", Locale.US),
 )
 
 internal fun convertDateStringToTimeInMs(date: String): Long {
