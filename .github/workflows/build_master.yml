@@ -16,14 +16,8 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@v1
 
-      - name: Install Dependencies
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.11
-
       - name: Run Unit Tests
-        working-directory: ./rss-reader
-        run: bash ./gradlew clean test
+        run:  ./dev/scripts/env.sh reader_test_cm
 
   build:
     name: Build APK
@@ -33,14 +27,8 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@v1
 
-      - name: Install Dependencies
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.11
-
       - name: Build APK
-        working-directory: ./rss-reader
-        run: bash ./gradlew clean build
+        run:  ./dev/scripts/env.sh reader_build_cm
 
       - name: Archive APK
         uses: actions/upload-artifact@v2
