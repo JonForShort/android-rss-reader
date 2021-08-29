@@ -21,54 +21,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.feedcontentfetcher
+package com.github.jonforshort.rssreader.feedcontentfetcher.utils
 
-data class FeedContent(
+import java.text.ParseException
+import java.text.SimpleDateFormat
 
-    val version: String,
+@SuppressWarnings("SimpleDateFormat")
+private val dateParsers = mutableListOf(
+    SimpleDateFormat("EEE, dd MMM yyyy HH:mm Z"),
+    SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z"),
+    SimpleDateFormat("yyyy-dd-MM'T'HH:mm:ss'Z'"),
+)
 
-    val serialized: String,
-
-    val channel: FeedChannel
-) {
-    companion object {
-        fun fromSerialized(serialized: String) = RssParser().parse(serialized)
+internal fun convertDateStringToTimeInMs(date: String): Long {
+    dateParsers.forEach { parser ->
+        try {
+            return parser.parse(date).time
+        } catch (e: ParseException) {
+            // Try next parser if format cannot be parsed.
+        }
     }
+    throw IllegalArgumentException("unable to parse date string [$date]")
 }
-
-data class FeedChannel(
-
-    val title: String,
-
-    val link: String,
-
-    val description: String,
-
-    val items: List<FeedItem>
-)
-
-data class FeedItem(
-
-    val title: String,
-
-    val link: String,
-
-    val description: String,
-
-    val publishDate: String,
-
-    val publishTimeInMs: Long,
-
-    val source: String,
-
-    val enclosure: FeedItemEnclosure? = null
-)
-
-data class FeedItemEnclosure(
-
-    val url: String,
-
-    val lengthInBytes: Int,
-
-    val mimeType: String
-)

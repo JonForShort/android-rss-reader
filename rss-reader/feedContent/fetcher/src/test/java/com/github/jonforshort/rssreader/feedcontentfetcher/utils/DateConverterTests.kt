@@ -21,54 +21,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.feedcontentfetcher
+package com.github.jonforshort.rssreader.feedcontentfetcher.utils
 
-data class FeedContent(
+import org.junit.Assert.assertEquals
+import org.junit.Test
 
-    val version: String,
+class DateConverterTests {
 
-    val serialized: String,
-
-    val channel: FeedChannel
-) {
-    companion object {
-        fun fromSerialized(serialized: String) = RssParser().parse(serialized)
+    @Test
+    fun testConvertDateStringToTimeInMs_validDateStringInCorrectFormat_expectTimeInMsIsCorrect() {
+        assertEquals(1680941640000, convertDateStringToTimeInMs("2021-08-28T01:14:00Z"))
+        assertEquals(1630087200000, convertDateStringToTimeInMs("Fri, 27 Aug 2021 14:00 EDT"))
     }
 }
-
-data class FeedChannel(
-
-    val title: String,
-
-    val link: String,
-
-    val description: String,
-
-    val items: List<FeedItem>
-)
-
-data class FeedItem(
-
-    val title: String,
-
-    val link: String,
-
-    val description: String,
-
-    val publishDate: String,
-
-    val publishTimeInMs: Long,
-
-    val source: String,
-
-    val enclosure: FeedItemEnclosure? = null
-)
-
-data class FeedItemEnclosure(
-
-    val url: String,
-
-    val lengthInBytes: Int,
-
-    val mimeType: String
-)

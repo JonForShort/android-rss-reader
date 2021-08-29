@@ -39,6 +39,8 @@ internal data class FeedArticle(
 
     val publishDate: String = "",
 
+    val publishTimeInMs: Long = 0,
+
     val enclosure: FeedItemEnclosure? = null,
 
     val providerName: String,

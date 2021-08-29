@@ -40,6 +40,9 @@ import com.github.jonforshort.rssreader.ui.main.FeedArticleAdapter
 import com.github.jonforshort.rssreader.ui.main.FeedArticleViewObserver
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber.d
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
 internal class HomeFeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
@@ -48,8 +51,13 @@ internal class HomeFeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListen
     private lateinit var feedArticleAdapter: FeedArticleAdapter
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
+    private val feedArticles = mutableListOf<FeedArticle>()
     private val feedArticleViewObserver = HomeFeedArticleViewObserver()
     private val feedViewModel: HomeFeedViewModel by viewModels()
+
+    companion object {
+        private val ARTICLE_DATE_STRING_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss MM/dd/yyyy")
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,17 +77,20 @@ internal class HomeFeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListen
 
         feedViewModel.feedContent().observe(viewLifecycleOwner) { feedAndFeedContent ->
             val feedContent = feedAndFeedContent.second
-            val feedArticles = feedContent.channel.items.map { feedItem ->
+            val currentFeedArticles = feedContent.channel.items.map { feedItem ->
                 FeedArticle(
                     feedItem.title,
                     feedItem.link,
                     feedItem.description,
-                    feedItem.publishDate,
+                    convertTimeInMsToDateString(feedItem.publishTimeInMs),
+                    feedItem.publishTimeInMs,
                     feedItem.enclosure,
                     feedAndFeedContent.first.providerName,
                     feedAndFeedContent.first.providerIconUrl
                 )
             }
+            feedArticles.addAll(currentFeedArticles)
+            feedArticles.sortByDescending { it.publishTimeInMs }
             feedArticleAdapter.submitList(feedArticles)
             swipeRefreshLayout.isRefreshing = false
         }
@@ -87,6 +98,11 @@ internal class HomeFeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListen
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout) as SwipeRefreshLayout
         swipeRefreshLayout.setOnRefreshListener(this)
     }
+
+    private fun convertTimeInMsToDateString(timeInMs: Long) =
+        Instant.ofEpochMilli(timeInMs)
+            .atZone(ZoneId.systemDefault())
+            .format(ARTICLE_DATE_STRING_FORMATTER)
 
     override fun onResume() {
         super.onResume()

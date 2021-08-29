@@ -26,6 +26,7 @@ package com.github.jonforshort.rssreader.feedcontentfetcher
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.github.jonforshort.rssreader.feedcontentfetcher.model.RssVersion
+import com.github.jonforshort.rssreader.feedcontentfetcher.utils.convertDateStringToTimeInMs
 import com.github.jonforshort.rssreader.feedcontentfetcher.model.rsstwo.Rss as RssTwo
 
 internal class RssParser {
@@ -54,6 +55,7 @@ internal class RssParser {
                         item.link,
                         item.description,
                         item.pubDate,
+                        convertDateStringToTimeInMs(item.pubDate),
                         item.source,
                         item.enclosure.let {
                             FeedItemEnclosure(

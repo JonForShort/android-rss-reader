@@ -17,4 +17,6 @@ dependencies {
 
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.12.3")
     implementation("javax.xml.stream:stax-api:1.0-2")
+
+    testImplementation("junit:junit:4.13.2")
 }
