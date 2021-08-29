@@ -30,7 +30,7 @@ class DateConverterTests {
 
     @Test
     fun testConvertDateStringToTimeInMs_validDateStringInCorrectFormat_expectTimeInMsIsCorrect() {
-        assertEquals(1680916440000, convertDateStringToTimeInMs("2021-08-28T01:14:00Z"))
+        assertEquals(1630113240000, convertDateStringToTimeInMs("2021-08-28T01:14:00Z"))
         assertEquals(1630087200000, convertDateStringToTimeInMs("Fri, 27 Aug 2021 14:00 EDT"))
     }
 }
