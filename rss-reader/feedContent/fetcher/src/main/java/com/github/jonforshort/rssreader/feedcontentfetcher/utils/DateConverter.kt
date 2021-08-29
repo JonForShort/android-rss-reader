@@ -25,12 +25,12 @@ package com.github.jonforshort.rssreader.feedcontentfetcher.utils
 
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.util.*
 
-@SuppressWarnings("SimpleDateFormat")
 private val dateParsers = mutableListOf(
-    SimpleDateFormat("EEE, dd MMM yyyy HH:mm Z"),
-    SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z"),
-    SimpleDateFormat("yyyy-dd-MM'T'HH:mm:ss'Z'"),
+    SimpleDateFormat("EEE, dd MMM yyyy HH:mm Z", Locale.US),
+    SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US),
+    SimpleDateFormat("yyyy-dd-MM'T'HH:mm:ss'Z'", Locale.US),
 )
 
 internal fun convertDateStringToTimeInMs(date: String): Long {
