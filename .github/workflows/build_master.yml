@@ -19,6 +19,12 @@ jobs:
       - name: Run Unit Tests
         run:  ./dev/scripts/env.sh reader_test_cm
 
+      - name: Archive Test Reports
+        uses: actions/upload-artifact@v2
+        with:
+          name: reports
+          path: rss-reader/**/build/reports/tests/test/index.html
+
   build:
     name: Build APK
     runs-on: ubuntu-latest
