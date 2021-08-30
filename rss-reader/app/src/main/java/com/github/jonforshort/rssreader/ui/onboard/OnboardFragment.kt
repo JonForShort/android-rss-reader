@@ -59,6 +59,6 @@ class OnboardFragment : Fragment() {
     }
 
     private fun navigateToSelectFeedsFragments(navController: NavController) {
-        navController.navigate(R.id.action_nav_OnboardFragment_to_SelectFeedsFragment);
+        navController.navigate(R.id.action_nav_OnboardFragment_to_SelectFeedsFragment)
     }
 }

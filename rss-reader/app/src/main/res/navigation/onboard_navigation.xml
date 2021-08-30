@@ -11,21 +11,12 @@
         tools:layout="@layout/fragment_onboard">
         <action
             android:id="@+id/action_nav_OnboardFragment_to_SelectFeedsFragment"
-            app:destination="@id/nav_onboard_select_feeds" />
+            app:destination="@id/nav_onboard_feed_selection" />
     </fragment>
 
     <fragment
-        android:id="@+id/nav_onboard_select_feeds"
-        android:name="com.github.jonforshort.rssreader.ui.onboard.SelectFeedsFragment"
-        android:label="SelectFeedsFragment">
-        <action
-            android:id="@+id/action_nav_SelectFeedsFragment_to_LoginFragment"
-            app:destination="@id/loginFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.github.jonforshort.rssreader.ui.onboard.LoginFragment"
-        android:label="LoginFragment" />
+        android:id="@+id/nav_onboard_feed_selection"
+        android:name="com.github.jonforshort.rssreader.ui.onboard.FeedSelectionFragment"
+        android:label="FeedSelectionFragment" />
 
 </navigation>

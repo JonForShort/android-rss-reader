@@ -23,32 +23,28 @@
 //
 package com.github.jonforshort.rssreader.ui.onboard
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import com.github.jonforshort.rssreader.MainActivity
-import com.github.jonforshort.rssreader.R
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.github.jonforshort.rssreader.feedsource.repo.FeedRepository
+import com.github.jonforshort.rssreader.utils.flatMapToList
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class LoginFragment : Fragment() {
+@HiltViewModel
+internal class FeedSelectionViewModel @Inject constructor(
+    private val feedRepository: FeedRepository
+) : ViewModel() {
 
-    private val viewModel: OnboardViewModel by viewModels()
+    val feedTags = MutableLiveData<List<String>>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_onboard_login, container, false)
-    }
+    val desiredFeedTags = mutableSetOf<String>()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        view.findViewById<Button>(R.id.buttonNext).setOnClickListener {
-            activity?.let {
-                viewModel.setHasAlreadyOnboarded(true)
-                MainActivity.launchMainActivity(it)
-            }
+    suspend fun refreshFeedTags() {
+        val feedTags = feedRepository.getAllTags().flatMapToList()
+        withContext(Dispatchers.Main) {
+            this@FeedSelectionViewModel.feedTags.value = feedTags
         }
     }
 }

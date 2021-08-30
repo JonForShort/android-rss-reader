@@ -32,24 +32,24 @@ import android.widget.CompoundButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.github.jonforshort.rssreader.MainActivity
 import com.github.jonforshort.rssreader.R
 import com.github.jonforshort.rssreader.databinding.ViewFeedSelectionItemBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SelectFeedsFragment : Fragment(), FeedSelectionChangedListener {
+class FeedSelectionFragment : Fragment(), FeedSelectionChangedListener {
 
     private lateinit var feedSelectionRecyclerView: RecyclerView
     private lateinit var feedSelectionAdapter: FeedSelectionAdapter
 
-    private val viewModel: SelectFeedsViewModel by viewModels()
+    private val feedSelectionViewModel: FeedSelectionViewModel by viewModels()
+    private val onboardViewModel: OnboardViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_onboard_select_feeds, container, false)
@@ -64,29 +64,31 @@ class SelectFeedsFragment : Fragment(), FeedSelectionChangedListener {
         feedSelectionRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         view.findViewById<Button>(R.id.buttonNext).setOnClickListener {
-            val navController = Navigation.findNavController(view)
-            navigateToLoginFragment(navController)
+            navigateToMainActivity()
         }
 
-        viewModel.feedTags.observe(viewLifecycleOwner) {
+        feedSelectionViewModel.feedTags.observe(viewLifecycleOwner) {
             feedSelectionAdapter.submitList(it)
         }
 
         lifecycleScope.launch {
-            viewModel.refreshFeedTags()
+            feedSelectionViewModel.refreshFeedTags()
         }
     }
 
-    private fun navigateToLoginFragment(navController: NavController) {
-        navController.navigate(R.id.action_nav_SelectFeedsFragment_to_LoginFragment)
+    private fun navigateToMainActivity() {
+        activity?.let {
+            onboardViewModel.setHasAlreadyOnboarded(true)
+            MainActivity.launchMainActivity(it)
+        }
     }
 
     override fun onFeedSelectionChanged(button: CompoundButton, isChecked: Boolean) {
         val tag = button.text.toString()
         if (isChecked) {
-            viewModel.desiredFeedTags.add(tag)
+            feedSelectionViewModel.desiredFeedTags.add(tag)
         } else {
-            viewModel.desiredFeedTags.remove(tag)
+            feedSelectionViewModel.desiredFeedTags.remove(tag)
         }
     }
 }
