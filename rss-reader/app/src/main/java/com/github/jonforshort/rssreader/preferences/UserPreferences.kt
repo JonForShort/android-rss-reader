@@ -21,22 +21,28 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.ui.onboard
+package com.github.jonforshort.rssreader.preferences
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringSetPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
+import com.github.jonforshort.rssreader.preferences.UserPreferences.PreferenceKeys.SELECTED_FEED_TAGS
+import kotlinx.coroutines.flow.map
 
-internal class OnboardPreferences(context: Context) {
+internal class UserPreferences(private val context: Context) {
 
-    private val sharedPreferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE)
+    val selectedFeedTagsFlow = context.dataStore.data
+        .map { preferences -> preferences[SELECTED_FEED_TAGS] ?: emptySet() }
 
-    companion object {
-        private const val PREFERENCES_KEY = "OnboardPreferences"
-        private const val PREFERENCES_VALUE_HAS_ALREADY_ONBOARDED = "PREFERENCES_HAS_ALREADY_ONBOARDED"
+    suspend fun setSelectedFeedTags(feedTags: Set<String>) = context.dataStore
+        .edit { preferences -> preferences[SELECTED_FEED_TAGS] = feedTags }
+
+    private object PreferenceKeys {
+        val SELECTED_FEED_TAGS = stringSetPreferencesKey("selected_feed_tags")
     }
-
-    fun setHasAlreadyOnboarded(hasAlreadyOnboarded: Boolean) =
-        sharedPreferences.edit().putBoolean(PREFERENCES_VALUE_HAS_ALREADY_ONBOARDED, hasAlreadyOnboarded).apply()
-
-    fun hasAlreadyOnboarded() =
-        sharedPreferences.getBoolean(PREFERENCES_VALUE_HAS_ALREADY_ONBOARDED, false)
 }
+
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "userPreferences")
