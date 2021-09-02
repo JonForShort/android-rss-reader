@@ -64,6 +64,9 @@ class FeedSelectionFragment : Fragment(), FeedSelectionChangedListener {
         feedSelectionRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         view.findViewById<Button>(R.id.buttonNext).setOnClickListener {
+            lifecycleScope.launch {
+                feedSelectionViewModel.saveSelectedFeedTags()
+            }
             navigateToMainActivity()
         }
 
@@ -86,9 +89,9 @@ class FeedSelectionFragment : Fragment(), FeedSelectionChangedListener {
     override fun onFeedSelectionChanged(button: CompoundButton, isChecked: Boolean) {
         val tag = button.text.toString()
         if (isChecked) {
-            feedSelectionViewModel.desiredFeedTags.add(tag)
+            feedSelectionViewModel.selectedFeedTags.add(tag)
         } else {
-            feedSelectionViewModel.desiredFeedTags.remove(tag)
+            feedSelectionViewModel.selectedFeedTags.remove(tag)
         }
     }
 }

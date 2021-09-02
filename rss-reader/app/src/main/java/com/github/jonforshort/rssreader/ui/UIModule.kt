@@ -26,6 +26,7 @@ package com.github.jonforshort.rssreader.ui
 import android.content.Context
 import com.github.jonforshort.rssreader.feedcontentrepo.FeedContentRepository
 import com.github.jonforshort.rssreader.feedsource.repo.createFeedRepo
+import com.github.jonforshort.rssreader.preferences.UserPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,6 +37,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 internal class UIModule {
+
+    @Singleton
+    @Provides
+    fun provideUserPreferences(@ApplicationContext context: Context) = UserPreferences(context)
 
     @Singleton
     @Provides
