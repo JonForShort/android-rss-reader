@@ -21,13 +21,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.ui.onboard
+package com.github.jonforshort.rssreader.ui.feeds
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.CompoundButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -36,7 +35,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.github.jonforshort.rssreader.MainActivity
 import com.github.jonforshort.rssreader.R
 import com.github.jonforshort.rssreader.databinding.ViewFeedSelectionItemBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,10 +47,9 @@ class FeedSelectionFragment : Fragment(), FeedSelectionChangedListener {
     private lateinit var feedSelectionAdapter: FeedSelectionAdapter
 
     private val feedSelectionViewModel: FeedSelectionViewModel by viewModels()
-    private val onboardViewModel: OnboardViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_onboard_select_feeds, container, false)
+        return inflater.inflate(R.layout.fragment_feed_selection, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -63,13 +60,6 @@ class FeedSelectionFragment : Fragment(), FeedSelectionChangedListener {
         feedSelectionRecyclerView.adapter = feedSelectionAdapter
         feedSelectionRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        view.findViewById<Button>(R.id.buttonNext).setOnClickListener {
-            lifecycleScope.launch {
-                feedSelectionViewModel.saveSelectedFeedTags()
-            }
-            navigateToMainActivity()
-        }
-
         feedSelectionViewModel.feedTags.observe(viewLifecycleOwner) {
             feedSelectionAdapter.submitList(it)
         }
@@ -79,10 +69,11 @@ class FeedSelectionFragment : Fragment(), FeedSelectionChangedListener {
         }
     }
 
-    private fun navigateToMainActivity() {
-        activity?.let {
-            onboardViewModel.setHasAlreadyOnboarded(true)
-            MainActivity.launchMainActivity(it)
+    override fun onDestroy() {
+        super.onDestroy()
+
+        lifecycleScope.launch {
+            feedSelectionViewModel.saveSelectedFeedTags()
         }
     }
 

@@ -16,7 +16,7 @@
 
     <fragment
         android:id="@+id/nav_onboard_feed_selection"
-        android:name="com.github.jonforshort.rssreader.ui.onboard.FeedSelectionFragment"
-        android:label="FeedSelectionFragment" />
+        android:name="com.github.jonforshort.rssreader.ui.onboard.OnboardFeedSelectionFragment"
+        android:label="OnboardFeedSelectionFragment" />
 
 </navigation>

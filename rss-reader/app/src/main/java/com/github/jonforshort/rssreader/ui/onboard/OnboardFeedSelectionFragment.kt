@@ -1,4 +1,3 @@
-//
 // MIT License
 //
 // Copyright (c) 2021
@@ -23,34 +22,31 @@
 //
 package com.github.jonforshort.rssreader.ui.onboard
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.github.jonforshort.rssreader.feedsource.repo.FeedRepository
-import com.github.jonforshort.rssreader.preferences.UserPreferences
-import com.github.jonforshort.rssreader.utils.flatMapToList
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import javax.inject.Inject
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import androidx.fragment.app.Fragment
+import com.github.jonforshort.rssreader.MainActivity
+import com.github.jonforshort.rssreader.R
 
-@HiltViewModel
-internal class FeedSelectionViewModel @Inject constructor(
-    private val feedRepository: FeedRepository,
-    private val userPreferences: UserPreferences
-) : ViewModel() {
+internal class OnboardFeedSelectionFragment : Fragment() {
 
-    val selectedFeedTags = mutableListOf<String>()
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_onboard_select_feeds, container, false)
+    }
 
-    val feedTags = MutableLiveData<List<String>>()
-
-    suspend fun refreshFeedTags() {
-        val feedTags = feedRepository.getAllTags().flatMapToList()
-        withContext(Dispatchers.Main) {
-            this@FeedSelectionViewModel.feedTags.value = feedTags
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.findViewById<Button>(R.id.buttonNext).setOnClickListener {
+            navigateToMainActivity()
         }
     }
 
-    suspend fun saveSelectedFeedTags() {
-        userPreferences.setSelectedFeedTags(selectedFeedTags.toSet())
+    private fun navigateToMainActivity() {
+        activity?.let {
+            MainActivity.launchMainActivity(it)
+        }
     }
 }

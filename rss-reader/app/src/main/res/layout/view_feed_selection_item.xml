@@ -5,11 +5,11 @@
 
         <variable
             name="item"
-            type="com.github.jonforshort.rssreader.ui.onboard.FeedSelectionItem" />
+            type="com.github.jonforshort.rssreader.ui.feeds.FeedSelectionItem" />
 
         <variable
             name="listener"
-            type="com.github.jonforshort.rssreader.ui.onboard.FeedSelectionChangedListener" />
+            type="com.github.jonforshort.rssreader.ui.feeds.FeedSelectionChangedListener" />
 
     </data>
 
