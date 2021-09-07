@@ -29,8 +29,6 @@ import com.github.jonforshort.rssreader.feedsource.repo.FeedRepository
 import com.github.jonforshort.rssreader.preferences.UserPreferences
 import com.github.jonforshort.rssreader.utils.flatMapToList
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,18 +37,21 @@ internal class FeedSelectionViewModel @Inject constructor(
     private val userPreferences: UserPreferences
 ) : ViewModel() {
 
-    val selectedFeedTags = mutableListOf<String>()
+    val feedItems = MutableLiveData<List<Pair<String, Boolean>>>()
 
-    val feedTags = MutableLiveData<List<String>>()
-
-    suspend fun refreshFeedTags() {
+    suspend fun loadFeedItems() {
         val feedTags = feedRepository.getAllTags().flatMapToList()
-        withContext(Dispatchers.Main) {
-            this@FeedSelectionViewModel.feedTags.value = feedTags
+        val selectedFeedTags = userPreferences.getSelectedFeedTags()
+        feedItems.value = feedTags.map { feedTag ->
+            feedTag to selectedFeedTags.contains(feedTag)
         }
     }
 
-    suspend fun saveSelectedFeedTags() {
-        userPreferences.setSelectedFeedTags(selectedFeedTags.toSet())
+    fun onFeedSelectionStateChanged(feedTag: String, isSelected: Boolean) {
+        if (isSelected) {
+            userPreferences.selectFeedTag(feedTag)
+        } else {
+            userPreferences.unselectFeedTag(feedTag)
+        }
     }
 }

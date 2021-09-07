@@ -60,35 +60,28 @@ class FeedSelectionFragment : Fragment(), FeedSelectionChangedListener {
         feedSelectionRecyclerView.adapter = feedSelectionAdapter
         feedSelectionRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        feedSelectionViewModel.feedTags.observe(viewLifecycleOwner) {
-            feedSelectionAdapter.submitList(it)
+        feedSelectionViewModel.feedItems.observe(viewLifecycleOwner) { feedItems ->
+            feedSelectionAdapter.submitList(
+                feedItems.map { FeedSelectionItem(it.first, it.second) }
+            )
         }
 
         lifecycleScope.launch {
-            feedSelectionViewModel.refreshFeedTags()
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        lifecycleScope.launch {
-            feedSelectionViewModel.saveSelectedFeedTags()
+            feedSelectionViewModel.loadFeedItems()
         }
     }
 
     override fun onFeedSelectionChanged(button: CompoundButton, isChecked: Boolean) {
-        val tag = button.text.toString()
-        if (isChecked) {
-            feedSelectionViewModel.selectedFeedTags.add(tag)
-        } else {
-            feedSelectionViewModel.selectedFeedTags.remove(tag)
+        val tag = button.text.toString().lowercase()
+        lifecycleScope.launch {
+            feedSelectionViewModel.onFeedSelectionStateChanged(tag, isChecked)
         }
     }
 }
 
 internal data class FeedSelectionItem(
-    val tag: String
+    val tag: String,
+    val isSelected: Boolean
 )
 
 interface FeedSelectionChangedListener {
@@ -97,7 +90,7 @@ interface FeedSelectionChangedListener {
 
 private class FeedSelectionAdapter(
     private val listener: FeedSelectionChangedListener
-) : ListAdapter<String, FeedSelectionAdapter.ViewHolder>(FeedTagDiffer()) {
+) : ListAdapter<FeedSelectionItem, FeedSelectionAdapter.ViewHolder>(FeedTagDiffer()) {
 
     class ViewHolder(
         private val binding: ViewFeedSelectionItemBinding
@@ -117,13 +110,13 @@ private class FeedSelectionAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val feedSelectionItem = getItem(position)
-        holder.bind(FeedSelectionItem(feedSelectionItem), listener)
+        holder.bind(feedSelectionItem, listener)
     }
 
-    private class FeedTagDiffer : DiffUtil.ItemCallback<String>() {
+    private class FeedTagDiffer : DiffUtil.ItemCallback<FeedSelectionItem>() {
 
-        override fun areItemsTheSame(oldItem: String, newItem: String) = oldItem == newItem
+        override fun areItemsTheSame(oldItem: FeedSelectionItem, newItem: FeedSelectionItem) = oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: String, newItem: String) = oldItem == newItem
+        override fun areContentsTheSame(oldItem: FeedSelectionItem, newItem: FeedSelectionItem) = oldItem == newItem
     }
 }

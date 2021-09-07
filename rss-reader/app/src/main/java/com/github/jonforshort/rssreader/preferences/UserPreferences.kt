@@ -24,25 +24,19 @@
 package com.github.jonforshort.rssreader.preferences
 
 import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringSetPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
-import com.github.jonforshort.rssreader.preferences.UserPreferences.PreferenceKeys.SELECTED_FEED_TAGS
-import kotlinx.coroutines.flow.map
+import android.content.Context.MODE_PRIVATE
 
-internal class UserPreferences(private val context: Context) {
+internal class UserPreferences(context: Context) {
 
-    val selectedFeedTagsFlow = context.dataStore.data
-        .map { preferences -> preferences[SELECTED_FEED_TAGS] ?: emptySet() }
+    private val selectedFeedTagPreferences = context.getSharedPreferences(SELECTED_FEED_TAGS_PREFERENCES, MODE_PRIVATE)
 
-    suspend fun setSelectedFeedTags(feedTags: Set<String>) = context.dataStore
-        .edit { preferences -> preferences[SELECTED_FEED_TAGS] = feedTags }
+    fun getSelectedFeedTags() = selectedFeedTagPreferences.all.filterValues { it == true }.keys
 
-    private object PreferenceKeys {
-        val SELECTED_FEED_TAGS = stringSetPreferencesKey("selected_feed_tags")
+    fun selectFeedTag(feedTag: String) = selectedFeedTagPreferences.edit().putBoolean(feedTag, true).apply()
+
+    fun unselectFeedTag(feedTag: String) = selectedFeedTagPreferences.edit().putBoolean(feedTag, false).apply()
+
+    companion object {
+        private const val SELECTED_FEED_TAGS_PREFERENCES = "selectedFeedTagsPreferences"
     }
 }
-
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "userPreferences")
