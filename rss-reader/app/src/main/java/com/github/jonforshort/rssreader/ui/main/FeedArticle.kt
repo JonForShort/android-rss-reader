@@ -24,6 +24,7 @@
 package com.github.jonforshort.rssreader.ui.main
 
 import android.content.res.Resources
+import android.webkit.WebView
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
@@ -70,4 +71,10 @@ internal fun loadFeedIcon(view: ImageView, iconUrl: String) {
     Glide.with(view.context)
         .load(iconUrl)
         .into(view)
+}
+
+@BindingAdapter("loadHtml")
+internal fun loadHtml(view: WebView, html: String) {
+    view.loadData(html, "text/html; charset=UTF-8", null)
+    view.settings.loadWithOverviewMode = true
 }
