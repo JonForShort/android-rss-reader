@@ -17,6 +17,15 @@
     <fragment
         android:id="@+id/nav_onboard_feed_selection"
         android:name="com.github.jonforshort.rssreader.ui.onboard.OnboardFeedSelectionFragment"
-        android:label="OnboardFeedSelectionFragment" />
+        android:label="OnboardFeedSelectionFragment">
+        <action
+            android:id="@+id/action_nav_OnboardFeedSelectionFragment_to_OnboardCompletedFragment"
+            app:destination="@id/nav_onboard_feed_completed" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_onboard_feed_completed"
+        android:name="com.github.jonforshort.rssreader.ui.onboard.OnboardCompletedFragment"
+        android:label="OnboardCompletedFragment" />
 
 </navigation>

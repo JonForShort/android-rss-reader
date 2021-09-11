@@ -1,3 +1,4 @@
+//
 // MIT License
 //
 // Copyright (c) 2021
@@ -26,27 +27,28 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
+import androidx.fragment.app.viewModels
+import com.github.jonforshort.rssreader.MainActivity
 import com.github.jonforshort.rssreader.R
 
-internal class OnboardFeedSelectionFragment : Fragment() {
+class OnboardCompletedFragment : Fragment() {
+
+    private val viewModel: OnboardViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_onboard_select_feeds, container, false)
+        return inflater.inflate(R.layout.fragment_onboard_completed, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<Button>(R.id.buttonNext).setOnClickListener {
-            val navController = Navigation.findNavController(view)
-            navigateToOnboardCompletedFragment(navController)
-        }
+        viewModel.setHasAlreadyOnboarded(true)
+        navigateToMainActivity()
     }
 
-    private fun navigateToOnboardCompletedFragment(navController: NavController) {
-        navController.navigate(R.id.action_nav_OnboardFeedSelectionFragment_to_OnboardCompletedFragment)
+    private fun navigateToMainActivity() {
+        activity?.let {
+            MainActivity.launchMainActivity(it)
+        }
     }
 }
