@@ -26,10 +26,11 @@ package com.github.jonforshort.rssreader.ui.main.feed.home
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.github.jonforshort.rssreader.feedsource.repo.Feed
-import com.github.jonforshort.rssreader.feedsource.repo.FeedRepository
 import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContent
 import com.github.jonforshort.rssreader.feedcontentrepo.FeedContentRepository
+import com.github.jonforshort.rssreader.feedsource.repo.Feed
+import com.github.jonforshort.rssreader.feedsource.repo.FeedRepository
+import com.github.jonforshort.rssreader.preferences.UserPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -41,7 +42,8 @@ internal typealias FeedAndFeedContent = Pair<Feed, FeedContent>
 @HiltViewModel
 internal class HomeFeedViewModel @Inject constructor(
     private val feedRepository: FeedRepository,
-    private val feedContentRepository: FeedContentRepository
+    private val feedContentRepository: FeedContentRepository,
+    private val userPreferences: UserPreferences
 ) : ViewModel() {
 
     private val feedContentLiveData = MutableLiveData<FeedAndFeedContent>()
@@ -50,7 +52,8 @@ internal class HomeFeedViewModel @Inject constructor(
 
     fun refreshFeedContent() {
         viewModelScope.launch {
-            feedRepository.getAll().collect { feed ->
+            val selectedTags = userPreferences.getSelectedFeedTags()
+            feedRepository.getByTags(selectedTags).collect { feed ->
                 val url = URL(feed.rssUrl)
                 feedContentRepository.fetch(url).collect { feedContent ->
                     feedContentLiveData.postValue(Pair(feed, feedContent))
