@@ -21,58 +21,29 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.feedcontentfetcher.model.rsstwo
+package com.github.jonforshort.rssreader.feedcontentfetcher
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
+import org.junit.Assert.assertEquals
+import org.junit.Test
+import java.io.File
 
-internal class Item {
+class RssParserTests {
 
-    var title = ""
+    @Test
+    fun testParse_validTestPageOne_expectParserToSucceed() {
+        val testPageResource = RssParserTests::class.java.classLoader.getResource("test_page_1.xml")
+        val testPageContent = File(testPageResource!!.toURI()).readLines().joinToString("")
+        val parsedContent = RssParser().parse(testPageContent)
+        assertEquals(parsedContent.version, "2.0")
+        assertEquals(parsedContent.channel.items.size, 50)
+    }
 
-    var link = ""
-
-    var description = ""
-
-    var author = ""
-
-    var category = ""
-
-    var comments = ""
-
-    var enclosure: Enclosure = Enclosure()
-
-    @JacksonXmlProperty(namespace = "media", localName = "content")
-    var mediaContent: MediaContent = MediaContent()
-
-    @JacksonXmlProperty(namespace = "media", localName = "credit")
-    var mediaCredit: MediaCredit = MediaCredit()
-
-    var guid = ""
-
-    var pubDate = ""
-
-    var source = ""
+    @Test
+    fun testParse_validTestPageTwo_expectParserToSucceed() {
+        val testPageResource = RssParserTests::class.java.classLoader.getResource("test_page_2.xml")
+        val testPageContent = File(testPageResource!!.toURI()).readLines().joinToString("")
+        val parsedContent = RssParser().parse(testPageContent)
+        assertEquals(parsedContent.version, "2.0")
+        assertEquals(parsedContent.channel.items.size, 25)
+    }
 }
-
-internal data class Enclosure(
-
-    var url: String = "",
-
-    var mimeType: String = "",
-
-    var lengthInBytes: String? = null
-)
-
-internal data class MediaContent(
-
-    var url: String = "",
-
-    var height: Int = -1,
-
-    var width: Int = -1
-)
-
-internal data class MediaCredit(
-
-    var role: String = "",
-)
