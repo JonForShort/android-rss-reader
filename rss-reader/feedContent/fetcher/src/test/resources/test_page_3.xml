@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"
+    xml:base="http://www.nasa.gov/">
+    <channel>
+        <title>NASA Breaking News</title>
+        <description>A RSS news feed containing the latest NASA news articles and press releases.</description>
+        <link>http://www.nasa.gov/</link>
+        <atom:link href="http://www.nasa.gov/rss/dyn/breaking_news.rss" rel="self" />
+        <language>en-us</language>
+        <managingEditor>jim.wilson@nasa.gov</managingEditor>
+        <webMaster>brian.dunbar@nasa.gov</webMaster>
+        <docs>http://blogs.harvard.edu/tech/rss</docs>
+        <item>
+            <title>NASA Awards Contract for Software Licenses, Maintenance, Support</title>
+            <link>http://www.nasa.gov/press-release/nasa-awards-contract-for-software-licenses-maintenance-support
+            </link>
+            <description>NASA has awarded Panamerica Computers of Luray, Virginia, an ordering vehicle to provide Box
+                platform licenses, maintenance, and support services when the agency requires.
+            </description>
+            <enclosure length="189751" type="image/jpeg"
+                url="http://www.nasa.gov/sites/default/files/styles/1x1_cardfeed/public/thumbnails/image/nasa-logo-web-rgb_0.jpg?itok=mrBnB_c9" />
+            <guid isPermaLink="false">
+                http://www.nasa.gov/press-release/nasa-awards-contract-for-software-licenses-maintenance-support
+            </guid>
+            <pubDate>Fri, 10 Sep 2021 16:05 EDT</pubDate>
+            <source url="http://www.nasa.gov/rss/dyn/breaking_news.rss">NASA Breaking News</source>
+            <dc:identifier>473866</dc:identifier>
+        </item>
+        <item>
+            <title>NASA Awards Launch Services Contract for GOES-U Mission</title>
+            <link>http://www.nasa.gov/press-release/nasa-awards-launch-services-contract-for-goes-u-mission</link>
+            <description>NASA has selected Space Exploration Technologies (SpaceX) of Hawthorne, California, to provide
+                launch services for the Geostationary Operational Environmental Satellite-U (GOES-U) mission.
+            </description>
+            <enclosure length="189751" type="image/jpeg"
+                url="http://www.nasa.gov/sites/default/files/styles/1x1_cardfeed/public/thumbnails/image/nasa-logo-web-rgb_0.jpg?itok=mrBnB_c9" />
+            <guid isPermaLink="false">
+                http://www.nasa.gov/press-release/nasa-awards-launch-services-contract-for-goes-u-mission
+            </guid>
+            <pubDate>Fri, 10 Sep 2021 15:56 EDT</pubDate>
+            <source url="http://www.nasa.gov/rss/dyn/breaking_news.rss">NASA Breaking News</source>
+            <dc:identifier>473864</dc:identifier>
+        </item>
+        <item>
+            <title>NASA’s Perseverance Rover Collects Puzzle Pieces of Mars’ History</title>
+            <link>http://www.nasa.gov/press-release/nasa-s-perseverance-rover-collects-puzzle-pieces-of-mars-history
+            </link>
+            <description>NASA’s Perseverance Mars rover successfully collected its first pair of rock samples, and
+                scientists already are gaining new insights into the region.
+            </description>
+            <enclosure length="28313741" type="image/png"
+                url="http://www.nasa.gov/sites/default/files/styles/1x1_cardfeed/public/thumbnails/image/1-pia24840_main_samuels_5_hazcam_flf_0196_0684353735_668cws_n0070000fhaz02008_0a00llj01-stretched.png?itok=APU7vDVn" />
+            <guid isPermaLink="false">
+                http://www.nasa.gov/press-release/nasa-s-perseverance-rover-collects-puzzle-pieces-of-mars-history
+            </guid>
+            <pubDate>Fri, 10 Sep 2021 10:38 EDT</pubDate>
+            <source url="http://www.nasa.gov/rss/dyn/breaking_news.rss">NASA Breaking News</source>
+            <dc:identifier>473855</dc:identifier>
+        </item>
+        <item>
+            <title>NASA Invites Media to Next SpaceX Commercial Crew Space Station Launch</title>
+            <link>
+                http://www.nasa.gov/press-release/nasa-invites-media-to-next-spacex-commercial-crew-space-station-launch
+            </link>
+            <description>Media accreditation now is open for the launch of the third SpaceX Crew Dragon spacecraft and
+                Falcon 9 rocket that will carry astronauts to the International Space Station for a long duration
+                mission.
+            </description>
+            <enclosure length="707748" type="image/jpeg"
+                url="http://www.nasa.gov/sites/default/files/styles/1x1_cardfeed/public/thumbnails/image/51403573072_7492e1f169_k.jpg?itok=4w8kTCdq" />
+            <guid isPermaLink="false">
+                http://www.nasa.gov/press-release/nasa-invites-media-to-next-spacex-commercial-crew-space-station-launch
+            </guid>
+            <pubDate>Fri, 10 Sep 2021 07:20 EDT</pubDate>
+            <source url="http://www.nasa.gov/rss/dyn/breaking_news.rss">NASA Breaking News</source>
+            <dc:identifier>473853</dc:identifier>
+        </item>
+        <item>
+            <title>NASA Innovations Will Help U.S. Meet Sustainable Aviation Goals</title>
+            <link>http://www.nasa.gov/press-release/nasa-innovations-will-help-us-meet-sustainable-aviation-goals</link>
+            <description>NASA Administrator Bill Nelson joined federal government and industry leaders Thursday at a
+                White House event highlighting sustainable aviation and the administration’s focus on medium- and
+                long-term goals to combat climate change.
+            </description>
+            <enclosure length="2511579" type="image/jpeg"
+                url="http://www.nasa.gov/sites/default/files/styles/1x1_cardfeed/public/thumbnails/image/ttbw-90-aerial-forest-16x9-2-no-logo_0.jpg?itok=S_OxvFpp" />
+            <guid isPermaLink="false">
+                http://www.nasa.gov/press-release/nasa-innovations-will-help-us-meet-sustainable-aviation-goals
+            </guid>
+            <pubDate>Thu, 09 Sep 2021 15:06 EDT</pubDate>
+            <source url="http://www.nasa.gov/rss/dyn/breaking_news.rss">NASA Breaking News</source>
+            <dc:identifier>473836</dc:identifier>
+        </item>
+        <item>
+            <title>NASA Readies James Webb Space Telescope for December Launch</title>
+            <link>http://www.nasa.gov/press-release/nasa-readies-james-webb-space-telescope-for-december-launch</link>
+            <description>NASA plans to launch the James Webb Space Telescope into orbit Dec. 18, 2021, to serve as the
+                premier deep space observatory for the next decade.
+            </description>
+            <enclosure length="4131889" type="image/jpeg"
+                url="http://www.nasa.gov/sites/default/files/styles/1x1_cardfeed/public/thumbnails/image/51404134793_3c65116be0_4k.jpg?itok=kJLttY8i" />
+            <guid isPermaLink="false">
+                http://www.nasa.gov/press-release/nasa-readies-james-webb-space-telescope-for-december-launch
+            </guid>
+            <pubDate>Wed, 08 Sep 2021 08:59 EDT</pubDate>
+            <source url="http://www.nasa.gov/rss/dyn/breaking_news.rss">NASA Breaking News</source>
+            <dc:identifier>473779</dc:identifier>
+        </item>
+        <item>
+            <title>NASA to Host Briefing on Successful Sample Collection of Martian Rock</title>
+            <link>
+                http://www.nasa.gov/press-release/nasa-to-host-briefing-on-successful-sample-collection-of-martian-rock
+            </link>
+            <description>NASA will hold a virtual media briefing Friday, Sept. 10, at noon EDT to provide an update on
+                the agency’s Perseverance Mars rover, which recently completed its first successful rock sampling.
+            </description>
+            <enclosure length="302753" type="image/jpeg"
+                url="http://www.nasa.gov/sites/default/files/styles/1x1_cardfeed/public/thumbnails/image/mars_rock.jpg?itok=zE5YMhQ_" />
+            <guid isPermaLink="false">
+                http://www.nasa.gov/press-release/nasa-to-host-briefing-on-successful-sample-collection-of-martian-rock
+            </guid>
+            <pubDate>Tue, 07 Sep 2021 16:09 EDT</pubDate>
+            <source url="http://www.nasa.gov/rss/dyn/breaking_news.rss">NASA Breaking News</source>
+            <dc:identifier>473769</dc:identifier>
+        </item>
+        <item>
+            <title>NASA’s Perseverance Rover Collects First Mars Rock Sample</title>
+            <link>http://www.nasa.gov/press-release/nasa-s-perseverance-rover-collects-first-mars-rock-sample</link>
+            <description>NASA’s Perseverance rover today completed the collection of the first sample of Martian rock, a
+                core from Jezero Crater slightly thicker than a pencil.
+            </description>
+            <enclosure length="390632" type="image/png"
+                url="http://www.nasa.gov/sites/default/files/styles/1x1_cardfeed/public/thumbnails/image/pia24807_-_cachecam_of_sealed.png?itok=-6l2joYx" />
+            <guid isPermaLink="false">
+                http://www.nasa.gov/press-release/nasa-s-perseverance-rover-collects-first-mars-rock-sample
+            </guid>
+            <pubDate>Mon, 06 Sep 2021 18:13 EDT</pubDate>
+            <source url="http://www.nasa.gov/rss/dyn/breaking_news.rss">NASA Breaking News</source>
+            <dc:identifier>473751</dc:identifier>
+        </item>
+        <item>
+            <title>Nebraska Youth to Hear from NASA Astronauts Aboard Space Station</title>
+            <link>http://www.nasa.gov/press-release/nebraska-youth-to-hear-from-nasa-astronauts-aboard-space-station
+            </link>
+            <description>Students participating with the Nebraska 4-H will have an opportunity next week to hear from
+                NASA astronauts aboard the International Space Station.
+            </description>
+            <enclosure length="488772" type="image/jpeg"
+                url="http://www.nasa.gov/sites/default/files/styles/1x1_cardfeed/public/thumbnails/image/expy_65_members.jpg?itok=7N7wMq6Z" />
+            <guid isPermaLink="false">
+                http://www.nasa.gov/press-release/nebraska-youth-to-hear-from-nasa-astronauts-aboard-space-station
+            </guid>
+            <pubDate>Fri, 03 Sep 2021 16:04 EDT</pubDate>
+            <source url="http://www.nasa.gov/rss/dyn/breaking_news.rss">NASA Breaking News</source>
+            <dc:identifier>473749</dc:identifier>
+        </item>
+        <item>
+            <title>NASA Invites Media to Kennedy for Artemis Activities</title>
+            <link>http://www.nasa.gov/press-release/nasa-invites-media-to-kennedy-for-artemis-activities</link>
+            <description>NASA is inviting a limited number of media to capture imagery of the fully stacked and
+                integrated Artemis I mission Orion spacecraft and Space Launch System (SLS) rocket at the Kennedy Space
+                Center in Florida.
+            </description>
+            <enclosure length="491311" type="image/jpeg"
+                url="http://www.nasa.gov/sites/default/files/styles/1x1_cardfeed/public/thumbnails/image/orbital.jpg?itok=9GJ_RCGC" />
+            <guid isPermaLink="false">
+                http://www.nasa.gov/press-release/nasa-invites-media-to-kennedy-for-artemis-activities
+            </guid>
+            <pubDate>Fri, 03 Sep 2021 13:49 EDT</pubDate>
+            <source url="http://www.nasa.gov/rss/dyn/breaking_news.rss">NASA Breaking News</source>
+            <dc:identifier>473747</dc:identifier>
+        </item>
+    </channel>
+</rss>

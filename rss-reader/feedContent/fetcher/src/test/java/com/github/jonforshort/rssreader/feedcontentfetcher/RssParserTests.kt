@@ -23,7 +23,7 @@
 //
 package com.github.jonforshort.rssreader.feedcontentfetcher
 
-import org.junit.Assert.assertEquals
+import org.junit.Assert.*
 import org.junit.Test
 import java.io.File
 
@@ -36,6 +36,13 @@ class RssParserTests {
         val parsedContent = RssParser().parse(testPageContent)
         assertEquals(parsedContent.version, "2.0")
         assertEquals(parsedContent.channel.items.size, 50)
+
+        parsedContent.channel.items.forEach { feedItem ->
+            assertTrue(feedItem.title.isNotEmpty())
+            assertTrue(feedItem.description.isEmpty())
+            assertTrue(feedItem.link.isNotEmpty())
+            assertTrue(feedItem.publishDate.isNotEmpty())
+        }
     }
 
     @Test
@@ -45,5 +52,30 @@ class RssParserTests {
         val parsedContent = RssParser().parse(testPageContent)
         assertEquals(parsedContent.version, "2.0")
         assertEquals(parsedContent.channel.items.size, 25)
+
+        parsedContent.channel.items.forEach { feedItem ->
+            assertTrue(feedItem.title.isNotEmpty())
+            assertTrue(feedItem.description.isNotEmpty())
+            assertTrue(feedItem.link.isNotEmpty())
+            assertTrue(feedItem.publishDate.isNotEmpty())
+        }
+    }
+
+    @Test
+    fun testParse_validTestPageThree_expectParserToSucceed() {
+        val testPageResource = RssParserTests::class.java.classLoader.getResource("test_page_3.xml")
+        val testPageContent = File(testPageResource!!.toURI()).readLines().joinToString("")
+        val parsedContent = RssParser().parse(testPageContent)
+        assertEquals(parsedContent.version, "2.0")
+        assertEquals(parsedContent.channel.items.size, 10)
+
+        parsedContent.channel.items.forEach { feedItem ->
+            assertTrue(feedItem.title.isNotEmpty())
+            assertTrue(feedItem.publishDate.isNotEmpty())
+            assertTrue(feedItem.description.isNotEmpty())
+            assertTrue(feedItem.link.isNotEmpty())
+            assertNotNull(feedItem.enclosure)
+            assertTrue(feedItem.enclosure?.url?.isNotBlank() ?: false)
+        }
     }
 }
