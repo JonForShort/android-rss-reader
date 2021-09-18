@@ -4,7 +4,7 @@
     <string name="menu_home">Home</string>
     <string name="menu_feeds">Feeds</string>
     <string name="menu_settings">Settings</string>
-    <string name="feed_item_enclosure">Feed Item Enclosure</string>
+    <string name="feed_item_title_image_url">Feed Item Title Image URL</string>
     <string name="feed_icon_description">feed icon</string>
     <string name="favorite_icon_description">favorite icon</string>
     <string name="share_icon_description">share icon</string>

@@ -28,11 +28,17 @@ import android.webkit.WebView
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
-import com.github.jonforshort.rssreader.feedcontentfetcher.FeedItemEnclosure
+import com.github.jonforshort.rssreader.feedcontentfetcher.FeedItem
+import com.github.jonforshort.rssreader.feedsource.repo.Feed
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 internal data class FeedArticle(
 
     val title: String = "",
+
+    val titleImageUrl: String? = null,
 
     val link: String = "",
 
@@ -41,8 +47,6 @@ internal data class FeedArticle(
     val publishDate: String = "",
 
     val publishTimeInMs: Long = 0,
-
-    val enclosure: FeedItemEnclosure? = null,
 
     val providerName: String,
 
@@ -57,10 +61,14 @@ private val FEED_ENCLOSURE_WIDTH_PX by lazy {
     Resources.getSystem().displayMetrics.widthPixels
 }
 
-@BindingAdapter("loadEnclosure")
-internal fun loadEnclosure(view: ImageView, enclosure: FeedItemEnclosure) {
+private val FEED_ARTICLE_DATE_STRING_FORMATTER by lazy {
+    DateTimeFormatter.ofPattern("HH:mm:ss MM/dd/yyyy")
+}
+
+@BindingAdapter("loadImage")
+internal fun loadImage(view: ImageView, url: String) {
     Glide.with(view.context)
-        .load(enclosure.url)
+        .load(url)
         .override(FEED_ENCLOSURE_WIDTH_PX, FEED_ENCLOSURE_HEIGHT_PX)
         .centerCrop()
         .into(view)
@@ -78,3 +86,20 @@ internal fun loadHtml(view: WebView, html: String) {
     view.loadData(html, "text/html; charset=UTF-8", null)
     view.settings.loadWithOverviewMode = true
 }
+
+internal fun createFeedArticle(feed: Feed, feedItem: FeedItem) =
+    FeedArticle(
+        title = feedItem.title,
+        titleImageUrl = feedItem.enclosure?.url,
+        link = feedItem.link,
+        description = feedItem.description,
+        publishDate = convertTimeInMsToDateString(feedItem.publishTimeInMs),
+        publishTimeInMs = feedItem.publishTimeInMs,
+        providerName = feed.providerName,
+        providerIconUrl = feed.providerIconUrl
+    )
+
+private fun convertTimeInMsToDateString(timeInMs: Long) =
+    Instant.ofEpochMilli(timeInMs)
+        .atZone(ZoneId.systemDefault())
+        .format(FEED_ARTICLE_DATE_STRING_FORMATTER)

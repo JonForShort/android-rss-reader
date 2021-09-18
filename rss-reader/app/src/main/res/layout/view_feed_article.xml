@@ -37,11 +37,11 @@
                 tools:text="Feed Item Title" />
 
             <ImageView
-                android:id="@+id/feedItemEnclosure"
+                android:id="@+id/feedItemTitleImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/feed_item_enclosure"
-                app:loadEnclosure="@{feedArticle.enclosure}" />
+                android:contentDescription="@string/feed_item_title_image_url"
+                app:loadImage="@{feedArticle.titleImageUrl}" />
 
             <WebView
                 android:id="@+id/feedItemDescription"
