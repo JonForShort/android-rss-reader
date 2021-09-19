@@ -61,7 +61,9 @@ data class FeedItem(
 
     val source: String,
 
-    val enclosure: FeedItemEnclosure? = null
+    val enclosure: FeedItemEnclosure? = null,
+
+    val mediaContent: FeedItemMediaContent? = null
 )
 
 data class FeedItemEnclosure(
@@ -71,4 +73,9 @@ data class FeedItemEnclosure(
     val lengthInBytes: Int,
 
     val mimeType: String
+)
+
+data class FeedItemMediaContent(
+
+    val url: String,
 )

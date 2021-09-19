@@ -51,19 +51,23 @@ internal class RssParser {
                 channel.description,
                 channel.item.map { item ->
                     FeedItem(
-                        item.title,
-                        item.link,
-                        item.description,
-                        item.pubDate,
-                        convertDateStringToTimeInMs(item.pubDate),
-                        item.source,
-                        item.enclosure.let {
+                        title = item.title,
+                        link = item.link,
+                        description = item.description,
+                        publishDate = item.pubDate,
+                        publishTimeInMs = convertDateStringToTimeInMs(item.pubDate),
+                        source = item.source,
+                        enclosure = item.enclosure.let {
                             FeedItemEnclosure(
                                 it.url,
                                 it.lengthInBytes?.toInt() ?: 0,
                                 it.mimeType
                             )
-                        })
+                        },
+                        mediaContent = FeedItemMediaContent(
+                            item.mediaContent.url
+                        )
+                    )
                 })
         )
     }

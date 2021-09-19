@@ -52,7 +52,7 @@ internal class FeedArticleAdapter(
                 CustomTabsIntent
                     .Builder()
                     .build()
-                    .launchUrl(context, Uri.parse(item.link))
+                    .launchUrl(context, Uri.parse(item.linkUrl.toString()))
             }
         }
     }

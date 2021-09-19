@@ -55,6 +55,7 @@ dependencies {
 
     implementation("com.jakewharton.timber:timber:4.7.1")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${LIBRARY_VERSION_KOTLIN}")
+    implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.3")
     implementation("androidx.core:core-ktx:${LIBRARY_VERSION_CORE_KTX}")
     implementation("androidx.appcompat:appcompat:1.3.1")
     implementation("com.google.android.material:material:1.4.0")
@@ -70,6 +71,7 @@ dependencies {
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("androidx.browser:browser:1.3.0")
+
     implementation("com.github.bumptech.glide:glide:4.12.0")
     kapt("com.github.bumptech.glide:compiler:4.12.0")
 

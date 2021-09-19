@@ -37,8 +37,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.github.jonforshort.rssreader.R
 import com.github.jonforshort.rssreader.ui.main.FeedArticle
 import com.github.jonforshort.rssreader.ui.main.FeedArticleAdapter
+import com.github.jonforshort.rssreader.ui.main.FeedArticleFactory
 import com.github.jonforshort.rssreader.ui.main.FeedArticleViewObserver
-import com.github.jonforshort.rssreader.ui.main.createFeedArticle
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber.d
 
@@ -71,7 +71,9 @@ internal class HomeFeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListen
 
         feedViewModel.feedContent().observe(viewLifecycleOwner) { feedAndFeedContent ->
             val feedContent = feedAndFeedContent.second
-            val currentFeedArticles = feedContent.channel.items.map { createFeedArticle(feedAndFeedContent.first, it) }
+            val currentFeedArticles = feedContent.channel.items.map { feedItem ->
+                FeedArticleFactory.from(feedAndFeedContent.first, feedItem)
+            }
             feedArticles.addAll(currentFeedArticles)
             feedArticles.sortByDescending { it.publishTimeInMs }
             feedArticleAdapter.submitList(feedArticles)
@@ -134,7 +136,7 @@ private class HomeFeedArticleViewObserver : FeedArticleViewObserver {
         val intent = Intent(Intent.ACTION_SEND).apply {
             type = "text/plain"
             putExtra(Intent.EXTRA_SUBJECT, "Sharing Feed URL")
-            putExtra(Intent.EXTRA_TEXT, feedArticle.link)
+            putExtra(Intent.EXTRA_TEXT, feedArticle.linkUrl.toString())
         }
         val chooserIntent = Intent.createChooser(intent, "Share URL")
         view.context.startActivity(chooserIntent)
