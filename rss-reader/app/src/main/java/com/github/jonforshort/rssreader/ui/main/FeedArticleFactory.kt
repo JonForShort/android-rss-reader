@@ -55,12 +55,16 @@ internal object FeedArticleFactory {
         )
 
     private fun createContentHtml(feedItem: FeedItem) =
-        if (feedItem.mediaContent?.url?.isNotEmpty() == true) {
-            buildHtmlWithMediaContent(feedItem)
-        } else if (feedItem.enclosure?.url?.isNotEmpty() == true) {
-            buildHtmlWithEnclosure(feedItem)
-        } else {
-            buildHtmlWithDescriptionContainsHtml(feedItem)
+        when {
+            feedItem.mediaContent?.url?.isNotEmpty() == true -> {
+                buildHtmlWithMediaContent(feedItem)
+            }
+            feedItem.enclosure?.url?.isNotEmpty() == true -> {
+                buildHtmlWithEnclosure(feedItem)
+            }
+            else -> {
+                buildHtmlWithDescriptionContainsHtml(feedItem)
+            }
         }
 
     private fun buildHtmlWithDescriptionContainsHtml(feedItem: FeedItem) = StringBuilder().appendHTML()

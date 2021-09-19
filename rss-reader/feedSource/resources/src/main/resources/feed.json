@@ -36,6 +36,18 @@
         "yahoo",
         "news"
       ]
+    },
+    {
+      "provider": "Google",
+      "title": "Google News",
+      "description": "The latest news and headlines from Google news.",
+      "homePageUrl": "https://news.google.com",
+      "rssUrl": "https://news.google.com/rss",
+      "iconUrl": "http://s2.googleusercontent.com/s2/favicons?domain=https://news.google.com/",
+      "tags": [
+        "google",
+        "news"
+      ]
     }
   ]
 }
