@@ -31,7 +31,5 @@ internal class PopularFeedViewModel : ViewModel() {
 
     private val feedContent = MutableLiveData<FeedContent>()
 
-    fun refreshFeedContent() {}
-
     fun getFeedContentLiveData() = feedContent
 }

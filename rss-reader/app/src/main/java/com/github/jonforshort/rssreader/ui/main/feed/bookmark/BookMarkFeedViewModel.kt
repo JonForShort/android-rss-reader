@@ -31,7 +31,5 @@ internal class BookMarkFeedViewModel : ViewModel() {
 
     private val feedContent = MutableLiveData<FeedContent>()
 
-    fun refreshFeedContent() {}
-
     fun getFeedContentLiveData() = feedContent
 }

@@ -1,30 +1,5 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
-  <CurrentIssues>
-    <ID>EmptyFunctionBlock:BookMarkFeedViewModel.kt$BookMarkFeedViewModel${}</ID>
-    <ID>EmptyFunctionBlock:MainFragment.kt$MainFragment${ }</ID>
-    <ID>EmptyFunctionBlock:PopularFeedViewModel.kt$PopularFeedViewModel${}</ID>
-    <ID>MagicNumber:FeedArticle.kt$200</ID>
-    <ID>NewLineAtEndOfFile:BookMarkFeedViewModel.kt$com.github.jonforshort.rssreader.ui.main.feed.bookmark.BookMarkFeedViewModel.kt</ID>
-    <ID>NewLineAtEndOfFile:ExampleUnitTest.kt$com.github.jonforshort.rssreader.ExampleUnitTest.kt</ID>
-    <ID>NewLineAtEndOfFile:FeedArticleAdapter.kt$com.github.jonforshort.rssreader.ui.main.FeedArticleAdapter.kt</ID>
-    <ID>NewLineAtEndOfFile:FeedArticleViewObserver.kt$com.github.jonforshort.rssreader.ui.main.FeedArticleViewObserver.kt</ID>
-    <ID>NewLineAtEndOfFile:FeedsViewModel.kt$com.github.jonforshort.rssreader.ui.feeds.FeedsViewModel.kt</ID>
-    <ID>NewLineAtEndOfFile:FlowExt.kt$com.github.jonforshort.rssreader.utils.FlowExt.kt</ID>
-    <ID>NewLineAtEndOfFile:FragmentExt.kt$com.github.jonforshort.rssreader.utils.FragmentExt.kt</ID>
-    <ID>NewLineAtEndOfFile:HomeFeedViewModel.kt$com.github.jonforshort.rssreader.ui.main.feed.home.HomeFeedViewModel.kt</ID>
-    <ID>NewLineAtEndOfFile:LoginFragment.kt$com.github.jonforshort.rssreader.ui.onboard.LoginFragment.kt</ID>
-    <ID>NewLineAtEndOfFile:MainActivity.kt$com.github.jonforshort.rssreader.MainActivity.kt</ID>
-    <ID>NewLineAtEndOfFile:MainViewModel.kt$com.github.jonforshort.rssreader.ui.main.MainViewModel.kt</ID>
-    <ID>NewLineAtEndOfFile:OnboardFragment.kt$com.github.jonforshort.rssreader.ui.onboard.OnboardFragment.kt</ID>
-    <ID>NewLineAtEndOfFile:OnboardViewModel.kt$com.github.jonforshort.rssreader.ui.onboard.OnboardViewModel.kt</ID>
-    <ID>NewLineAtEndOfFile:PopularFeedViewModel.kt$com.github.jonforshort.rssreader.ui.main.feed.popular.PopularFeedViewModel.kt</ID>
-    <ID>NewLineAtEndOfFile:RssReaderApplication.kt$com.github.jonforshort.rssreader.RssReaderApplication.kt</ID>
-    <ID>NewLineAtEndOfFile:SelectFeedsViewModel.kt$com.github.jonforshort.rssreader.ui.onboard.SelectFeedsViewModel.kt</ID>
-    <ID>NewLineAtEndOfFile:SettingsFragment.kt$com.github.jonforshort.rssreader.ui.settings.SettingsFragment.kt</ID>
-    <ID>NewLineAtEndOfFile:SettingsViewModel.kt$com.github.jonforshort.rssreader.ui.settings.SettingsViewModel.kt</ID>
-    <ID>NewLineAtEndOfFile:UIModule.kt$com.github.jonforshort.rssreader.ui.UIModule.kt</ID>
-    <ID>UnusedPrivateMember:OnboardPreferences.kt$private val Context.dataStore: DataStore&lt;Preferences&gt; by preferencesDataStore(name = "onboardSettings")</ID>
-  </CurrentIssues>
+  <CurrentIssues></CurrentIssues>
 </SmellBaseline>

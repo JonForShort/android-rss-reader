@@ -39,6 +39,7 @@ import com.github.jonforshort.rssreader.ui.main.feed.popular.PopularFeedFragment
 import com.github.jonforshort.rssreader.utils.setActionBarTitle
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import timber.log.Timber.d
 
 internal class MainFragment : Fragment(), TabLayout.OnTabSelectedListener {
 
@@ -83,9 +84,11 @@ internal class MainFragment : Fragment(), TabLayout.OnTabSelectedListener {
     }
 
     override fun onTabUnselected(tab: TabLayout.Tab) {
+        d("onTabUnselected called")
     }
 
     override fun onTabReselected(tab: TabLayout.Tab) {
+        d("onTabReselected called")
     }
 }
 
