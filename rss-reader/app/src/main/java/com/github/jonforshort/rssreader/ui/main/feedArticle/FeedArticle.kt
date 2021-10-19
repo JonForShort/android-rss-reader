@@ -21,28 +21,40 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.feedcontentrepo.database
+package com.github.jonforshort.rssreader.ui.main.feedArticle
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import android.webkit.WebView
+import android.widget.ImageView
+import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
+import java.net.URL
 
-@Dao
-internal interface FeedContentDao {
+internal data class FeedArticle(
 
-    @Query("SELECT * FROM FeedContentEntity ORDER BY modification_date DESC")
-    suspend fun getAll(): List<FeedContentEntity>
+    val id: String,
 
-    @Query("SELECT * FROM FeedContentEntity WHERE url = :url")
-    suspend fun getByUrl(url: String): FeedContentEntity
+    val contentHtml: String,
 
-    @Query("SELECT EXISTS(SELECT * FROM FeedContentEntity WHERE url = :url)")
-    suspend fun isFeedContentExists(url: String): Boolean
+    val linkUrl: URL,
 
-    @Insert
-    suspend fun insert(feedContentEntity: FeedContentEntity)
+    val publishDate: String = "",
 
-    @Delete
-    suspend fun delete(feedContentEntity: FeedContentEntity)
+    val publishTimeInMs: Long = 0,
+
+    val providerName: String,
+
+    val providerIconUrl: URL
+)
+
+@BindingAdapter("loadImage")
+internal fun loadImage(view: ImageView, url: URL) {
+    Glide.with(view.context)
+        .load(url.toString())
+        .into(view)
+}
+
+@BindingAdapter("loadHtml")
+internal fun loadHtml(view: WebView, html: String) {
+    view.loadData(html, "text/html; charset=UTF-8", null)
+    view.settings.loadWithOverviewMode = true
 }

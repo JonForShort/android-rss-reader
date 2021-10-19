@@ -35,10 +35,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.github.jonforshort.rssreader.R
-import com.github.jonforshort.rssreader.ui.main.FeedArticle
-import com.github.jonforshort.rssreader.ui.main.FeedArticleAdapter
-import com.github.jonforshort.rssreader.ui.main.FeedArticleFactory
-import com.github.jonforshort.rssreader.ui.main.FeedArticleViewObserver
+import com.github.jonforshort.rssreader.ui.main.feedArticle.FeedArticle
+import com.github.jonforshort.rssreader.ui.main.feedArticle.FeedArticleAdapter
+import com.github.jonforshort.rssreader.ui.main.feedArticle.FeedArticleFactory
+import com.github.jonforshort.rssreader.ui.main.feedArticle.FeedArticleViewObserver
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber.d
 

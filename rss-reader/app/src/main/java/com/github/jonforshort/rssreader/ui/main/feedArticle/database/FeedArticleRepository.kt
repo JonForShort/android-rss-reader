@@ -21,28 +21,22 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.feedcontentrepo.database
+package com.github.jonforshort.rssreader.ui.main.feedArticle.database
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import android.content.Context
+import com.github.jonforshort.rssreader.ui.main.feedArticle.FeedArticle
 
-@Dao
-internal interface FeedContentDao {
+internal class FeedArticleRepository(context: Context) {
 
-    @Query("SELECT * FROM FeedContentEntity ORDER BY modification_date DESC")
-    suspend fun getAll(): List<FeedContentEntity>
+    private val feedArticleDao =
+        getDatabase(context).feedArticleDao()
 
-    @Query("SELECT * FROM FeedContentEntity WHERE url = :url")
-    suspend fun getByUrl(url: String): FeedContentEntity
+    suspend fun getBookmarkedArticles() =
+        feedArticleDao.getBookmarked()
 
-    @Query("SELECT EXISTS(SELECT * FROM FeedContentEntity WHERE url = :url)")
-    suspend fun isFeedContentExists(url: String): Boolean
+    suspend fun bookmarkArticle(article: FeedArticle) =
+        feedArticleDao.insert(fromArticle(article, true))
 
-    @Insert
-    suspend fun insert(feedContentEntity: FeedContentEntity)
-
-    @Delete
-    suspend fun delete(feedContentEntity: FeedContentEntity)
+    suspend fun unbookmarkArticle(article: FeedArticle) =
+        feedArticleDao.insert(fromArticle(article, false))
 }

@@ -8,11 +8,11 @@
 
         <variable
             name="feedArticleEventListener"
-            type="com.github.jonforshort.rssreader.ui.main.FeedArticleViewObserver" />
+            type="com.github.jonforshort.rssreader.ui.main.feedArticle.FeedArticleViewObserver" />
 
         <variable
             name="feedArticle"
-            type="com.github.jonforshort.rssreader.ui.main.FeedArticle" />
+            type="com.github.jonforshort.rssreader.ui.main.feedArticle.FeedArticle" />
     </data>
 
     <androidx.cardview.widget.CardView

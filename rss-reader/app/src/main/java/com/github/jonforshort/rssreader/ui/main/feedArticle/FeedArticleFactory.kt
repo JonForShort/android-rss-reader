@@ -21,7 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.ui.main
+package com.github.jonforshort.rssreader.ui.main.feedArticle
 
 import com.github.jonforshort.rssreader.feedcontentfetcher.FeedItem
 import com.github.jonforshort.rssreader.feedsource.repo.Feed
@@ -37,6 +37,7 @@ import java.net.URL
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 internal object FeedArticleFactory {
 
@@ -46,6 +47,7 @@ internal object FeedArticleFactory {
 
     fun from(feed: Feed, feedItem: FeedItem) =
         FeedArticle(
+            id = generateId(feed),
             contentHtml = createContentHtml(feedItem),
             linkUrl = URL(feedItem.link),
             publishDate = convertTimeInMsToDateString(feedItem.publishTimeInMs),
@@ -53,6 +55,11 @@ internal object FeedArticleFactory {
             providerName = feed.providerName,
             providerIconUrl = URL(feed.providerIconUrl)
         )
+
+    private fun generateId(feed: Feed): String {
+        val uniqueString = "${feed.providerHomePageUrl}:${feed.rssUrl}"
+        return UUID.nameUUIDFromBytes(uniqueString.toByteArray()).toString()
+    }
 
     private fun createContentHtml(feedItem: FeedItem) =
         when {

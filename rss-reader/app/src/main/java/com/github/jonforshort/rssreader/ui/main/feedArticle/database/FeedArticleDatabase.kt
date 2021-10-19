@@ -21,15 +21,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.ui.main
+package com.github.jonforshort.rssreader.ui.main.feedArticle.database
 
-import android.view.View
+import android.content.Context
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
 
-internal interface FeedArticleViewObserver {
+@Database(entities = [FeedArticleEntity::class], version = 1)
+internal abstract class FeedArticleDatabase : RoomDatabase() {
 
-    fun onBookmarkClicked(view: View, feedArticle: FeedArticle)
-
-    fun onFavoriteClicked(view: View, feedArticle: FeedArticle)
-
-    fun onShareClicked(view: View, feedArticle: FeedArticle)
+    abstract fun feedArticleDao(): FeedArticleDao
 }
+
+internal fun getDatabase(context: Context) = Room
+    .databaseBuilder(context, FeedArticleDatabase::class.java, "FeedArticleDatabase")
+    .build()

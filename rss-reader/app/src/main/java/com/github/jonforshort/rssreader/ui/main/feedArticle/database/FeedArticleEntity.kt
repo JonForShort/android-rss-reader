@@ -21,37 +21,41 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.feedcontentrepo.database
+package com.github.jonforshort.rssreader.ui.main.feedArticle.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
-import androidx.room.TypeConverters
-import java.util.*
+import com.github.jonforshort.rssreader.ui.main.feedArticle.FeedArticle
 
 @Entity
-@TypeConverters(DateConverter::class)
-internal data class FeedContentEntity(
+internal data class FeedArticleEntity(
 
-    @PrimaryKey @ColumnInfo(name = "url") val url: String,
+    @PrimaryKey @ColumnInfo(name = "id") val id: String,
 
-    @ColumnInfo(name = "content") val content: String,
+    @ColumnInfo(name = "contentHtml") val contentHtml: String,
 
-    @ColumnInfo(name = "creation_date") val date: Date = Date(System.currentTimeMillis()),
+    @ColumnInfo(name = "linkUrl") val linkUrl: String,
 
-    @ColumnInfo(name = "modification_date") val modificationDate: Date = Date(System.currentTimeMillis())
+    @ColumnInfo(name = "publishDate") val publishDate: String = "",
+
+    @ColumnInfo(name = "publishTimeInMs") val publishTimeInMs: Long = 0,
+
+    @ColumnInfo(name = "providerName") val providerName: String,
+
+    @ColumnInfo(name = "providerIconUrl") val providerIconUrl: String,
+
+    @ColumnInfo(name = "isBookmarked") val isBookmarked: Boolean
 )
 
-private class DateConverter {
-
-    @TypeConverter
-    fun toDate(date: Long): Date {
-        return Date(date)
-    }
-
-    @TypeConverter
-    fun fromDate(date: Date): Long {
-        return date.time
-    }
-}
+internal fun fromArticle(article: FeedArticle, isBookmarked: Boolean) =
+    FeedArticleEntity(
+        id = article.id,
+        contentHtml = article.contentHtml,
+        linkUrl = article.linkUrl.toString(),
+        publishDate = article.publishDate,
+        publishTimeInMs = article.publishTimeInMs,
+        providerName = article.providerName,
+        providerIconUrl = article.providerIconUrl.toString(),
+        isBookmarked = isBookmarked
+    )

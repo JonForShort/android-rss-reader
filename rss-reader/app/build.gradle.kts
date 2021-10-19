@@ -72,6 +72,10 @@ dependencies {
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("androidx.browser:browser:1.3.0")
 
+    implementation("androidx.room:room-runtime:${LIBRARY_VERSION_ROOM}")
+    implementation("androidx.room:room-ktx:${LIBRARY_VERSION_ROOM}")
+    kapt("androidx.room:room-compiler:${LIBRARY_VERSION_ROOM}")
+
     implementation("com.github.bumptech.glide:glide:4.12.0")
     kapt("com.github.bumptech.glide:compiler:4.12.0")
 
