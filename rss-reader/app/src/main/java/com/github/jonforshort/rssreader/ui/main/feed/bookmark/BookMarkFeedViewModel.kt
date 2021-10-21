@@ -25,11 +25,24 @@ package com.github.jonforshort.rssreader.ui.main.feed.bookmark
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContent
+import androidx.lifecycle.viewModelScope
+import com.github.jonforshort.rssreader.ui.main.feedArticle.FeedArticle
+import com.github.jonforshort.rssreader.ui.main.feedArticle.database.FeedArticleRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-internal class BookMarkFeedViewModel : ViewModel() {
+@HiltViewModel
+internal class BookMarkFeedViewModel @Inject constructor(
+    private val feedArticleRepository: FeedArticleRepository,
+) : ViewModel() {
 
-    private val feedContent = MutableLiveData<FeedContent>()
+    val feedArticles = MutableLiveData<List<FeedArticle>>()
 
-    fun getFeedContentLiveData() = feedContent
+    fun refreshFeedArticles() {
+        viewModelScope.launch {
+            val articles = feedArticleRepository.getBookmarkedArticles()
+            feedArticles.postValue(articles)
+        }
+    }
 }

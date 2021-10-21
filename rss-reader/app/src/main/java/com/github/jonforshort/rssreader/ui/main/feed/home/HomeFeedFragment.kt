@@ -47,11 +47,12 @@ internal class HomeFeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListen
 
     private lateinit var feedRecyclerView: RecyclerView
     private lateinit var feedArticleAdapter: FeedArticleAdapter
+    private lateinit var feedArticleViewObserver: HomeFeedArticleViewObserver
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var bookmarkObserver: HomeFeedBookmarkObserver
 
-    private val feedArticles = mutableListOf<FeedArticle>()
-    private val feedArticleViewObserver = HomeFeedArticleViewObserver()
     private val feedViewModel: HomeFeedViewModel by viewModels()
+    private val feedArticles = mutableListOf<FeedArticle>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,6 +65,8 @@ internal class HomeFeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        bookmarkObserver = HomeFeedBookmarkObserver(feedViewModel)
+        feedArticleViewObserver = HomeFeedArticleViewObserver(bookmarkObserver)
         feedArticleAdapter = FeedArticleAdapter(requireContext(), feedArticleViewObserver)
         feedRecyclerView = view.findViewById(R.id.contentRecyclerView)
         feedRecyclerView.adapter = feedArticleAdapter
@@ -99,7 +102,26 @@ internal class HomeFeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListen
     }
 }
 
-private class HomeFeedArticleViewObserver : FeedArticleViewObserver {
+private class HomeFeedBookmarkObserver(
+    private val homeFeedViewModel: HomeFeedViewModel
+) : HomeFeedArticleViewObserver.BookmarkObserver {
+
+    override fun onBookmarkArticle(feedArticle: FeedArticle) =
+        homeFeedViewModel.bookmarkArticle(feedArticle)
+
+    override fun onUnbookmarkArticle(feedArticle: FeedArticle) =
+        homeFeedViewModel.unbookmarkArticle(feedArticle)
+}
+
+private class HomeFeedArticleViewObserver(
+    private val bookmarkObserver: BookmarkObserver
+) : FeedArticleViewObserver {
+
+    interface BookmarkObserver {
+        fun onBookmarkArticle(feedArticle: FeedArticle)
+
+        fun onUnbookmarkArticle(feedArticle: FeedArticle)
+    }
 
     override fun onBookmarkClicked(view: View, feedArticle: FeedArticle) {
         d("onBookmarkClicked")
@@ -108,10 +130,14 @@ private class HomeFeedArticleViewObserver : FeedArticleViewObserver {
             R.drawable.ic_bookmark -> {
                 imageView.tag = R.drawable.ic_bookmark_border
                 imageView.setImageResource(R.drawable.ic_bookmark_border)
+
+                bookmarkObserver.onUnbookmarkArticle(feedArticle)
             }
             else -> {
                 imageView?.tag = R.drawable.ic_bookmark
                 imageView?.setImageResource(R.drawable.ic_bookmark)
+
+                bookmarkObserver.onBookmarkArticle(feedArticle)
             }
         }
     }

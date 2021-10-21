@@ -32,7 +32,7 @@ internal class FeedArticleRepository(context: Context) {
         getDatabase(context).feedArticleDao()
 
     suspend fun getBookmarkedArticles() =
-        feedArticleDao.getBookmarked()
+        feedArticleDao.getBookmarked().map { it.toArticle() }
 
     suspend fun bookmarkArticle(article: FeedArticle) =
         feedArticleDao.insert(fromArticle(article, true))
@@ -40,3 +40,5 @@ internal class FeedArticleRepository(context: Context) {
     suspend fun unbookmarkArticle(article: FeedArticle) =
         feedArticleDao.insert(fromArticle(article, false))
 }
+
+internal fun createFeedArticleRepo(context: Context) = FeedArticleRepository(context)

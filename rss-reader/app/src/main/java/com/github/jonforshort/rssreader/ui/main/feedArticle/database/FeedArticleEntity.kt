@@ -27,6 +27,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.github.jonforshort.rssreader.ui.main.feedArticle.FeedArticle
+import java.net.URL
 
 @Entity
 internal data class FeedArticleEntity(
@@ -58,4 +59,15 @@ internal fun fromArticle(article: FeedArticle, isBookmarked: Boolean) =
         providerName = article.providerName,
         providerIconUrl = article.providerIconUrl.toString(),
         isBookmarked = isBookmarked
+    )
+
+internal fun FeedArticleEntity.toArticle() =
+    FeedArticle(
+        id = id,
+        contentHtml = contentHtml,
+        linkUrl = URL(linkUrl),
+        publishDate = publishDate,
+        publishTimeInMs = publishTimeInMs,
+        providerName = providerName,
+        providerIconUrl = URL(providerIconUrl),
     )

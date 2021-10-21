@@ -26,16 +26,18 @@ package com.github.jonforshort.rssreader.ui.main.feedArticle
 import android.content.Context
 import android.net.Uri
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.github.jonforshort.rssreader.databinding.ViewFeedArticleBinding
+import timber.log.Timber.d
 
 internal class FeedArticleAdapter(
     private val context: Context,
-    private val viewObserver: FeedArticleViewObserver
+    private val viewObserver: FeedArticleViewObserver = DummyFeedArticleViewObserver()
 ) : ListAdapter<FeedArticle, FeedArticleAdapter.ViewHolder>(FeedArticleDiffer()) {
 
     class ViewHolder(
@@ -75,5 +77,20 @@ internal class FeedArticleAdapter(
 
         override fun areContentsTheSame(oldItem: FeedArticle, newItem: FeedArticle) =
             oldItem == newItem
+    }
+}
+
+private class DummyFeedArticleViewObserver : FeedArticleViewObserver {
+
+    override fun onBookmarkClicked(view: View, feedArticle: FeedArticle) {
+        d("onBookmarkClicked called")
+    }
+
+    override fun onFavoriteClicked(view: View, feedArticle: FeedArticle) {
+        d("onFavoriteClicked called")
+    }
+
+    override fun onShareClicked(view: View, feedArticle: FeedArticle) {
+        d("onShareClicked called")
     }
 }

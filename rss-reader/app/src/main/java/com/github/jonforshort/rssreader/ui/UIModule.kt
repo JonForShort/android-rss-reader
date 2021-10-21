@@ -27,6 +27,7 @@ import android.content.Context
 import com.github.jonforshort.rssreader.feedcontentrepo.FeedContentRepository
 import com.github.jonforshort.rssreader.feedsource.repo.createFeedRepo
 import com.github.jonforshort.rssreader.preferences.UserPreferences
+import com.github.jonforshort.rssreader.ui.main.feedArticle.database.createFeedArticleRepo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -49,4 +50,8 @@ internal class UIModule {
     @Singleton
     @Provides
     fun provideFeedRepository() = createFeedRepo()
+
+    @Singleton
+    @Provides
+    fun provideFeedArticleRepository(@ApplicationContext context: Context) = createFeedArticleRepo(context)
 }
