@@ -31,8 +31,6 @@ import com.github.jonforshort.rssreader.feedcontentrepo.FeedContentRepository
 import com.github.jonforshort.rssreader.feedsource.repo.Feed
 import com.github.jonforshort.rssreader.feedsource.repo.FeedRepository
 import com.github.jonforshort.rssreader.preferences.UserPreferences
-import com.github.jonforshort.rssreader.ui.main.feedArticle.FeedArticle
-import com.github.jonforshort.rssreader.ui.main.feedArticle.database.FeedArticleRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -44,7 +42,6 @@ internal typealias FeedAndFeedContent = Pair<Feed, FeedContent>
 @HiltViewModel
 internal class HomeFeedViewModel @Inject constructor(
     private val feedRepository: FeedRepository,
-    private val feedArticleRepository: FeedArticleRepository,
     private val feedContentRepository: FeedContentRepository,
     private val userPreferences: UserPreferences
 ) : ViewModel() {
@@ -62,18 +59,6 @@ internal class HomeFeedViewModel @Inject constructor(
                     feedContentLiveData.postValue(Pair(feed, feedContent))
                 }
             }
-        }
-    }
-
-    fun bookmarkArticle(feedArticle: FeedArticle) {
-        viewModelScope.launch {
-            feedArticleRepository.bookmarkArticle(feedArticle)
-        }
-    }
-
-    fun unbookmarkArticle(feedArticle: FeedArticle) {
-        viewModelScope.launch {
-            feedArticleRepository.unbookmarkArticle(feedArticle)
         }
     }
 }

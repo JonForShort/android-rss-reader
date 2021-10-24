@@ -21,9 +21,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-package com.github.jonforshort.rssreader.ui.main.feed.bookmark
+package com.github.jonforshort.rssreader.ui.main.feed
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.jonforshort.rssreader.ui.main.feedArticle.FeedArticle
@@ -33,18 +32,19 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-internal class BookMarkFeedViewModel @Inject constructor(
+internal class FeedViewModel @Inject constructor(
     private val feedArticleRepository: FeedArticleRepository,
 ) : ViewModel() {
 
-    private val feedArticles = MutableLiveData<List<FeedArticle>>()
-
-    fun feedContent() = feedArticles
-
-    fun refreshFeedContent() {
+    fun bookmarkArticle(feedArticle: FeedArticle) {
         viewModelScope.launch {
-            val articles = feedArticleRepository.getBookmarkedArticles()
-            feedArticles.postValue(articles)
+            feedArticleRepository.bookmarkArticle(feedArticle)
+        }
+    }
+
+    fun unbookmarkArticle(feedArticle: FeedArticle) {
+        viewModelScope.launch {
+            feedArticleRepository.unbookmarkArticle(feedArticle)
         }
     }
 }

@@ -26,10 +26,16 @@ package com.github.jonforshort.rssreader.ui.main.feed.popular
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.github.jonforshort.rssreader.feedcontentfetcher.FeedContent
+import dagger.hilt.android.lifecycle.HiltViewModel
+import timber.log.Timber.d
 
 internal class PopularFeedViewModel : ViewModel() {
 
     private val feedContent = MutableLiveData<FeedContent>()
 
     fun getFeedContentLiveData() = feedContent
+
+    fun refreshFeedContent() {
+        d("refreshFeedContent called")
+    }
 }

@@ -24,63 +24,25 @@
 package com.github.jonforshort.rssreader.ui.main.feed.bookmark
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.github.jonforshort.rssreader.R
-import com.github.jonforshort.rssreader.ui.main.feedArticle.FeedArticleAdapter
+import com.github.jonforshort.rssreader.ui.main.feed.FeedFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-internal class BookmarkFeedFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
-
-    private lateinit var feedRecyclerView: RecyclerView
-    private lateinit var feedArticleAdapter: FeedArticleAdapter
-    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+internal class BookmarkFeedFragment : FeedFragment() {
 
     private val feedViewModel: BookMarkFeedViewModel by viewModels()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_feed, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        feedArticleAdapter = FeedArticleAdapter(requireContext())
-        feedRecyclerView = view.findViewById(R.id.contentRecyclerView)
-        feedRecyclerView.adapter = feedArticleAdapter
-        feedRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-
-        feedViewModel.feedArticles.observe(viewLifecycleOwner) { feedArticles ->
-            feedArticleAdapter.submitList(feedArticles)
-            swipeRefreshLayout.isRefreshing = false
+        feedViewModel.feedContent().observe(viewLifecycleOwner) { feedArticles ->
+            feedArticles().postValue(feedArticles)
         }
-
-        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout) as SwipeRefreshLayout
-        swipeRefreshLayout.setOnRefreshListener(this)
     }
 
-    override fun onResume() {
-        super.onResume()
-        refreshFeedContent()
-    }
-
-    override fun onRefresh() {
-        refreshFeedContent()
-    }
-
-    private fun refreshFeedContent() {
-        swipeRefreshLayout.isRefreshing = true
-        feedViewModel.refreshFeedArticles()
+    override fun onRefreshFeedContent() {
+        feedViewModel.refreshFeedContent()
     }
 }

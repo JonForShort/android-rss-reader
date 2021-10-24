@@ -23,6 +23,14 @@
 //
 package com.github.jonforshort.rssreader.ui.main.feed.popular
 
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import com.github.jonforshort.rssreader.ui.main.feed.FeedFragment
 
-internal class PopularFeedFragment : Fragment()
+internal class PopularFeedFragment : FeedFragment() {
+
+    private val feedViewModel: PopularFeedViewModel by viewModels()
+
+    override fun onRefreshFeedContent() {
+        feedViewModel.refreshFeedContent()
+    }
+}
