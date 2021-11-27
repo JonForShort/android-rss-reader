@@ -6,12 +6,12 @@ plugins {
 }
 
 android {
-    compileSdk = 30
-    buildToolsVersion = "30.0.3"
+    compileSdk = COMPILE_SDK_VERSION
+    buildToolsVersion = BUILD_TOOLS_VERSION
 
     defaultConfig {
-        minSdk = 26
-        targetSdk = 30
+        minSdk = MIN_SDK_VERSION
+        targetSdk = TARGET_SDK_VERSION
 
         applicationId = "com.github.jonforshort.rssreader"
         versionCode = 1
@@ -57,10 +57,10 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${LIBRARY_VERSION_KOTLIN}")
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.3")
     implementation("androidx.core:core-ktx:${LIBRARY_VERSION_CORE_KTX}")
-    implementation("androidx.appcompat:appcompat:1.3.1")
+    implementation("androidx.appcompat:appcompat:1.4.0")
     implementation("com.google.android.material:material:1.4.0")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.1")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.2")
     implementation("androidx.viewpager2:viewpager2:1.0.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:${LIBRARY_VERSION_LIVEDATA}")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${LIBRARY_VERSION_LIVEDATA}")
@@ -70,7 +70,7 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("androidx.cardview:cardview:1.0.0")
-    implementation("androidx.browser:browser:1.3.0")
+    implementation("androidx.browser:browser:1.4.0")
 
     implementation("androidx.room:room-runtime:${LIBRARY_VERSION_ROOM}")
     implementation("androidx.room:room-ktx:${LIBRARY_VERSION_ROOM}")

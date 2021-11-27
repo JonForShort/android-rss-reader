@@ -26,5 +26,5 @@ jsonSchema2Pojo {
 }
 
 dependencies {
-    api 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
+    api 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
 }
